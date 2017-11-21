@@ -1,0 +1,30 @@
+text-block {
+    .text-block {
+        position: absolute;
+        width: 100%;
+        height: 1.2em;
+    }
+    .my-overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 100;
+        top: 0;
+        left: 0;
+    }
+
+    .input, .display {
+        position: relative;
+        color: blue;
+        font-family: cursive;
+        font-size: 18pt;
+        z-index: 100;
+    }
+
+    .input {
+        background: white;
+        border: none;
+        border-bottom: 2pt solid black;
+    }
+}

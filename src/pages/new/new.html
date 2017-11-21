@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      New
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let meme of blankMemes, let i = index" [navPush]="meme" [navParams]="i">
+    <br>
+    <ion-img [width]=200 [height]=200 src="{{meme.thumbnailUrl}}"></ion-img>
+    <h3>{{meme.title}}</h3>
+    <br>
+  </div>
+</ion-content>

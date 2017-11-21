@@ -1,0 +1,21 @@
+<!--
+  Generated template for the MemedogePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create A Doge</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="meme-container" tappable (click)="setAnchor($event.offsetX, $event.offsetY)">
+    <text-block editing="false" text="Such Doge" x=150 y=300></text-block>
+    <img class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
+  </div>
+</ion-content>
