@@ -13,8 +13,9 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { NewPage } from '../pages/new/new';
 import { MemedogePage } from '../pages/memedoge/memedoge';
+import { SuccPage } from '../pages/memes/succ/succ';
+import { WonkaPage } from '../pages/memes/wonka/wonka';
 
 @NgModule({
   declarations: [
@@ -23,8 +24,9 @@ import { MemedogePage } from '../pages/memedoge/memedoge';
     ContactPage,
     HomePage,
     TabsPage,
-    NewPage,
     MemedogePage,
+    SuccPage,
+    WonkaPage,
     TextBlockComponent
   ],
   imports: [
@@ -38,7 +40,8 @@ import { MemedogePage } from '../pages/memedoge/memedoge';
     ContactPage,
     HomePage,
     TabsPage,
-    NewPage,
+    SuccPage,
+    WonkaPage,
     MemedogePage
   ],
   providers: [

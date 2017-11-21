@@ -4,9 +4,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-list no-lines>
-    <ion-item *ngFor="let meme of blankMemes, let i = index" [navPush]="meme" [navParams]="i">
+<ion-content no-padding>
+  <ion-list no-lines no-padding>
+    <ion-item *ngFor="let meme of blankMemes, let i = index" [navPush]="meme" [navParams]="i" no-padding>
       <figure class='meme-thumbnail'>
         <img src="{{meme.thumbnailUrl}}">
         <figcaption>{{meme.title}}</figcaption>

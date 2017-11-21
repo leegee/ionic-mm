@@ -2,24 +2,19 @@ page-home {
   padding: 0;
   margin: 0;
   width: 100%;
-
+  .meme-thumbnail,
   .label-md,
   .item-md,
   ion-label,
   figure {
-      margin: 0;
-      -webkit-margin: 0;
-      padding: 0;
-  }
-
-  .meme-thumbnail {
-    padding: 0;
     margin: 0;
+    -webkit-margin: 0;
+    padding: 0;
+  }
+  .meme-thumbnail {
     width: 100%;
-    font-size: 200%;
     font-weight: bolder;
-    height: 33%;
-
+    height: 10em;
     img {
       position: relative;
       object-fit: cover;
@@ -30,7 +25,7 @@ page-home {
     }
     figcaption {
       position: relative;
-      bottom: 5.5em;
+      bottom: 3em;
       text-align: center;
       z-index: 100;
       color: white;

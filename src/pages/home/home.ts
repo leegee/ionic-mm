@@ -1,4 +1,6 @@
+import { WonkaPage } from './../memes/wonka/wonka';
 import { MemedogePage } from './../memedoge/memedoge';
+import { SuccPage } from './../memes/succ/succ';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -12,7 +14,11 @@ export class HomePage {
     public navCtrl: NavController
   ) {
     this.blankMemes = [
-      MemedogePage,MemedogePage,MemedogePage,MemedogePage,MemedogePage
+      MemedogePage,
+      SuccPage,
+      WonkaPage,
+      MemedogePage,
+      SuccPage,
     ];
 
   }
