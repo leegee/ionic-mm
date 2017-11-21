@@ -37,7 +37,8 @@ export class MemedogePage extends Meme implements AfterViewChecked {
 
   ngAfterViewChecked() {
     var img = this.elRef.nativeElement.querySelector('img');
-    console.log('MEME IMG', img);
+    var memeContainer = this.elRef.nativeElement.querySelector('.meme-container');
+    console.log('-----memeContainer', memeContainer);
 
     // https://stackoverflow.com/questions/37256745/object-fit-get-resulting-dimensions
     function getRenderedSize(contains, cWidth, cHeight, width, height, pos) {
@@ -67,11 +68,15 @@ export class MemedogePage extends Meme implements AfterViewChecked {
         parseInt(pos[0]));
     }
 
-    var rendered = getImgSizeInfo(img);
+    var renderedImg = getImgSizeInfo(img);
+    console.log('Rendered:', renderedImg.width, MemedogePage.width, renderedImg.height, MemedogePage.height);
     this.scale = {
-      x : rendered.width / MemedogePage.width,
-      y: rendered.height / MemedogePage.height
+      x: renderedImg.width / MemedogePage.width,
+      y: renderedImg.height / MemedogePage.height
     };
+
+    memeContainer.style.width = renderedImg.width + 'px';
+    memeContainer.style.height = renderedImg.height + 'px';
 
     console.log('scale`=',this.scale);
   }

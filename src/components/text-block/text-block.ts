@@ -12,26 +12,32 @@ import { Component, ElementRef, Input, AfterViewChecked } from '@angular/core';
 })
 export class TextBlockComponent implements AfterViewChecked {
   private  el: any;
+  private elRef: ElementRef;
   public editing: boolean;
+  public static instanceCount: number = 0;
   @Input('text') text: string;
   @Input('id') id: string;
+  @Input('clr') clr: string;
   @Input('x') x: any;
   @Input('y') y: any;
 
   constructor(
     elRef: ElementRef
   ) {
-    this.el = elRef.nativeElement;
+    this.elRef = elRef;
+    this.id = 'text-block-' + (TextBlockComponent.instanceCount ++);
   }
 
   ngAfterViewChecked () {
-    this.setPosition(this.x, this.y);
+    this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+    this.display();
   }
 
-  setPosition(x: number, y: number) {
-    this.el.style.left = x + '%';
-    this.el.style.top = y + '%';
-    console.log('set position ', this.el.style.left, this.el.style.top);
+  display() {
+    this.el.style.left = this.x;
+    this.el.style.top = this.y;
+    this.el.style.color = this.clr;
+    console.log('Display ', this.el.style);
   }
 
   inputText(text: string) {

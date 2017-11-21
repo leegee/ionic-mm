@@ -3,9 +3,11 @@ page-memedoge {
     img {
         position: absolute;
         width: 100%;
+        height: 100%;
         top: 0;
         left: 0;
         object-fit: scale-down;
         object-position: top left;
+        background-color: "black";
     }
 }
