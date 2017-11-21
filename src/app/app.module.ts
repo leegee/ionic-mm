@@ -14,7 +14,6 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { NewPage } from '../pages/new/new';
-import { CreateMeme } from '../pages/create/create';
 import { MemedogePage } from '../pages/memedoge/memedoge';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { MemedogePage } from '../pages/memedoge/memedoge';
     HomePage,
     TabsPage,
     NewPage,
-    CreateMeme,
     MemedogePage,
     TextBlockComponent
   ],
@@ -41,7 +39,6 @@ import { MemedogePage } from '../pages/memedoge/memedoge';
     HomePage,
     TabsPage,
     NewPage,
-    CreateMeme,
     MemedogePage
   ],
   providers: [

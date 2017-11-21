@@ -37,7 +37,7 @@ export class TextBlockComponent implements AfterViewChecked {
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;
-    console.log('Display ', this.el.style);
+    console.log('Display ', this.x, this.y);
   }
 
   inputText(text: string) {
