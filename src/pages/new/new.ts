@@ -1,5 +1,4 @@
 import { MemedogePage } from '../memedoge/memedoge';
-
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 

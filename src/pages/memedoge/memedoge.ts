@@ -15,9 +15,9 @@ export class MemedogePage extends Meme {
   static height: number = 450;
 
   constructor(
-    private navCtrl: NavController,
-    private navParams: NavParams,
-    private elRef: ElementRef
+    navCtrl: NavController,
+    navParams: NavParams,
+    elRef: ElementRef
   ) {
     super(navCtrl, navParams, elRef);
   }

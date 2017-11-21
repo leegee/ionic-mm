@@ -1,5 +1,6 @@
 import { ElementRef, AfterViewChecked } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { TextBlockComponent } from '../text-block/text-block';
 
 export abstract class Meme implements AfterViewChecked {
   static title: string;
@@ -8,15 +9,15 @@ export abstract class Meme implements AfterViewChecked {
   static width: number;
   static height: number;
   private scale: { x: number; y: number; };
-  public textBlocks: any = [];
+  public textBlocks: Array<TextBlockComponent> = [];
 
-  // public constructor(
-    // private  navCtrl: NavController,
-    // private  navParams: NavParams,
-    // private elRef: ElementRef
-  // ) {
-    // this.elRef = elRef;
-  // }
+  public constructor(
+  private  navCtrl: NavController,
+  private  navParams: NavParams,
+  private elRef: ElementRef
+  ) {
+  this.elRef = elRef;
+  }
 
   get(field: string) {
     return Meme[field];

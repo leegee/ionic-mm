@@ -1,3 +1,4 @@
+import { MemedogePage } from './../memedoge/memedoge';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -6,9 +7,13 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-  constructor(public navCtrl: NavController) {
+  public blankMemes: Array<any> = [];
+  constructor(
+    public navCtrl: NavController
+  ) {
+    this.blankMemes = [
+      MemedogePage,MemedogePage,MemedogePage,MemedogePage,MemedogePage
+    ];
 
   }
-
 }
