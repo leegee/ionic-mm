@@ -11,11 +11,12 @@ import { Component, ElementRef, Input, AfterViewChecked } from '@angular/core';
   templateUrl: 'text-block.html'
 })
 export class TextBlockComponent implements AfterViewChecked {
-  public el: any;
+  private  el: any;
+  public editing: boolean;
   @Input('text') text: string;
   @Input('id') id: string;
-  @Input('x') x: number;
-  @Input('y') y: number;
+  @Input('x') x: any;
+  @Input('y') y: any;
 
   constructor(
     elRef: ElementRef
@@ -28,9 +29,9 @@ export class TextBlockComponent implements AfterViewChecked {
   }
 
   setPosition(x: number, y: number) {
-    this.x = this.el.style.left = x;
-    this.y = this.el.style.top = y;
-    console.log('set position ', x, y);
+    this.el.style.left = x + '%';
+    this.el.style.top = y + '%';
+    console.log('set position ', this.el.style.left, this.el.style.top);
   }
 
   inputText(text: string) {

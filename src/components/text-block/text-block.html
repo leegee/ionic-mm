@@ -1,5 +1,5 @@
 <div id="{{id}}_id" class='text-block'>
+  <div id="{{id}}_overlay" class="my-overlay" *ngIf="editing"></div>
   <ion-input id="{{id}}_input" class='input' *ngIf="editing" placeholder="Such input" [(ngModel)]="text" (blur)="editing=false"></ion-input>
   <div id="{{id}}_display" class='display' *ngIf="!editing" (click)="editing=true">{{text}}</div>
-  <div id="{{id}}_overlay" class="my-overlay" *ngIf="editing"></div>
 </div>
