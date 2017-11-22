@@ -28,8 +28,8 @@ export class TextBlockComponent implements AfterViewChecked {
   ) {
     this.elRef = elRef;
     TextBlockComponent.instanceCount++;
-    this.instanceIndex = TextBlockComponent.instanceCount;
-    this.id = 'text-block-' + (TextBlockComponent.instanceCount);
+    this.instanceIndex = TextBlockComponent.instanceCount - 1;
+    this.id = 'text-block-index-' + (TextBlockComponent.instanceCount - 1);
   }
 
   ngAfterViewChecked() {
@@ -40,7 +40,7 @@ export class TextBlockComponent implements AfterViewChecked {
   inputBlurred(e) {
     // console.log('here we are', e.value, '===', this.x, this.y, this.clr, this.text, this.id, this.instanceIndex);
     this.updated.emit(this);
-    this.editing=false;
+    this.editing = false;
   }
 
   private position() {
