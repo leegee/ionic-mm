@@ -8,8 +8,6 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
   <ion-list no-lines no-padding>
     <ion-item *ngFor="let meme of blankMemes, let i = index" [navPush]="meme" [navParams]="i" no-padding>
       <figure class='meme-thumbnail'>

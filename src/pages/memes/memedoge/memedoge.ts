@@ -5,7 +5,7 @@ import { Meme } from '../../../components/meme/meme';
 @IonicPage()
 @Component({
   selector: 'page-memedoge',
-  templateUrl: 'memedoge.html',
+  templateUrl: 'memedoge.html'
 })
 export class MemedogePage extends Meme {
   static title: string = 'Doge';

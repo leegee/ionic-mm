@@ -12,17 +12,18 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-.meme-container {
+.meme-text-container {
   position: absolute;
   top: 0;
   left: 0;
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: scale-down;
-    object-position: top left;
-  }
+}
+
+img.meme-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: scale-down;
+  object-position: top left;
 }
 
 .screen-overlay {

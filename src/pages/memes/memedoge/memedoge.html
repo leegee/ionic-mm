@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Create A Doge</ion-title>
+    <ion-title>Doge</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="share()">
         <ion-icon name="share"></ion-icon>
@@ -10,9 +10,9 @@
 </ion-header>
 
 <ion-content padding>
-  <img class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
-  <div class="meme-container" tappable (click)="setAnchor($event.offsetX, $event.offsetY)">
-    <text-block text="Wow" x=5% y=10% clr='white'></text-block>
+  <img id='meme-img' class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
+  <div class="meme-text-container" tappable ><!-- (click)="setAnchor($event.offsetX, $event.offsetY)" -->
+    <text-block (updated)="updated($event)" text="Wow" x=5% y=10% clr='white'></text-block>
     <text-block text="So scare" x=80% y=20% clr='cyan'></text-block>
     <text-block text="What r\nyou doing" x=14% y=50% clr='red'></text-block>
     <text-block text="Keep yr hands away from me" clr='yellow' x=40% y=75%></text-block>

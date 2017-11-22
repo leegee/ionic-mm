@@ -10,8 +10,8 @@
 </ion-header>
 
 <ion-content padding>
-  <img class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
-  <div class="meme-container" tappable (click)="setAnchor($event.offsetX, $event.offsetY)">
+  <img id='meme-img' class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
+  <div class="meme-text-container" tappable (click)="setAnchor($event.offsetX, $event.offsetY)">
     <text-block text="Something will go here" x=1% y=10% clr='white'></text-block>
     <text-block text="Something else will go here" x=1% y=50% clr='white'></text-block>
   </div>
