@@ -1,10 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Memeology: Dank Memes</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Memeology</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content no-padding>
+<ion-content padding>
+  <h3>Ionic Menu Starter</h3>
+
   <ion-list no-lines no-padding>
     <ion-item *ngFor="let meme of blankMemes, let i = index" [navPush]="meme" [navParams]="i" no-padding>
       <figure class='meme-thumbnail'>
@@ -13,4 +18,5 @@
       </figure>
     </ion-item>
   </ion-list>
+
 </ion-content>

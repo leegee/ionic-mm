@@ -1,5 +1,5 @@
 import { WonkaPage } from './../memes/wonka/wonka';
-import { MemedogePage } from './../memedoge/memedoge';
+import { MemedogePage } from './../memes/memedoge/memedoge';
 import { SuccPage } from './../memes/succ/succ';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';

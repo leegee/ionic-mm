@@ -1,6 +1,6 @@
 {
-  "name": "mm",
-  "app_id": "a04aaf1f",
+  "name": "sidemenu",
+  "app_id": "",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
