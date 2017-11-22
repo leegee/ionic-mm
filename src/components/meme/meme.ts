@@ -9,8 +9,12 @@ export abstract class Meme implements AfterViewChecked {
   thumbnailUrl: string;
   width: number;
   height: number;
+  fontFamily: 'cursive';
+  lineHeight: '24pt';
+  fontSize: '18pt';
+  fontWeight: 'bolder';
   scale: { x: number; y: number; };
-  textBlocks: Array<TextBlockComponent> = [];
+  textBlocks: {[key:string]: TextBlockComponent} = {};
   private canvas: HTMLCanvasElement;;
 
   public constructor(
@@ -67,9 +71,15 @@ export abstract class Meme implements AfterViewChecked {
     memeContainer.style.height = renderedImg.height + 'px';
   }
 
+  styleString() {
+    return 'font:' + this.get('fontFamily') + ' '
+      + this.get('fontWeight') + ' '
+      + this.get('fontSize') + '/' + + this.get('lineHeight')
+  }
 
   updated(textblock: TextBlockComponent) {
-    this.textBlocks[ textblock.instanceIndex ] = textblock;
+    this.textBlocks[textblock.id] = textblock;
+    console.log('updated set ', textblock.id, Object.keys(this.textBlocks).length);
   }
 
   setAnchor(
@@ -89,7 +99,7 @@ export abstract class Meme implements AfterViewChecked {
 
   getFinalImage() {
     let img: HTMLImageElement = new Image(this.get('width'), this.get('height'));
-    img.src = this.imageUrl;
+    img.src = this.get('imageUrl');
 
     this.canvas = document.createElement("canvas");
     this.canvas.id = "screenshot-canvas";
@@ -100,11 +110,10 @@ export abstract class Meme implements AfterViewChecked {
     ctx.canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
 
-    console.log('----------', this.textBlocks());
-
-    this.textBlocks.forEach((textBlock) => {
-      console.log(textBlock.x, textBlock.y, textBlock.text)
-    })
+    console.log(this.textBlocks);
+    // this.textBlocks.forEach((textBlock) => {
+    //   console.log(textBlock.x, textBlock.y, textBlock.text)
+    // })
 
     // let imgExport = new Image(this.width, this.height);
     // imgExport.src = this.canvas.toDataURL();

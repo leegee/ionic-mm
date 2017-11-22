@@ -3,6 +3,7 @@ import { MemedogePage } from './../memes/memedoge/memedoge';
 import { SuccPage } from './../memes/succ/succ';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { PepePage } from '../memes/pepe/pepe';
 
 @Component({
   selector: 'page-home',
@@ -17,6 +18,7 @@ export class HomePage {
       MemedogePage,
       SuccPage,
       WonkaPage,
+      PepePage,
       MemedogePage,
       SuccPage,
     ];

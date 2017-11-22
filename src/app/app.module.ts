@@ -14,6 +14,7 @@ import { WonkaPage } from '../pages/memes/wonka/wonka';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { PepePage } from '../pages/memes/pepe/pepe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ListPage,
     MemedogePage,
     WonkaPage,
-    SuccPage
+    SuccPage,
+    PepePage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ListPage,
     MemedogePage,
     WonkaPage,
-    SuccPage
+    SuccPage,
+    PepePage
   ],
   providers: [
     StatusBar,

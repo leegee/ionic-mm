@@ -1,18 +1,12 @@
-import { Component, ElementRef, Input, AfterViewChecked, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, Input, EventEmitter, Output } from '@angular/core';
 
-/**
- * Generated class for the TextBlockComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
+import { Md5 } from 'ts-md5/dist/md5';
+
 @Component({
   selector: 'text-block',
   templateUrl: 'text-block.html'
 })
-export class TextBlockComponent implements AfterViewChecked {
-  instanceIndex: number;
-  public static instanceCount: number = 0;
+export class TextBlockComponent {
   private el: any;
   private elRef: ElementRef;
   editing: boolean;
@@ -23,22 +17,28 @@ export class TextBlockComponent implements AfterViewChecked {
   @Input('y') y: any;
   @Output() updated: EventEmitter<TextBlockComponent> = new EventEmitter<TextBlockComponent>();
 
-  constructor(
-    elRef: ElementRef
-  ) {
+  constructor(elRef: ElementRef) {
     this.elRef = elRef;
-    TextBlockComponent.instanceCount++;
-    this.instanceIndex = TextBlockComponent.instanceCount - 1;
-    this.id = 'text-block-index-' + (TextBlockComponent.instanceCount - 1);
+  }
+
+  ngDoCheck() {
+    // Can only set an ID when we have the necessary data from the template
+    if (this.id === undefined) {
+      this.id = 'text-block-index-' + Md5.hashStr(this.x + this.y + this.clr + this.text);
+    }
   }
 
   ngAfterViewChecked() {
-    this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+    // Can ony get an element when its ID has been composed
+    if (! this.el) {
+      this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+    }
     this.position();
+    this.onUpdated();
   }
 
-  inputBlurred(e) {
-    // console.log('here we are', e.value, '===', this.x, this.y, this.clr, this.text, this.id, this.instanceIndex);
+  onUpdated() {
+    // console.log('emit onUpdated', this.x, this.y, this.text, this.id);
     this.updated.emit(this);
     this.editing = false;
   }
@@ -47,7 +47,6 @@ export class TextBlockComponent implements AfterViewChecked {
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;
-    // console.log('Display ', this.x, this.y);
   }
 
 }
