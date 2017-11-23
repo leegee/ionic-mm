@@ -4,17 +4,17 @@ import { NavController, NavParams } from 'ionic-angular';
 import { TextBlockComponent } from '../text-block/text-block';
 
 export abstract class Meme implements AfterViewChecked {
-  title: string;
+  static title: string;
+  static thumbnailUrl: string;
   imageUrl: string;
-  thumbnailUrl: string;
   width: number;
   height: number;
-  fontFamily: 'cursive';
-  lineHeight: '24pt';
-  fontSize: '18pt';
-  fontWeight: 'bolder';
-  scale: { x: number; y: number; };
-  textBlocks: {[key:string]: TextBlockComponent} = {};
+  fontFamily: string = 'cursive';
+  lineHeight: string = '24pt';
+  fontSize: string = '24pt';
+  fontWeight: string = 'bolder';
+  // static scale: { x: number; y: number; };
+  textBlocks: { [key: string]: TextBlockComponent } = {};
   private canvas: HTMLCanvasElement;;
 
   public constructor(
@@ -23,10 +23,6 @@ export abstract class Meme implements AfterViewChecked {
     private elRef: ElementRef
   ) {
     this.elRef = elRef;
-  }
-
-  get(field: string) {
-    return Meme[field];
   }
 
   ngAfterViewChecked() {
@@ -67,19 +63,20 @@ export abstract class Meme implements AfterViewChecked {
     //   y: renderedImg.height / MemedogePage.height
     // };
 
+    memeContainer.style.font = this.fontStyleString();
     memeContainer.style.width = renderedImg.width + 'px';
     memeContainer.style.height = renderedImg.height + 'px';
   }
 
-  styleString() {
-    return 'font:' + this.get('fontFamily') + ' '
-      + this.get('fontWeight') + ' '
-      + this.get('fontSize') + '/' + + this.get('lineHeight')
+  fontStyleString() {
+      return this.fontWeight + ' '
+      + this.fontSize + '/' + this.lineHeight + ' '
+      + this.fontFamily;
   }
 
   updated(textblock: TextBlockComponent) {
     this.textBlocks[textblock.id] = textblock;
-    console.log('updated set ', textblock.id, Object.keys(this.textBlocks).length);
+    // console.log('updated set ', textblock.id, Object.keys(this.textBlocks).length);
   }
 
   setAnchor(
@@ -87,19 +84,19 @@ export abstract class Meme implements AfterViewChecked {
     y: number,
     text?: string
   ) {
-    console.log(this);
+    // console.log(this);
   }
 
   share() {
-    console.log('Meme.Share()');
+    console.log('Meme.share!', this.textBlocks);
     // let screenshot = new Screenshot(document).getImg();
     let image = this.getFinalImage();
     // Shareable.share(png);
   }
 
   getFinalImage() {
-    let img: HTMLImageElement = new Image(this.get('width'), this.get('height'));
-    img.src = this.get('imageUrl');
+    let img: HTMLImageElement = new Image(this.width, this.getheight);
+    img.src = this.imageUrl;
 
     this.canvas = document.createElement("canvas");
     this.canvas.id = "screenshot-canvas";

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Doge</ion-title>
+    <ion-title>{{title}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="share()">
         <ion-icon name="share"></ion-icon>
@@ -10,13 +10,13 @@
 </ion-header>
 
 <ion-content padding>
-  <img id='meme-img' class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
+  <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
   <!-- (click)="setAnchor($event.offsetX, $event.offsetY)" -->
-  <div class="meme-text-container" tappable [style]="styleString()">
+  <div class="meme-text-container" tappable>
     <text-block (updated)="updated($event)" text="Wow" x=5% y=10% clr='white'></text-block>
-    <text-block text="So scare" x=80% y=20% clr='cyan'></text-block>
-    <text-block text="What r\nyou doing" x=14% y=50% clr='red'></text-block>
-    <text-block text="Keep yr hands away from me" clr='yellow' x=40% y=75%></text-block>
-    <text-block text="Concern" x=75% y=50% clr='magenta'></text-block>
+    <text-block (updated)="updated($event)" text="So scare" x=80% y=20% clr='cyan'></text-block>
+    <text-block (updated)="updated($event)" text="What r\nyou doing" x=14% y=50% clr='red'></text-block>
+    <text-block (updated)="updated($event)" text="Keep yr hands away from me" clr='yellow' x=40% y=75%></text-block>
+    <text-block (updated)="updated($event)" text="Concern" x=75% y=50% clr='magenta'></text-block>
   </div>
 </ion-content>

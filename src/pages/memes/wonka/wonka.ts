@@ -9,10 +9,10 @@ import { Meme } from '../../../components/meme/meme';
 })
 export class WonkaPage extends Meme {
   static title: string = 'Doge';
-  static imageUrl: string = 'assets/imgs/wonka.jpg';
   static thumbnailUrl: string = 'assets/imgs/wonka.jpg';
-  static width: number = 550;
-  static height: number = 545;
+  imageUrl: string = 'assets/imgs/wonka.jpg';
+  width: number = 550;
+  height: number = 545;
 
   constructor(
     navCtrl: NavController,
@@ -20,9 +20,5 @@ export class WonkaPage extends Meme {
     elRef: ElementRef
   ) {
     super(navCtrl, navParams, elRef);
-  }
-
-  get(field: string) {
-    return WonkaPage[field];
   }
 }

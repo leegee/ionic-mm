@@ -8,11 +8,11 @@ import { Meme } from '../../../components/meme/meme';
   templateUrl: 'memedoge.html'
 })
 export class MemedogePage extends Meme {
-  static title: string = 'Doge';
-  static imageUrl: string = 'assets/imgs/doge.jpg';
   static thumbnailUrl: string = 'assets/imgs/doge_thumb.jpg';
-  static width: number = 800;
-  static height: number = 450;
+  static title: string = 'Doge';
+  imageUrl: string = 'assets/imgs/doge.jpg';
+  width: number = 800;
+  height: number = 450;
 
   constructor(
     navCtrl: NavController,
@@ -22,7 +22,4 @@ export class MemedogePage extends Meme {
     super(navCtrl, navParams, elRef);
   }
 
-  get(field: string) {
-    return MemedogePage[field];
-  }
 }

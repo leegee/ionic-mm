@@ -24,7 +24,7 @@ export class TextBlockComponent {
   ngDoCheck() {
     // Can only set an ID when we have the necessary data from the template
     if (this.id === undefined) {
-      this.id = 'text-block-index-' + Md5.hashStr(this.x + this.y + this.clr + this.text);
+      this.id = 'text-block-' + Md5.hashStr(this.x + this.y + this.clr + this.text);
     }
   }
 
@@ -33,17 +33,16 @@ export class TextBlockComponent {
     if (! this.el) {
       this.el = this.elRef.nativeElement.querySelector('#' + this.id);
     }
-    this.position();
-    this.onUpdated();
+      this.position();
   }
 
   onUpdated() {
-    // console.log('emit onUpdated', this.x, this.y, this.text, this.id);
     this.updated.emit(this);
     this.editing = false;
   }
 
   private position() {
+    console.log('position', this.text, this.x, this.y);
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;

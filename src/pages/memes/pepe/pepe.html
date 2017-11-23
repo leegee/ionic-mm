@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Pepe</ion-title>
+    <ion-title>{{title}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="share()">
         <ion-icon name="share"></ion-icon>
@@ -10,8 +10,8 @@
 </ion-header>
 
 <ion-content padding>
-  <img id='meme-img' class="meme-img" [width]="get('width')" [height]="get('height')" [src]="get('imageUrl')">
+  <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
   <div class="meme-text-container" tappable (click)="setAnchor($event.offsetX, $event.offsetY)">
-    <text-block text="Blink" x=52% y=22% clr='black'></text-block>
+    <text-block text="Yol no know" x=72% y=42% clr='black'></text-block>
   </div>
 </ion-content>
