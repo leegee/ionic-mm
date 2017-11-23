@@ -1,8 +1,6 @@
 # TODO
 
-- Improve meme-page inheritance
-- Include memes via markup in home.
-- Fix text position by percentages
+- Fix text position by percentages on mobile
 - Improve per-meme text flow in CSS
-- Copy the meme to canvas
-- Share export
+
+https://medium.com/@leetheguy/adding-fonts-to-your-ionic-1-sass-app-dfbabf20dcaf

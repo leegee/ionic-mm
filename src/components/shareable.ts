@@ -1,9 +1,15 @@
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 export class Shareable {
-    constructor() {
+    private static socialSharing: SocialSharing = new SocialSharing();
+    constructor() { }
 
-    }
-
-    static share() {
-        console.log('*** SHAREABLE SHARE')
+    static share(imgb64) {
+        console.log('*** SHAREABLE SHARE', imgb64);
+        Shareable.socialSharing.share(
+            'Memeology Message',
+            'Memeology Subject',
+            imgb64
+        );
     }
 }

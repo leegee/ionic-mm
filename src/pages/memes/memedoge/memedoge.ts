@@ -13,6 +13,7 @@ export class MemedogePage extends Meme {
   imageUrl: string = 'assets/imgs/doge.jpg';
   width: number = 800;
   height: number = 450;
+  fontFamily: string = 'PermanentMarkerRegular';
 
   constructor(
     navCtrl: NavController,

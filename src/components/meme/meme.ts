@@ -69,7 +69,8 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   fontStyleString() {
-      return this.fontWeight + ' '
+    console.log('fontfamily: ', this.fontFamily);
+    return this.fontWeight + ' '
       + this.fontSize + '/' + this.lineHeight + ' '
       + this.fontFamily;
   }
@@ -79,24 +80,19 @@ export abstract class Meme implements AfterViewChecked {
     // console.log('updated set ', textblock.id, Object.keys(this.textBlocks).length);
   }
 
-  setAnchor(
-    x: number,
-    y: number,
-    text?: string
-  ) {
-    // console.log(this);
-  }
-
   share() {
-    console.log('Meme.share!', this.textBlocks);
-    // let screenshot = new Screenshot(document).getImg();
-    let image = this.getFinalImage();
-    // Shareable.share(png);
+    let img = this.base64memeImage();
+    Shareable.share(img);
   }
 
-  getFinalImage() {
-    let img: HTMLImageElement = new Image(this.width, this.getheight);
+  base64memeImage() {
+    let img: HTMLImageElement = new Image(this.width, this.height);
     img.src = this.imageUrl;
+
+    function literal(pc, xy) {
+      let l = pc.match(/^(\d+)/)[1];
+      return l * (xy / 100);
+    }
 
     this.canvas = document.createElement("canvas");
     this.canvas.id = "screenshot-canvas";
@@ -107,14 +103,20 @@ export abstract class Meme implements AfterViewChecked {
     ctx.canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
 
-    console.log(this.textBlocks);
-    // this.textBlocks.forEach((textBlock) => {
-    //   console.log(textBlock.x, textBlock.y, textBlock.text)
-    // })
+    for (let id in this.textBlocks) {
+      ctx.font = this.fontStyleString();
+      ctx.fillStyle = this.textBlocks[id].clr;
+      ctx.fillText(
+        this.textBlocks[id].text,
+        literal(this.textBlocks[id].x, img.width),
+        literal(this.textBlocks[id].y, img.height)
+      );
+    }
 
     // let imgExport = new Image(this.width, this.height);
     // imgExport.src = this.canvas.toDataURL();
-
+    // window.open().document.body.appendChild(imgExport);;
+    return this.canvas.toDataURL();
   }
 
 }

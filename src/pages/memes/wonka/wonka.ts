@@ -13,6 +13,7 @@ export class WonkaPage extends Meme {
   imageUrl: string = 'assets/imgs/wonka.jpg';
   width: number = 550;
   height: number = 545;
+  fontFamily: string = 'AntonRegular';
 
   constructor(
     navCtrl: NavController,

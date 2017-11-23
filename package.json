@@ -1,8 +1,8 @@
 {
-  "name": "sidemenu",
+  "name": "Memeology",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Lee Goddard",
+  "homepage": "http://leegoddard.net/memeology",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",

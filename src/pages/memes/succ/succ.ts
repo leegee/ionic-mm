@@ -9,7 +9,7 @@ import { Meme } from '../../../components/meme/meme';
 })
 export class SuccPage extends Meme {
   static title: string = 'Mr Succ';
-  static thumbnailUrl: string = 'assets/imgs/succ_thumb.jpg';
+  static thumbnailUrl: string = 'assets/imgs/succ.jpg';
   imageUrl: string = 'assets/imgs/succ.jpg';
   width: number = 600;
   height: number = 600;

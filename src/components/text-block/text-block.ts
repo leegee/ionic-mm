@@ -30,10 +30,10 @@ export class TextBlockComponent {
 
   ngAfterViewChecked() {
     // Can ony get an element when its ID has been composed
-    if (! this.el) {
+    if (!this.el) {
       this.el = this.elRef.nativeElement.querySelector('#' + this.id);
     }
-      this.position();
+    this.position();
   }
 
   onUpdated() {
@@ -42,10 +42,10 @@ export class TextBlockComponent {
   }
 
   private position() {
-    console.log('position', this.text, this.x, this.y);
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;
+    this.updated.emit(this);
   }
 
 }

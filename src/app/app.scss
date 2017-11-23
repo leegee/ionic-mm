@@ -12,6 +12,7 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
 .meme-text-container {
   position: absolute;
   top: 0;
@@ -34,4 +35,24 @@ img.meme-img {
   z-index: 100;
   top: 0;
   left: 0;
+}
+
+@font-face {
+  font-family: 'AntonRegular';
+  src: url('/assets/fonts/Anton/AntonRegular.eot');
+  src: url('/assets/fonts/Anton/AntonRegular.eot') format('embedded-opentype'),
+       url('/assets/fonts/Anton/AntonRegular.woff2') format('woff2'),
+       url('/assets/fonts/Anton/AntonRegular.woff') format('woff'),
+       url('/assets/fonts/Anton/AntonRegular.ttf') format('truetype'),
+       url('/assets/fonts/Anton/AntonRegular.svg#AntonRegular') format('svg');
+}
+
+@font-face {
+  font-family: 'PermanentMarkerRegular';
+  src: url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.eot');
+  src: url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.eot') format('embedded-opentype'),
+       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.woff2') format('woff2'),
+       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.woff') format('woff'),
+       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.ttf') format('truetype'),
+       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.svg#PermanentMarkerRegular') format('svg');
 }

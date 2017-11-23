@@ -15,7 +15,7 @@ export class HomePage {
     public navCtrl: NavController
   ) {
     this.blankMemes = [
-      new MemedogePage(),
+      MemedogePage,
       SuccPage,
       WonkaPage,
       PepePage,
