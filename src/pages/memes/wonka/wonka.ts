@@ -8,12 +8,15 @@ import { Meme } from '../../../components/meme/meme';
   templateUrl: 'wonka.html',
 })
 export class WonkaPage extends Meme {
-  static title: string = 'Doge';
+  static title: string = 'Wonka';
   static thumbnailUrl: string = 'assets/imgs/wonka.jpg';
+  title = 'Wonka';
   imageUrl: string = 'assets/imgs/wonka.jpg';
   width: number = 550;
   height: number = 545;
   fontFamily: string = 'AntonRegular';
+  fontSize: string = '2vw';
+  justify: string = 'center';
 
   constructor(
     navCtrl: NavController,

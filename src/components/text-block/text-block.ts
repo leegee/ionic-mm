@@ -13,6 +13,7 @@ export class TextBlockComponent {
   @Input('text') text: string;
   @Input('id') id: string;
   @Input('clr') clr: string;
+  @Input('justify') justify: string = 'left';
   @Input('x') x: any;
   @Input('y') y: any;
   @Output() updated: EventEmitter<TextBlockComponent> = new EventEmitter<TextBlockComponent>();
@@ -45,6 +46,7 @@ export class TextBlockComponent {
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;
+    this.el.style.textAlign = this.justify;
     this.updated.emit(this);
   }
 

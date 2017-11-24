@@ -12,7 +12,7 @@
 <ion-content padding>
   <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
   <!-- (click)="setAnchor($event.offsetX, $event.offsetY)" -->
-  <div class="meme-text-container" tappable>
+  <div id="meme-text-container" tappable>
     <text-block (updated)="updated($event)" text="Wow" x=5% y=10% clr='white'></text-block>
     <text-block (updated)="updated($event)" text="So scare" x=80% y=20% clr='cyan'></text-block>
     <text-block (updated)="updated($event)" text="What r\nyou doing" x=14% y=50% clr='red'></text-block>

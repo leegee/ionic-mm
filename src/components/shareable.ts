@@ -5,7 +5,6 @@ export class Shareable {
     constructor() { }
 
     static share(imgb64) {
-        console.log('*** SHAREABLE SHARE', imgb64);
         Shareable.socialSharing.share(
             'Memeology Message',
             'Memeology Subject',

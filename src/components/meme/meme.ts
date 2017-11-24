@@ -26,12 +26,12 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    var img = this.elRef.nativeElement.querySelector('img');
-    var memeContainer = this.elRef.nativeElement.querySelector('.meme-text-container');
+    let img = this.elRef.nativeElement.querySelector('img');
+    let memeContainer = this.elRef.nativeElement.querySelector('#meme-text-container');
 
     // https://stackoverflow.com/questions/37256745/object-fit-get-resulting-dimensions
     function getRenderedSize(cWidth, cHeight, width, height, pos) {
-      var oRatio = width / height,
+      let oRatio = width / height,
         cRatio = cWidth / cHeight;
       return function () {
         if (oRatio > cRatio) {
@@ -48,7 +48,7 @@ export abstract class Meme implements AfterViewChecked {
     }
 
     function getImgSizeInfo(img) {
-      var pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
+      let pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
       return getRenderedSize(
         img.width,
         img.height,
@@ -57,7 +57,7 @@ export abstract class Meme implements AfterViewChecked {
         parseInt(pos[0]));
     }
 
-    var renderedImg = getImgSizeInfo(img);
+    let renderedImg = getImgSizeInfo(img);
     // this.scale = {
     //   x: renderedImg.width / MemedogePage.width,
     //   y: renderedImg.height / MemedogePage.height
@@ -69,7 +69,6 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   fontStyleString() {
-    console.log('fontfamily: ', this.fontFamily);
     return this.fontWeight + ' '
       + this.fontSize + '/' + this.lineHeight + ' '
       + this.fontFamily;
@@ -77,7 +76,6 @@ export abstract class Meme implements AfterViewChecked {
 
   updated(textblock: TextBlockComponent) {
     this.textBlocks[textblock.id] = textblock;
-    // console.log('updated set ', textblock.id, Object.keys(this.textBlocks).length);
   }
 
   share() {
@@ -88,6 +86,9 @@ export abstract class Meme implements AfterViewChecked {
   base64memeImage() {
     let img: HTMLImageElement = new Image(this.width, this.height);
     img.src = this.imageUrl;
+
+    let style = this.elRef.nativeElement.style;
+    console.log(style);
 
     function literal(pc, xy) {
       let l = pc.match(/^(\d+)/)[1];
