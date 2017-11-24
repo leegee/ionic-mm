@@ -9,13 +9,7 @@ export abstract class Meme implements AfterViewChecked {
   imageUrl: string;
   width: number;
   height: number;
-  fontFamily: string = 'cursive';
-  lineHeight: string = '24pt';
-  fontSize: string = '24pt';
-  fontWeight: string = 'bolder';
-  // static scale: { x: number; y: number; };
   textBlocks: { [key: string]: TextBlockComponent } = {};
-  private canvas: HTMLCanvasElement;;
 
   public constructor(
     private navCtrl: NavController,
@@ -95,11 +89,11 @@ export abstract class Meme implements AfterViewChecked {
       return l * (xy / 100);
     }
 
-    this.canvas = document.createElement("canvas");
-    this.canvas.id = "screenshot-canvas";
-    document.body.appendChild(this.canvas);
+    let canvas = document.createElement("canvas");
+    canvas.id = "screenshot-canvas";
+    document.body.appendChild(canvas);
 
-    let ctx = this.canvas.getContext("2d");
+    let ctx = canvas.getContext("2d");
     ctx.canvas.width = img.width;
     ctx.canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
@@ -115,9 +109,9 @@ export abstract class Meme implements AfterViewChecked {
     }
 
     // let imgExport = new Image(this.width, this.height);
-    // imgExport.src = this.canvas.toDataURL();
+    // imgExport.src = canvas.toDataURL();
     // window.open().document.body.appendChild(imgExport);;
-    return this.canvas.toDataURL();
+    return canvas.toDataURL();
   }
 
 }

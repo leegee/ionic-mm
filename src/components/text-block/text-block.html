@@ -3,3 +3,4 @@
   <ion-input id="{{id}}_input" class='input' *ngIf="editing" placeholder="Such input" [(ngModel)]="text" (ionBlur)="onUpdated($event)"></ion-input>
   <div id="{{id}}_display" class='display' *ngIf="!editing" (click)="editing=true">{{text}}</div>
 </div>
+
