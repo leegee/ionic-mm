@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Meme } from '../../../components/meme/meme';
 

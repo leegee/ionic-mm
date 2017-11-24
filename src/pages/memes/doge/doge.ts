@@ -1,13 +1,13 @@
-import { Component, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Meme } from '../../../components/meme/meme';
 
 @IonicPage()
 @Component({
-  selector: 'page-memedoge',
-  templateUrl: 'memedoge.html'
+  selector: 'page-doge',
+  templateUrl: 'doge.html'
 })
-export class MemedogePage extends Meme {
+export class DogePage extends Meme {
   static thumbnailUrl: string = 'assets/imgs/doge_thumb.jpg';
   static title: string = 'Doge';
   imageUrl: string = 'assets/imgs/doge.jpg';

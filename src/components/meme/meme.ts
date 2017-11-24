@@ -56,8 +56,8 @@ export abstract class Meme implements AfterViewChecked {
 
     let renderedImg = getImgSizeInfo(this.img);
     // this.scale = {
-    //   x: renderedImg.width / MemedogePage.width,
-    //   y: renderedImg.height / MemedogePage.height
+    //   x: renderedImg.width / DogePage.width,
+    //   y: renderedImg.height / DogePage.height
     // };
 
     this.container.style.width = renderedImg.width + 'px';

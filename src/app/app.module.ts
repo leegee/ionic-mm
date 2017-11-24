@@ -8,7 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
-import { MemedogePage } from '../pages/memes/memedoge/memedoge';
+import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
 import { WonkaPage } from '../pages/memes/wonka/wonka';
 
@@ -22,7 +22,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     TextBlockComponent,
     HomePage,
     ListPage,
-    MemedogePage,
+    DogePage,
     WonkaPage,
     SuccPage,
     PepePage
@@ -36,7 +36,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     MyApp,
     HomePage,
     ListPage,
-    MemedogePage,
+    DogePage,
     WonkaPage,
     SuccPage,
     PepePage

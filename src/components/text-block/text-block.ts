@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, EventEmitter, Output } from '@angular/core';
 
 import { Md5 } from 'ts-md5/dist/md5';
-import { TextInput } from 'ionic-angular/components/input/input';
 
 @Component({
   selector: 'text-block',
