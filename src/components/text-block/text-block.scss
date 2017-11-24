@@ -12,9 +12,6 @@ text-block {
       width: 60em;
       top: 0;
       left: 0;
-      // font-family: cursive;
-      // font-size: 24pt;
-      // font-weight: 900;
       z-index: 200;
     }
     .input {
@@ -22,9 +19,18 @@ text-block {
       color: black;
       border: none;
       border-bottom: 2pt solid black;
+      z-index: 300;
     }
     .input input::after {
       content: 'Ⓧ';
     }
+  }
+  input::-moz-selection {
+    background: #ddd;
+    color: black;
+  }
+  input::selection {
+    background: #ddd;
+    color: black;
   }
 }

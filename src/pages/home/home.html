@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="dark">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,7 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding>
   <ion-list no-lines no-padding>
     <ion-item *ngFor="let meme of blankMemes, let i = index" [navPush]="meme" [navParams]="i" no-padding>
       <figure class='meme-thumbnail'>

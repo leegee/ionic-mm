@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, EventEmitter, Output } from '@angular/core';
 
 import { Md5 } from 'ts-md5/dist/md5';
+import { TextInput } from 'ionic-angular/components/input/input';
 
 @Component({
   selector: 'text-block',
@@ -13,7 +14,6 @@ export class TextBlockComponent {
   @Input('text') text: string;
   @Input('id') id: string;
   @Input('clr') clr: string;
-  @Input('justify') justify: string = 'left';
   @Input('x') x: any;
   @Input('y') y: any;
   @Output() updated: EventEmitter<TextBlockComponent> = new EventEmitter<TextBlockComponent>();
@@ -37,7 +37,18 @@ export class TextBlockComponent {
     this.position();
   }
 
+  onActivated() {
+    this.editing = true;
+    setTimeout(() => {
+      var el = this.elRef.nativeElement.querySelector('input');
+      el.select();
+      el.focus();
+    }, 1);
+  }
+
   onUpdated() {
+   // The blur event is missing in Ionic since at least July 2017
+    // TODO Don't blur if user touched the input box
     this.updated.emit(this);
     this.editing = false;
   }
@@ -46,7 +57,6 @@ export class TextBlockComponent {
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;
-    this.el.style.textAlign = this.justify;
     this.updated.emit(this);
   }
 

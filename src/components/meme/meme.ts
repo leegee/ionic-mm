@@ -6,6 +6,9 @@ import { TextBlockComponent } from '../text-block/text-block';
 export abstract class Meme implements AfterViewChecked {
   static title: string;
   static thumbnailUrl: string;
+  private static textStyleRules = ['textAlign', 'color', 'fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
+  private container: HTMLElement;
+  private img: HTMLImageElement;
   imageUrl: string;
   width: number;
   height: number;
@@ -20,8 +23,8 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    let img = this.elRef.nativeElement.querySelector('img');
-    let memeContainer = this.elRef.nativeElement.querySelector('#meme-text-container');
+    this.img = this.elRef.nativeElement.querySelector('img');
+    this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
 
     // https://stackoverflow.com/questions/37256745/object-fit-get-resulting-dimensions
     function getRenderedSize(cWidth, cHeight, width, height, pos) {
@@ -51,21 +54,14 @@ export abstract class Meme implements AfterViewChecked {
         parseInt(pos[0]));
     }
 
-    let renderedImg = getImgSizeInfo(img);
+    let renderedImg = getImgSizeInfo(this.img);
     // this.scale = {
     //   x: renderedImg.width / MemedogePage.width,
     //   y: renderedImg.height / MemedogePage.height
     // };
 
-    memeContainer.style.font = this.fontStyleString();
-    memeContainer.style.width = renderedImg.width + 'px';
-    memeContainer.style.height = renderedImg.height + 'px';
-  }
-
-  fontStyleString() {
-    return this.fontWeight + ' '
-      + this.fontSize + '/' + this.lineHeight + ' '
-      + this.fontFamily;
+    this.container.style.width = renderedImg.width + 'px';
+    this.container.style.height = renderedImg.height + 'px';
   }
 
   updated(textblock: TextBlockComponent) {
@@ -77,16 +73,37 @@ export abstract class Meme implements AfterViewChecked {
     Shareable.share(img);
   }
 
+  // getStyles() {
+  //   return this.fontWeight + ' '
+  //     + this.fontSize + '/' + this.lineHeight + ' '
+  //     + this.fontFamily;
+  // }
+
   base64memeImage() {
     let img: HTMLImageElement = new Image(this.width, this.height);
-    img.src = this.imageUrl;
+    img.src = this.img.src;
 
-    let style = this.elRef.nativeElement.style;
-    console.log(style);
+    let getStyles = (textBlock) => {
+      let textBlockStyle = Object.assign(
+        {},
+        document.defaultView.getComputedStyle(this.container),
+        document.defaultView.getComputedStyle(textBlock.el),
+      );
+      let rv = Object.keys(textBlockStyle)
+        .filter(ruleName => Meme.textStyleRules.some(
+          wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
+        )
+        ).reduce((styles, ruleName) => {
+          styles[ruleName] = textBlockStyle[ruleName];
+          return styles;
+        }, {}
+        );
+      return rv;
+    };
 
     function literal(pc, xy) {
-      let l = pc.match(/^(\d+)/)[1];
-      return l * (xy / 100);
+      let integer = pc.match(/^(\d+)/)[1];
+      return integer * (xy / 100);
     }
 
     let canvas = document.createElement("canvas");
@@ -99,7 +116,20 @@ export abstract class Meme implements AfterViewChecked {
     ctx.drawImage(img, 0, 0);
 
     for (let id in this.textBlocks) {
-      ctx.font = this.fontStyleString();
+      let blockStyles: { [key: string]: string } = getStyles(this.textBlocks[id]);
+      ctx.font = [
+        blockStyles.fontWeight || '',
+        blockStyles.fontSize || '',
+        blockStyles.fontFamily || ''
+      ].join(' ');
+
+      console.log('FONT=',ctx.font);
+
+      if (blockStyles.textAlign) {
+        ctx.textAlign = blockStyles.textAlign;
+      }
+      ctx.textBaseline = 'middle';
+
       ctx.fillStyle = this.textBlocks[id].clr;
       ctx.fillText(
         this.textBlocks[id].text,
@@ -108,10 +138,13 @@ export abstract class Meme implements AfterViewChecked {
       );
     }
 
-    // let imgExport = new Image(this.width, this.height);
-    // imgExport.src = canvas.toDataURL();
-    // window.open().document.body.appendChild(imgExport);;
-    return canvas.toDataURL();
+    let imgExport = new Image(this.width, this.height);
+    imgExport.src = canvas.toDataURL();
+    window.open().document.body.appendChild(imgExport);;
+
+    var imgB64 = canvas.toDataURL();
+    canvas.outerHTML = '';
+    return imgB64;
   }
 
 }
