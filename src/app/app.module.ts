@@ -1,3 +1,7 @@
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { ImagePicker } from '@ionic-native/image-picker';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TextBlockComponent } from './../components/text-block/text-block';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,7 +10,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { CustomPage } from '../pages/custom/custom';
 
 import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
@@ -21,7 +25,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     MyApp,
     TextBlockComponent,
     HomePage,
-    ListPage,
+    CustomPage,
     DogePage,
     WonkaPage,
     SuccPage,
@@ -35,7 +39,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
+    CustomPage,
     DogePage,
     WonkaPage,
     SuccPage,
@@ -45,7 +49,11 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     StatusBar,
     SplashScreen,
     SocialSharing,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    ImagePicker,
+    File,
+    Transfer,
+    FilePath,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }
