@@ -1,5 +1,5 @@
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
-import { File } from '@ionic-native/file';
+import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Component } from '@angular/core';
@@ -31,7 +31,7 @@ export class CustomPage {
     private imagePicker: ImagePicker,
     private imageResizer: ImageResizer
   ) {
-    this.isWeb = ! this.platform.is('android');
+    this.isWeb = !this.platform.is('android');
     console.log('isWeb?', this.isWeb);
   }
 
@@ -39,40 +39,50 @@ export class CustomPage {
     this.imagePicker.getPictures({
       maximumImagesCount: 1
     }).then((results) => {
-      let path = results[0];
+      let path: string = results[0];
+      let filename: string;
       console.log('Got image path: ', path);
       this.filePath.resolveNativePath(path)
-        .then(filePath => {
-          console.log('filePath',filePath);
-          let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-          console.log('correctPath', correctPath);
-          let currentName = path.substring(path.lastIndexOf('/') + 1);
-          if (currentName.lastIndexOf('?') > -1) {
-            currentName = currentName.substring(0, currentName.lastIndexOf('?'));
-          }
-          console.log('currentName', currentName);
-          this.userImageSrc = this.createFileName(currentName);
-          console.log('userImageSrc=', this.userImageSrc);
-          this.copyFileToLocalDir(correctPath, currentName, this.userImageSrc);
-          console.log('this.userImageSrc', this.userImageSrc);
-          this.imageResizer.resize({
-            uri: this.userImageSrc,
+        .then(path => {
+          console.log('Resolved image path: ', path);
+          let match = path.match(/^(.+?)\/([^/]+)(\.\w+)(?:\?.*)?$/);
+          let dir: string = match[1];
+          let name: string = match[2];
+          let ext: string = match[3];
+          // let newFilename: string = new Date().getTime() + ext;
+          // console.log('###', dir, name,
+          //   this.file.dataDirectory, newFilename
+          // );
+          console.log('this.file.dataDirectory', this.file.dataDirectory);
+          return this.file.copyFile(
+            dir, name + ext,
+            this.file.dataDirectory, new Date().getTime() + ext
+          );
+        }).then((resizedFileEntry:FileEntry) => {
+          console.log('copy file rv=', resizedFileEntry);
+          return this.imageResizer.resize({
+            uri: resizedFileEntry.nativeURL, // .fullPath
             // folderName: 'Protonet',
             quality: 100,
             width: CustomPage.WIDTH,
             height: CustomPage.HEIGHT
-           } as ImageResizerOptions)
+          } as ImageResizerOptions)
+        })
+        .then((resizedFilePath) => {
+          console.log('Resize rv=', resizedFilePath);
+          this.userImageSrc = resizedFilePath;
+          console.log('Resized ', this.userImageSrc);
         }).catch(e => {
-          this.presentToast('Error resizing image: ' + e.toString());
+          console.error(e);
+          this.showError('Error resizing image: ' + e.toString());
         });
     }, (err) => {
-      this.presentToast('Error while selecting image.');
+      this.showError('Error while selecting image.');
     });
   }
 
-  private ionViewDidLoad() {
+  ionViewDidLoad() {
     if (!this.isWeb) {
-      // console.log('Android-------------------------------------------');
       if (!this.imagePicker.hasReadPermission()) {
         this.imagePicker.requestReadPermission().then(() => {
           this.androidPickImage();
@@ -83,34 +93,18 @@ export class CustomPage {
     }
   }
 
-  private presentToast(text) {
+  private showError(text) {
     this.toastCtrl.create({
       message: text,
-      duration: 5 * 60,
+      duration: 20000,
       position: 'top'
     }).present();
   }
 
-  private createFileName(currentName) {
-    let ext = currentName.match(/\.(\w+)$/)[1];
-    return new Date().getTime() + '.' + ext;
-  }
-
-  // constructor(public navCtrl: NavController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController) { }
-
-  private copyFileToLocalDir(namePath, currentName, newFileName) {
-    console.log('Enter copyFileToLocalDir');
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
-      this.lastImage = newFileName;
-    }, error => {
-      this.presentToast('Error while storing file.');
-    });
-  }
-
-  getImageFile(event) {
+  public getImageFile(event) {
     let imgBlob = event.target.files[0];
     let reader = new FileReader();
-    reader.onload = (e:Event) => {
+    reader.onload = (e: Event) => {
       this.userImageSrc = (<FileReader>e.target).result;
     };
 
