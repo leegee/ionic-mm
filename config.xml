@@ -87,4 +87,5 @@
     </plugin>
     <engine name="android" spec="~6.3.0" />
     <allow-navigation href="http://192.168.0.45:8100" />
+    <plugin name="info.protonet.imageresizer" spec="^0.1.1" />
 </widget>

@@ -1,3 +1,4 @@
+import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
@@ -50,6 +51,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     SplashScreen,
     SocialSharing,
     ImagePicker,
+    ImageResizer,
     File,
     Transfer,
     FilePath,

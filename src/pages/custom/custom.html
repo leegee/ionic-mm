@@ -4,7 +4,12 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
-  <img [hidden]="userImage" src="{{userImage}}">
+
+  <img [hidden]="!userImageSrc" src="{{userImageSrc}}">
+
+  <div [hidden]="!isWeb">
+    <input id='userImage' [hidden]='userImageSrc' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
+  </div>
+
 </ion-content>
