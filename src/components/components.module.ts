@@ -4,9 +4,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextBlockComponent } from './text-block/text-block';
 import { Meme } from './meme/meme';
+import { CustomTextComponent } from './custom-text/custom-text';
 @NgModule({
 	declarations: [
-		TextBlockComponent
+		TextBlockComponent,
+    CustomTextComponent
 	],
 	imports: [
 		CommonModule,
@@ -15,7 +17,8 @@ import { Meme } from './meme/meme';
 		IonicModule.forRoot(Meme)
 	],
 	exports: [
-		TextBlockComponent
+		TextBlockComponent,
+    CustomTextComponent
 	]
 })
 export class ComponentsModule { }

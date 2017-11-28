@@ -6,7 +6,10 @@
 
 <ion-content padding>
 
-  <img [hidden]="!userImageSrc" src="{{userImageSrc}}">
+  <div id='image-chosen' [hidden]="!userImageSrc">
+    <img src="{{userImageSrc}}">
+    <custom-text></custom-text>
+  </div>
 
   <div [hidden]="!isWeb">
     <input id='userImage' [hidden]='userImageSrc' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>

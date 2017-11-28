@@ -12,6 +12,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CustomPage } from '../pages/custom/custom';
+import { CustomTextComponent } from '../components/custom-text/custom-text';
 
 import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
@@ -25,6 +26,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
   declarations: [
     MyApp,
     TextBlockComponent,
+    CustomTextComponent,
     HomePage,
     CustomPage,
     DogePage,
