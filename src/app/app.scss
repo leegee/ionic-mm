@@ -60,3 +60,10 @@ img.meme-img {
        url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.svg#PermanentMarkerRegular') format('svg');
 }
 
+.toolbar-background,
+ion-content {
+   background-color: map-get($colors, dark) !important;
+ }
+ .toolbar-title {
+  color: map-get($colors,primary) !important;
+ }

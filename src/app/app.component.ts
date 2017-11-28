@@ -21,7 +21,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Dank Memes', component: HomePage },
+      { title: 'Dank Memes', component: HomePage},
       { title: 'Create a Meme', component: CustomPage }
     ];
 
