@@ -46,7 +46,10 @@ export class CustomPage {
           console.log('filePath',filePath);
           let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
           console.log('correctPath', correctPath);
-          let currentName = path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('?'));
+          let currentName = path.substring(path.lastIndexOf('/') + 1);
+          if (currentName.lastIndexOf('?') > -1) {
+            currentName = currentName.substring(0, currentName.lastIndexOf('?'));
+          }
           console.log('currentName', currentName);
           this.userImageSrc = this.createFileName(currentName);
           console.log('userImageSrc=', this.userImageSrc);
