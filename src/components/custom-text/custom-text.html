@@ -1,4 +1,9 @@
 <!-- Generated template for the CustomTextComponent component -->
-<div>
-  {{text}}
-</div>
+  <textarea
+    id="{{id}}"
+    style="{{style}}"
+    on-keydown='keyDown($event)'
+    on-keyup='keyUp($event)'
+    on-focus='onFocus($event)'
+  >{{text}}
+</textarea>>

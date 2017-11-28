@@ -9,8 +9,8 @@
 
 <ion-content padding>
 
-  <div id='image-chosen' [hidden]="!userImageSrc">
-    <img src="{{userImageSrc}}">
+  <div id='editable-image' [hidden]="!userImageSrc">
+    <img id='user-image' class='meme-img' src="{{userImageSrc}}">
     <custom-text></custom-text>
   </div>
 
