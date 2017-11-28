@@ -1,22 +1,29 @@
-# TODO
+Memeology
+=========
 
-- Fix text position by percentages on mobile
-- Improve per-meme text flow in CSS
+My first mobile app, first Ionic app, first Cordova experience, and first Angular 4 project.
 
-BUILD
+To Do
+-----
+
+- [ ] Fix text position by percentages on mobile
+- [ ] Improve per-meme text flow in CSS (import eCards)
+
+Build
 -----
 
     ionic serve
     ionic cordova run android --livereload
 
-BIBLIOGRAPHY
+Bibliography
 ------------
-- https://medium.com/@leetheguy/adding-fonts-to-your-ionic-1-sass-app-dfbabf20dcaf
+- [Font conversion](https://medium.com/@leetheguy/adding-fonts-to-your-ionic-1-sass-app-dfbabf20dcaf)
+- [Testing](https://leifwells.github.io/2017/08/27/testing-in-ionic-configure-existing-projects-for-testing/)
 
-ANDROID DEV
------------
+Developing on Android
+---------------------
 
-http://ionicframework.com/docs/v1/guide/installation.html
+(Ionic docs)(http://ionicframework.com/docs/v1/guide/installation.html) are a little out of date. Here is the missing info.
 
 Assuming Java, JDK, and Ant are installed with `ANT_HOME` set to the directory containing `bin/ant`, and `JAVA_HOME` is set.
 
