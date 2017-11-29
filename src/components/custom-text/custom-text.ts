@@ -12,17 +12,19 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: 'custom-text.html'
 })
 export class CustomTextComponent implements AfterViewChecked {
+
+  private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
   public id: string = "meme-text-container";
   public text: string = "Type here!";
-  private el: HTMLElement;
+  private el: HTMLInputElement;
   private running: boolean;
   private options = {
     container: null,
-    requiredLineLengthsPx: [100, 100],
+    requiredLineLengthsPx: [12, 12, 12, 12],
     selectListElement: null,
     selectListIndex: null,
     textInput: null,
-    fontSizept: 24,
+    fontSize: 12,
     leading: 8
   };
   private widthOfASpace: number;
@@ -46,8 +48,8 @@ export class CustomTextComponent implements AfterViewChecked {
 
   style() {
     return <string>this.sanitizer.bypassSecurityTrustStyle(
-      'fontSize: ' + this.options.fontSizept + 'pt; '
-      + 'lineSpacing: ' + (this.options.fontSizept + this.options.leading) + 'pt'
+      'fontSize: ' + this.options.fontSize + 'vh; '
+      + 'lineSpacing: ' + (this.options.fontSize + this.options.leading) + 'pt'
     );
   }
 
@@ -55,22 +57,18 @@ export class CustomTextComponent implements AfterViewChecked {
     console.log('Focus');
   }
 
-  keyDown(e:KeyboardEvent) {
-    this.oldTextValue = e.target.innerHTML;
-  }
-
-  keyUp(e:KeyboardEvent) {
-    console.log(e);
+  onInput(e: KeyboardEvent) {
     if (!this.running && !e.ctrlKey) {
       this.running = true;
       let caret = this.el.selectionStart;
 
-      let caretAtEnd = caret == e.target.innerHTML.length;
+      let caretAtEnd = caret == this.el.innerHTML.length;
 
-      this.oldTextValue = e.target.innerHTML;
-      this.text = this.flow(e.target.innerHTML);
+      this.oldTextValue = this.text;
+      this.text = this.flow( this.oldTextValue );
+      console.log( this.oldTextValue, this.text);
 
-      if (caretAtEnd) caret = e.target.innerHTML.length;
+      if (caretAtEnd) caret = this.el.innerHTML.length;
 
       this.el.focus();
       this.el.setSelectionRange(caret, caret);
@@ -110,17 +108,18 @@ export class CustomTextComponent implements AfterViewChecked {
     // });
 
     if (unFlowedText.match(/\s$/)) finalSpace = true;
-    let wordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
     let m;
-    while (m = wordMaybeSpace.exec(unFlowedText)) {
-      let word = m[1];
-      let space = m[2];
 
+    // Iterate over each word, including its trailing space:
+    while (m = CustomTextComponent.reWordMaybeSpace.exec(unFlowedText)) {
+      let word = m[1];
+      let trailingSpaces = m[2];
       let wordWidth = word == '' ? 0 : this.getChrWidth(word);
       line.newWidth = line.width + this.widthOfASpace + wordWidth;
 
-      // Doesn't fit?
+      // If a word was found:
       if (wordWidth) {
+        // Doesn't fit?
         if (line.newWidth > this.options.requiredLineLengthsPx[line.number - 1]) {
           // If there is space for a new line on card
           if (line.number <= this.options.requiredLineLengthsPx.length) {
@@ -139,30 +138,28 @@ export class CustomTextComponent implements AfterViewChecked {
         }
       }
 
-      // Replace space unless word ended with newline:
-      if (space
-        && line.number <= this.options.requiredLineLengthsPx.length
-      ) {
-        let lf = space.match(/[\n\n\f]/g);
-        if (lf) {
+      // If a space was found, replace it - unless previous word ended with newline:
+      if (trailingSpaces && line.number <= this.options.requiredLineLengthsPx.length) {
+        if (trailingSpaces.match(/[\n\r\f]/g)) {
           rv += line.content + "\n";
           line.content = '';
           line.width = 0;
-          line.number += 1;
+          line.number ++;
         }
         else {
-          line.width += this.widthOfASpace * space.length;
-          line.content += space;
+          line.width += this.widthOfASpace * trailingSpaces.length;
+          line.content += trailingSpaces;
         }
       }
     } // whend
 
-    // Just empty lines at the start
+    // Just empty lines at the start?
     m = unFlowedText.match(/^(\s+)/);
     let initialSpace = m ? m[1] : '';
 
-    if (line.number <= this.options.requiredLineLengthsPx.length && line.width > 0)
+    if (line.number <= this.options.requiredLineLengthsPx.length && line.width > 0){
       rv += line.content;
+    }
 
     return initialSpace + rv;
   }
@@ -170,7 +167,7 @@ export class CustomTextComponent implements AfterViewChecked {
   private getChrWidth(chrs: string) {
     let style = this.sanitizer.bypassSecurityTrustStyle(
       // fontFamily:
-      'fontSize:' + this.options.fontSizept + 'pt;' +
+      'fontSize:' + this.options.fontSize + 'vh;' +
       'position: "absolute";left: 0;top: 0'
     );
 
