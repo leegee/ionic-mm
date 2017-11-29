@@ -2,12 +2,6 @@ import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
-/**
- * Generated class for the CustomTextComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
@@ -33,7 +27,7 @@ export class CustomTextComponent implements AfterViewChecked {
   }
 
   private config: { [key: string]: any } = {
-    requiredLineLengthsPx: [3, 4, 5],
+    requiredLineLengthsPx: [10, 5, 10],
     fontSize: 5,
     leading: 0.1
   };
@@ -42,16 +36,13 @@ export class CustomTextComponent implements AfterViewChecked {
     private elRef: ElementRef,
     private sanitizer: DomSanitizer
   ) {
-    this.widthOfASpace = this.getChrWidth(' ');
-    // this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+    this.widthOfASpace = this.getChrWidth('_');
   }
 
   ngAfterViewChecked() {
-    // if (!this.el) {
-    this.el = this.elRef.nativeElement.querySelector('#' + this.id);
-    // } else {
-    // console.log('Tried to re-get an element');
-    // }
+    if (!this.el) {
+      this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+    }
   }
 
   onFocus(e) {
@@ -89,7 +80,6 @@ export class CustomTextComponent implements AfterViewChecked {
       width: 0,
       newWidth: 0
     };
-    let finalSpace = false;
 
     // unFlowedText = unFlowedText.replace(/\n/g, " ");
     unFlowedText = unFlowedText.replace(/\s+/g, " ");
@@ -103,7 +93,7 @@ export class CustomTextComponent implements AfterViewChecked {
     //   return pre + post
     // });
 
-    if (unFlowedText.match(/\s$/)) finalSpace = true;
+    // let finalSpace = unFlowedText.match(/\s$/)) ? true : false;
     let m;
 
     // Iterate over each word, including its trailing space:
@@ -113,13 +103,16 @@ export class CustomTextComponent implements AfterViewChecked {
       let wordWidth = word == '' ? 0 : this.getChrWidth(word);
       line.newWidth = line.width + this.widthOfASpace + wordWidth;
 
-      // console.log(word, wordWidth, line.newWidth);
-
       // If a word was found:
       if (wordWidth) {
         // Doesn't fit?
+        console.log(
+          'line.number: ', line.number, ' --- ',
+          line.newWidth, this.config.requiredLineLengthsPx[line.number - 1]
+        );
         if (line.newWidth > this.config.requiredLineLengthsPx[line.number - 1]) {
           // If there is space for a new line on card
+          console.log('add new line');
           if (line.number <= this.config.requiredLineLengthsPx.length) {
             rv += line.content + "\n" + word;
             line.content = '';
@@ -163,7 +156,7 @@ export class CustomTextComponent implements AfterViewChecked {
   }
 
   private getChrWidth(chrs: string) {
-    chrs = chrs.replace(/\s/g, '.');
+    chrs = chrs.replace(/\s/g, '_');
     let el = document.createElement('span');
     el.setAttribute('class', 'text');
     el.setAttribute('style',
@@ -171,15 +164,10 @@ export class CustomTextComponent implements AfterViewChecked {
       // TODO lineheight
     );
     el.innerHTML = chrs;
+    let rv = 0;
     if (this.el) { // For TS
       this.el.parentElement.appendChild(el);
-      // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements
-      // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
-      let guard = 0;
-      let rv;
-      rv = el.getBoundingClientRect();
-      console.log(chrs, el, rv);
-      rv = rv.width;
+      rv = el.getBoundingClientRect().width;
       el.outerHTML = '';
     }
     return rv;
