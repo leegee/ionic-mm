@@ -1,6 +1,8 @@
 <textarea
-    id="{{id}}"
-    style="{{style}}"
-    on-input='onInput($event)'
-    on-focus='onFocus($event)'
-  >{{text}}</textarea>>
+  id="{{id}}"
+  [style.fontSize]='fontSize'
+  [style.lineHeight]='lineHeight'
+  on-input='onInput($event)'
+  on-focus='onFocus($event)'
+  [(ngModel)]='text'
+></textarea>>

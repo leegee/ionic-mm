@@ -1,5 +1,6 @@
 import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 /**
  * Generated class for the CustomTextComponent component.
@@ -18,17 +19,24 @@ export class CustomTextComponent implements AfterViewChecked {
   public text: string = "Type here!";
   private el: HTMLInputElement;
   private running: boolean;
-  private options = {
-    container: null,
-    requiredLineLengthsPx: [12, 12, 12, 12],
-    selectListElement: null,
-    selectListIndex: null,
-    textInput: null,
-    fontSize: 12,
-    leading: 8
-  };
   private widthOfASpace: number;
   private oldTextValue: string;
+
+  private _fontSize: number;
+  get fontSize(): SafeStyle {
+    return this.sanitizer.bypassSecurityTrustStyle(this.config.fontSize + 'vh');
+  }
+
+  private _lineHeight: number;
+  get getLineHeight(): SafeStyle {
+    return this.sanitizer.bypassSecurityTrustStyle((this.config.fontSize + this.config.leading) + 'vh');
+  }
+
+  private config: { [key: string]: any } = {
+    requiredLineLengthsPx: [3, 4, 5],
+    fontSize: 5,
+    leading: 0.1
+  };
 
   constructor(
     private elRef: ElementRef,
@@ -39,18 +47,11 @@ export class CustomTextComponent implements AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if (!this.el) {
-      this.el = this.elRef.nativeElement.querySelector('#' + this.id);
-      // } else {
-      // console.log('Tried to re-get an element');
-    }
-  }
-
-  style() {
-    return <string>this.sanitizer.bypassSecurityTrustStyle(
-      'fontSize: ' + this.options.fontSize + 'vh; '
-      + 'lineSpacing: ' + (this.options.fontSize + this.options.leading) + 'pt'
-    );
+    // if (!this.el) {
+    this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+    // } else {
+    // console.log('Tried to re-get an element');
+    // }
   }
 
   onFocus(e) {
@@ -65,20 +66,15 @@ export class CustomTextComponent implements AfterViewChecked {
       let caretAtEnd = caret == this.el.innerHTML.length;
 
       this.oldTextValue = this.text;
-      this.text = this.flow( this.oldTextValue );
-      console.log( this.oldTextValue, this.text);
+      this.text = this.flow(this.oldTextValue);
 
-      if (caretAtEnd) caret = this.el.innerHTML.length;
+      if (caretAtEnd) {
+        caret = this.el.innerHTML.length;
+      }
 
       this.el.focus();
       this.el.setSelectionRange(caret, caret);
       this.el.focus();
-
-      // if (this.el.createTextRange) {
-      //   var range = this.el.createTextRange();
-      //   range.move('character', caret);
-      //   range.select();
-      // }
 
       this.running = false;
     }
@@ -117,12 +113,14 @@ export class CustomTextComponent implements AfterViewChecked {
       let wordWidth = word == '' ? 0 : this.getChrWidth(word);
       line.newWidth = line.width + this.widthOfASpace + wordWidth;
 
+      // console.log(word, wordWidth, line.newWidth);
+
       // If a word was found:
       if (wordWidth) {
         // Doesn't fit?
-        if (line.newWidth > this.options.requiredLineLengthsPx[line.number - 1]) {
+        if (line.newWidth > this.config.requiredLineLengthsPx[line.number - 1]) {
           // If there is space for a new line on card
-          if (line.number <= this.options.requiredLineLengthsPx.length) {
+          if (line.number <= this.config.requiredLineLengthsPx.length) {
             rv += line.content + "\n" + word;
             line.content = '';
             line.width = 0;
@@ -131,7 +129,7 @@ export class CustomTextComponent implements AfterViewChecked {
         }
         // Fits
         else {
-          if (line.number <= this.options.requiredLineLengthsPx.length) {
+          if (line.number <= this.config.requiredLineLengthsPx.length) {
             line.content += word;
             line.width = line.newWidth;
           }
@@ -139,12 +137,12 @@ export class CustomTextComponent implements AfterViewChecked {
       }
 
       // If a space was found, replace it - unless previous word ended with newline:
-      if (trailingSpaces && line.number <= this.options.requiredLineLengthsPx.length) {
+      if (trailingSpaces && line.number <= this.config.requiredLineLengthsPx.length) {
         if (trailingSpaces.match(/[\n\r\f]/g)) {
           rv += line.content + "\n";
           line.content = '';
           line.width = 0;
-          line.number ++;
+          line.number++;
         }
         else {
           line.width += this.widthOfASpace * trailingSpaces.length;
@@ -157,7 +155,7 @@ export class CustomTextComponent implements AfterViewChecked {
     m = unFlowedText.match(/^(\s+)/);
     let initialSpace = m ? m[1] : '';
 
-    if (line.number <= this.options.requiredLineLengthsPx.length && line.width > 0){
+    if (line.number <= this.config.requiredLineLengthsPx.length && line.width > 0) {
       rv += line.content;
     }
 
@@ -165,20 +163,25 @@ export class CustomTextComponent implements AfterViewChecked {
   }
 
   private getChrWidth(chrs: string) {
-    let style = this.sanitizer.bypassSecurityTrustStyle(
-      // fontFamily:
-      'fontSize:' + this.options.fontSize + 'vh;' +
-      'position: "absolute";left: 0;top: 0'
-    );
-
     chrs = chrs.replace(/\s/g, '.');
-    let el = document.createElement('div');
+    let el = document.createElement('span');
     el.setAttribute('class', 'text');
-    el.setAttribute('style', <string>style);
+    el.setAttribute('style',
+      'fontSize:' + this.config.fontSize + 'vh;' + 'position: "absolute";left: 0;top: 0'
+      // TODO lineheight
+    );
     el.innerHTML = chrs;
-    // document.body.appendChild(el);
-    // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements
-    // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
-    return el.getBoundingClientRect().width;
+    if (this.el) { // For TS
+      this.el.parentElement.appendChild(el);
+      // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements
+      // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
+      let guard = 0;
+      let rv;
+      rv = el.getBoundingClientRect();
+      console.log(chrs, el, rv);
+      rv = rv.width;
+      el.outerHTML = '';
+    }
+    return rv;
   }
 }
