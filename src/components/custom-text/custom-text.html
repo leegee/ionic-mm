@@ -1,7 +1,10 @@
 <textarea
-  id="{{id}}"
+  placeholder='{{placeholder}}'
+  class='meme-text-container'
   [style.fontSize]='fontSize'
   [style.lineHeight]='lineHeight'
+  [style.width]='config.cssWidth'
+  [style.height]='config.cssHeight'
   on-input='onInput($event)'
   on-focus='onFocus($event)'
   [(ngModel)]='text'

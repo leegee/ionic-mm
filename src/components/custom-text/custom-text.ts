@@ -9,8 +9,8 @@ import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitizati
 export class CustomTextComponent implements AfterViewChecked {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
-  public id: string = "meme-text-container";
-  public text: string = "Type here!";
+  public placeholder: string = "Type here";
+  public text: string = '';
   private el: HTMLInputElement;
   private running: boolean;
   private widthOfASpace: number;
@@ -22,14 +22,16 @@ export class CustomTextComponent implements AfterViewChecked {
   }
 
   private _lineHeight: number;
-  get getLineHeight(): SafeStyle {
+  get lineHeight(): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle((this.config.fontSize + this.config.leading) + 'vh');
   }
 
   private config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
     fontSize: 5,
-    leading: 0.1
+    leading: 0.1,
+    cssWidth: '100%',
+    cssHeight: '100%'
   };
 
   constructor(
@@ -41,7 +43,7 @@ export class CustomTextComponent implements AfterViewChecked {
 
   ngAfterViewChecked() {
     if (!this.el) {
-      this.el = this.elRef.nativeElement.querySelector('#' + this.id);
+      this.el = this.elRef.nativeElement.querySelector('textarea');
     }
   }
 
@@ -97,19 +99,23 @@ export class CustomTextComponent implements AfterViewChecked {
     let m;
 
     // Iterate over each word, including its trailing space:
-    while (m = CustomTextComponent.reWordMaybeSpace.exec(unFlowedText)) {
+    while ((m = CustomTextComponent.reWordMaybeSpace.exec(unFlowedText)) &&
+      line.number <= this.config.requiredLineLengthsPx.length
+    ) {
       let word = m[1];
       let trailingSpaces = m[2];
-      let wordWidth = word == '' ? 0 : this.getChrWidth(word);
+      let wordWidth = word.length === 0 ? 0 : this.getChrWidth(word);
       line.newWidth = line.width + this.widthOfASpace + wordWidth;
 
       // If a word was found:
       if (wordWidth) {
         // Doesn't fit?
         console.log(
-          'line.number: ', line.number, ' --- ',
-          line.newWidth, this.config.requiredLineLengthsPx[line.number - 1]
+          'line.number:', line.number, ' of ', this.config.requiredLineLengthsPx.length,
+          '; width:', line.newWidth,
+          '; requiredLength: ', this.config.requiredLineLengthsPx[line.number - 1]
         );
+
         if (line.newWidth > this.config.requiredLineLengthsPx[line.number - 1]) {
           // If there is space for a new line on card
           console.log('add new line');
@@ -122,15 +128,13 @@ export class CustomTextComponent implements AfterViewChecked {
         }
         // Fits
         else {
-          if (line.number <= this.config.requiredLineLengthsPx.length) {
-            line.content += word;
-            line.width = line.newWidth;
-          }
+          line.content += word;
+          line.width = line.newWidth;
         }
       }
 
       // If a space was found, replace it - unless previous word ended with newline:
-      if (trailingSpaces && line.number <= this.config.requiredLineLengthsPx.length) {
+      if (trailingSpaces) {
         if (trailingSpaces.match(/[\n\r\f]/g)) {
           rv += line.content + "\n";
           line.content = '';

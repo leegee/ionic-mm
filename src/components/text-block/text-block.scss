@@ -15,22 +15,19 @@ text-block {
       z-index: 200;
     }
     .input {
-      background: white;
+      background-color: white;
       color: black;
       border: none;
       border-bottom: 2pt solid black;
       z-index: 300;
     }
-    .input input::after {
-      content: 'Ⓧ';
-    }
   }
   input::-moz-selection {
-    background: #ddd;
+    background-color: #ddd;
     color: black;
   }
   input::selection {
-    background: #ddd;
+    background-color: #ddd;
     color: black;
   }
 }

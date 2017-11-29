@@ -1,3 +1,4 @@
+import { BatmanPage } from './../memes/batman/batman';
 import { WonkaPage } from './../memes/wonka/wonka';
 import { DogePage } from './../memes/doge/doge';
 import { SuccPage } from './../memes/succ/succ';
@@ -19,8 +20,7 @@ export class HomePage {
       SuccPage,
       WonkaPage,
       PepePage,
-      DogePage,
-      SuccPage,
+      BatmanPage
     ];
 
   }

@@ -14,6 +14,7 @@ import { HomePage } from '../pages/home/home';
 import { CustomPage } from '../pages/custom/custom';
 import { CustomTextComponent } from '../components/custom-text/custom-text';
 
+import { BatmanPage } from '../pages/memes/batman/batman';
 import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
 import { WonkaPage } from '../pages/memes/wonka/wonka';
@@ -32,7 +33,8 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     DogePage,
     WonkaPage,
     SuccPage,
-    PepePage
+    PepePage,
+    BatmanPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     DogePage,
     WonkaPage,
     SuccPage,
-    PepePage
+    PepePage,
+    BatmanPage
   ],
   providers: [
     StatusBar,

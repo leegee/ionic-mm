@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Doge</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="share()">
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
+  <div id="meme-text-container" tappable>
+    <text-block (updated)="updated($event)" text="Wow" x=5% y=2% clr='white'></text-block>
+    <text-block (updated)="updated($event)" text="Concern" x=50% y=2% clr='white'></text-block>
+  </div>
+</ion-content>
