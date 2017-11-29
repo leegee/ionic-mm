@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
@@ -8,7 +8,18 @@ import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitizati
 })
 export class CustomTextComponent implements AfterViewChecked {
 
+  @Input('width') public width: string;
+  @Input('height') public height: string;
+
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
+  private static fontScaleUnit: number = 1;
+
+  public config: { [key: string]: any } = {
+    requiredLineLengthsPx: [10, 5, 10],
+    fontSize: 5,
+    leading: 0.1
+  };
+
   public placeholder: string = "Type here";
   public text: string = '';
   private el: HTMLInputElement;
@@ -16,29 +27,14 @@ export class CustomTextComponent implements AfterViewChecked {
   private widthOfASpace: number;
   private oldTextValue: string;
 
-  private _fontSize: number;
-  get fontSize(): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle(this.config.fontSize + 'vh');
-  }
-
-  private _lineHeight: number;
-  get lineHeight(): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle((this.config.fontSize + this.config.leading) + 'vh');
-  }
-
-  private config: { [key: string]: any } = {
-    requiredLineLengthsPx: [10, 5, 10],
-    fontSize: 5,
-    leading: 0.1,
-    cssWidth: '100%',
-    cssHeight: '100%'
-  };
+  public fontSize: number;
 
   constructor(
     private elRef: ElementRef,
     private sanitizer: DomSanitizer
   ) {
     this.widthOfASpace = this.getChrWidth('_');
+    this.fontSize = this.config.fontSize;
   }
 
   ngAfterViewChecked() {
@@ -73,8 +69,8 @@ export class CustomTextComponent implements AfterViewChecked {
     }
   }
 
-  flow(unFlowedText: string) {
-    console.log('flow ', unFlowedText);
+  // Requires textbox overflow: auto;
+  flowFitIrregular(unFlowedText: string) {
     let rv = "";
     let line = {
       number: 1,
@@ -83,19 +79,7 @@ export class CustomTextComponent implements AfterViewChecked {
       newWidth: 0
     };
 
-    // unFlowedText = unFlowedText.replace(/\n/g, " ");
     unFlowedText = unFlowedText.replace(/\s+/g, " ");
-    // unFlowedText = unFlowedText.replace(/(\S+)\n(\S+)/g, function (str, pre, post) {
-    //   return pre + ' ' + post
-    // });
-    // unFlowedText = unFlowedText.replace(/(\s+)\n(\S+)/g, function (str, pre, post) {
-    //   return pre + post
-    // });
-    // unFlowedText = unFlowedText.replace(/(\S+)\n(\s+)/g, function (str, pre, post) {
-    //   return pre + post
-    // });
-
-    // let finalSpace = unFlowedText.match(/\s$/)) ? true : false;
     let m;
 
     // Iterate over each word, including its trailing space:
@@ -110,15 +94,8 @@ export class CustomTextComponent implements AfterViewChecked {
       // If a word was found:
       if (wordWidth) {
         // Doesn't fit?
-        console.log(
-          'line.number:', line.number, ' of ', this.config.requiredLineLengthsPx.length,
-          '; width:', line.newWidth,
-          '; requiredLength: ', this.config.requiredLineLengthsPx[line.number - 1]
-        );
-
         if (line.newWidth > this.config.requiredLineLengthsPx[line.number - 1]) {
           // If there is space for a new line on card
-          console.log('add new line');
           if (line.number <= this.config.requiredLineLengthsPx.length) {
             rv += line.content + "\n" + word;
             line.content = '';
@@ -175,5 +152,29 @@ export class CustomTextComponent implements AfterViewChecked {
       el.outerHTML = '';
     }
     return rv;
+  }
+
+  flow(text: string) {
+    let shrunk = false;
+    let hasHorizontalScrollbar = this.el.scrollWidth > this.el.clientWidth;
+    let hasVerticalScrollbar = this.el.scrollHeight > this.el.clientHeight;
+
+    // While text fits  bounding box, expand font size
+    // While text does not fit bounding box, contract  font size
+
+    if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
+      this.fontSize += CustomTextComponent.fontScaleUnit;
+    } else {
+      this.fontSize -= CustomTextComponent.fontScaleUnit;
+      shrunk = true;
+    }
+
+    this.el.style.fontSize = this.fontSize + 'vh';
+
+    console.log(this.fontSize, hasHorizontalScrollbar, this.width, 'x', this.height);
+
+    if (this.fontSize > 100) shrunk = true;
+
+    return shrunk ? text : this.flow(text);
   }
 }

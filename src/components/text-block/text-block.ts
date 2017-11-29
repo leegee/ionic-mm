@@ -9,7 +9,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 export class TextBlockComponent {
   private el: any;
   private elRef: ElementRef;
-  editing: boolean;
+  public editing: boolean;
   @Input('text') text: string;
   @Input('id') id: string;
   @Input('clr') clr: string;

@@ -2,6 +2,7 @@ import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TextBlockComponent } from '../text-block/text-block';
+import { ContainerSizeService } from '../../components/ContainerSizeService';
 
 export abstract class Meme implements AfterViewChecked {
   static title: string;
@@ -9,59 +10,29 @@ export abstract class Meme implements AfterViewChecked {
   private static textStyleRules = ['textAlign', 'color', 'fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
   private container: HTMLElement;
   private img: HTMLImageElement;
-  imageUrl: string;
-  width: number;
-  height: number;
-  textBlocks: { [key: string]: TextBlockComponent } = {};
+  public imageUrl: string;
+  public width: number;
+  public height: number;
+  public textBlocks: { [key: string]: TextBlockComponent } = {};
 
   public constructor(
-    private navCtrl: NavController,
-    private navParams: NavParams,
-    private elRef: ElementRef
+    // private navCtrl: NavController,
+    // private navParams: NavParams,
+    private elRef: ElementRef,
+    private containerSizeService: ContainerSizeService
   ) {
     this.elRef = elRef;
+    console.log(this.containerSizeService);
   }
 
   ngAfterViewChecked() {
-    this.img = this.elRef.nativeElement.querySelector('img');
-    this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
-
-    // https://stackoverflow.com/questions/37256745/object-fit-get-resulting-dimensions
-    function getRenderedSize(cWidth, cHeight, width, height, pos) {
-      let oRatio = width / height,
-        cRatio = cWidth / cHeight;
-      return function () {
-        if (oRatio > cRatio) {
-          this.width = cWidth;
-          this.height = cWidth / oRatio;
-        } else {
-          this.width = cHeight * oRatio;
-          this.height = cHeight;
-        }
-        this.left = (cWidth - this.width) * (pos / 100);
-        this.right = this.width + this.left;
-        return this;
-      }.call({});
+    if (!this.img) {
+      this.img = this.elRef.nativeElement.querySelector('img');
+      this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
     }
-
-    function getImgSizeInfo(img) {
-      let pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
-      return getRenderedSize(
-        img.width,
-        img.height,
-        img.naturalWidth,
-        img.naturalHeight,
-        parseInt(pos[0]));
-    }
-
-    let renderedImg = getImgSizeInfo(this.img);
-    // this.scale = {
-    //   x: renderedImg.width / DogePage.width,
-    //   y: renderedImg.height / DogePage.height
-    // };
-
-    this.container.style.width = renderedImg.width + 'px';
-    this.container.style.height = renderedImg.height + 'px';
+    let { width, height } = this.containerSizeService.containerSizeFromImg(this.img, this.container);
+    this.container.style.width = width;
+    this.container.style.height = height;
   }
 
   updated(textblock: TextBlockComponent) {
@@ -123,7 +94,7 @@ export abstract class Meme implements AfterViewChecked {
         blockStyles.fontFamily || ''
       ].join(' ');
 
-      console.log('FONT=',ctx.font);
+      console.log('FONT=', ctx.font);
 
       if (blockStyles.textAlign) {
         ctx.textAlign = blockStyles.textAlign;

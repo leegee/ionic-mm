@@ -13,6 +13,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CustomPage } from '../pages/custom/custom';
 import { CustomTextComponent } from '../components/custom-text/custom-text';
+import { ContainerSizeService } from '../components/ContainerSizeService';
 
 import { BatmanPage } from '../pages/memes/batman/batman';
 import { DogePage } from '../pages/memes/doge/doge';
@@ -52,6 +53,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     BatmanPage
   ],
   providers: [
+    ContainerSizeService,
     StatusBar,
     SplashScreen,
     SocialSharing,

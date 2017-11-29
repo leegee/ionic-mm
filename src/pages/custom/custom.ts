@@ -15,10 +15,10 @@ declare var cordova: any;
 export class CustomPage {
   private lastImage: string;
   public isWeb: boolean;
-  public userImageSrc: string;
+  public imageUrl: string;
 
-  public static WIDTH = 800;
-  public static HEIGHT = 800;
+  public width: number = 800;
+  public height: number = 800;
 
   // private imagePicker: ImagePicker;
   constructor(
@@ -58,20 +58,20 @@ export class CustomPage {
             dir, name + ext,
             this.file.dataDirectory, new Date().getTime() + ext
           );
-        }).then((resizedFileEntry:FileEntry) => {
+        }).then((resizedFileEntry: FileEntry) => {
           console.log('copy file rv=', resizedFileEntry);
           return this.imageResizer.resize({
             uri: resizedFileEntry.nativeURL, // .fullPath
             // folderName: 'Protonet',
             quality: 100,
-            width: CustomPage.WIDTH,
-            height: CustomPage.HEIGHT
+            width: this.width,
+            height: this.height
           } as ImageResizerOptions)
         })
         .then((resizedFilePath) => {
           console.log('Resize rv=', resizedFilePath);
-          this.userImageSrc = resizedFilePath;
-          console.log('Resized ', this.userImageSrc);
+          this.imageUrl = resizedFilePath;
+          console.log('Resized ', this.imageUrl);
         }).catch(e => {
           console.error(e);
           this.showError('Error resizing image: ' + e.toString());
@@ -105,7 +105,7 @@ export class CustomPage {
     let imgBlob = event.target.files[0];
     let reader = new FileReader();
     reader.onload = (e: Event) => {
-      this.userImageSrc = (<FileReader>e.target).result;
+      this.imageUrl = (<FileReader>e.target).result;
     };
 
     reader.readAsDataURL(imgBlob);

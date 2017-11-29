@@ -3,19 +3,19 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>New Meme</ion-title>
+    <ion-title>New Meme {{width}} x {{height}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <div id='editable-image' [hidden]="!userImageSrc">
-    <img id='user-image' class='meme-img' src="{{userImageSrc}}">
-    <custom-text></custom-text>
+  <div id='editable-image' [hidden]="!imageUrl">
+    <img id='userImage' class='meme-img' src="{{imageUrl}}">
+    <custom-text width={{width}} height={{height}}></custom-text>
   </div>
 
   <div [hidden]="!isWeb">
-    <input id='userImage' [hidden]='userImageSrc' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
+    <input id='userImage' [hidden]='imageUrl' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
   </div>
 
 </ion-content>

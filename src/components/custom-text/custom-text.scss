@@ -1,6 +1,7 @@
 custom-text {
-    .meme-text-container {
+    textarea.meme-text-container {
         color: black;
         z-index: 900;
+        overflow: auto;
     }
 }
