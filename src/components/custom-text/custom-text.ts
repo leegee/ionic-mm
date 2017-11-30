@@ -1,14 +1,11 @@
-import { Component, ElementRef, AfterViewChecked, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked  } from '@angular/core';
 import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent implements AfterViewChecked, OnChanges {
-
-  @Input('width') public width: string;
-  @Input('height') public height: string;
+export class CustomTextComponent {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
   private static fontScaleBy: number = 0.5;
@@ -35,15 +32,6 @@ export class CustomTextComponent implements AfterViewChecked, OnChanges {
     this.fontSize = this.config.fontSize;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.width) {
-      this.width = changes.width.currentValue;
-    }
-    if (changes.height) {
-      this.height = changes.height.currentValue;
-    }
-  }
-
   ngAfterViewChecked() {
     if (!this.el) {
       this.el = this.elRef.nativeElement.querySelector('textarea');
@@ -51,10 +39,12 @@ export class CustomTextComponent implements AfterViewChecked, OnChanges {
   }
 
   onFocus(e) {
-    console.log('Focus');
+    // this.fontSize = this.config.fontSize;
+    // this.el.style.fontSize = this.fontSize + 'vh';
+    // console.log('focus');
   }
 
-  onInput(e: KeyboardEvent) {
+  sizeText(e: KeyboardEvent) {
     if (!this.running && !e.ctrlKey) {
       this.running = true;
       let caret = this.el.selectionStart;
@@ -189,12 +179,12 @@ export class CustomTextComponent implements AfterViewChecked, OnChanges {
       }
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);
 
-    console.log(
-      "Font %s, tooBig? %s scrollbar? %s,%s, %s x %s",
-      this.fontSize, tooBig, hasHorizontalScrollbar,
-      hasVerticalScrollbar,
-      this.width, this.height
-    );
+    // console.log(
+    //   "Font %s, tooBig? %s scrollbar? %s,%s, %s x %s",
+    //   this.fontSize, tooBig, hasHorizontalScrollbar,
+    //   hasVerticalScrollbar,
+    //   this.width, this.height
+    // );
 
     return text;
   }
