@@ -23,8 +23,8 @@ export class ContainerSizeService {
         }.call({});
     }
 
-    static getImgSizeInfo(img) {
-        let pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
+    static getImgSizeInfo(img: HTMLImageElement) {
+        let pos = document.defaultView.getComputedStyle(img).getPropertyValue('object-position').split(' ');
         return ContainerSizeService.getRenderedSize(
             img.width,
             img.height,

@@ -52,11 +52,11 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
   }
 
   ngDoCheck() {
-    // setTimeout(() => {
-      let { width, height } = this.containerSizeService.containerSizeFromImg(this.img, this.container);
-      this.width = width;
-      this.height = height;
-    // }, 1);
+      if (this.img) {
+        let { width, height } = this.containerSizeService.containerSizeFromImg(this.img, this.container);
+        this.width = width;
+        this.height = height;
+      }
   }
 
   androidPickImage() {
