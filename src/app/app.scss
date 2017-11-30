@@ -13,6 +13,7 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+#meme-text-container,
 .meme-text-container {
   position: absolute;
   top: 0;
@@ -71,4 +72,7 @@ ion-content {
  }
  .toolbar-title {
   color: map-get($colors,primary) !important;
+ }
+ .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+   color: white;
  }
