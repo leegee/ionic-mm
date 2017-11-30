@@ -17,7 +17,7 @@ export class SplashPage {
   }
 
   ionViewDidEnter() {
-    let showTime = this.platform.is('android')? 2000 : 10000;
+    let showTime = this.platform.is('android')? 2000 : 0;
     this.splashScreen.hide();
     setTimeout(() => {
       this.viewCtrl.dismiss();
