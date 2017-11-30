@@ -33,7 +33,7 @@ export class ContainerSizeService {
             parseInt(pos[0]));
     }
 
-    public containerSizeFromImg(img: HTMLImageElement, container: HTMLElement) {
+    public containerSizeFromImg(img: HTMLImageElement) {
         let renderedImg = ContainerSizeService.getImgSizeInfo(img);
         // this.scale = {
         //   x: renderedImg.width / DogePage.width,

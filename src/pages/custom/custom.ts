@@ -53,9 +53,11 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
 
   ngDoCheck() {
       if (this.img) {
-        let { width, height } = this.containerSizeService.containerSizeFromImg(this.img, this.container);
+        let { width, height } = this.containerSizeService.containerSizeFromImg(this.img);
         this.width = width;
         this.height = height;
+        // this.container.style.width = width;
+        // this.container.style.height = height;
       }
   }
 
