@@ -10,12 +10,15 @@
 <ion-content padding>
 
   <div id='editable-image' [hidden]="!imageUrl">
-    <img id='userImage' class='meme-img' src="{{imageUrl}}">
-    <custom-text width={{width}} height={{height}}></custom-text>
+    <img id='meme-img' class='meme-img' src="{{imageUrl}}" width='{{width}}' height='{{height}}'>
+    <<div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'>
+      <!-- for dev: cover whole image -->
+      <custom-text width='{{width}}' height='{{height}}'></custom-text>
+    </div>
   </div>
 
   <div [hidden]="!isWeb">
-    <input id='userImage' [hidden]='imageUrl' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
+    <input id='meme-img' [hidden]='imageUrl' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
   </div>
 
 </ion-content>

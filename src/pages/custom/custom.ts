@@ -2,23 +2,27 @@ import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
-
-declare var cordova: any;
+import { ContainerSizeService } from '../../components/ContainerSizeService';
+import { AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @IonicPage()
 @Component({
   selector: 'page-custom',
   templateUrl: 'custom.html',
 })
-export class CustomPage {
-  private lastImage: string;
+export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
   public isWeb: boolean;
   public imageUrl: string;
+  public resizeWidth: number = 800;
+  public resizeHeight: number = 800;
+  public width: string = "800";
+  public height: string = "800";
 
-  public width: number = 800;
-  public height: number = 800;
+  private lastImage: string;
+  private container: HTMLElement;
+  private img: HTMLImageElement;
 
   // private imagePicker: ImagePicker;
   constructor(
@@ -29,10 +33,30 @@ export class CustomPage {
     private toastCtrl: ToastController,
     private platform: Platform,
     private imagePicker: ImagePicker,
-    private imageResizer: ImageResizer
+    private imageResizer: ImageResizer,
+    private containerSizeService: ContainerSizeService,
+    private elRef: ElementRef
   ) {
     this.isWeb = !this.platform.is('android');
     console.log('isWeb?', this.isWeb);
+  }
+
+  ngAfterViewInit() {
+    if (!this.img) {
+      this.img = this.elRef.nativeElement.querySelector('img');
+      this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
+    }
+  }
+
+  ngAfterViewChecked() {
+  }
+
+  ngDoCheck() {
+    // setTimeout(() => {
+      let { width, height } = this.containerSizeService.containerSizeFromImg(this.img, this.container);
+      this.width = width;
+      this.height = height;
+    // }, 1);
   }
 
   androidPickImage() {
@@ -41,18 +65,12 @@ export class CustomPage {
     }).then((results) => {
       let path: string = results[0];
       let filename: string;
-      console.log('Got image path: ', path);
       this.filePath.resolveNativePath(path)
         .then(path => {
-          console.log('Resolved image path: ', path);
           let match = path.match(/^(.+?)\/([^/]+)(\.\w+)(?:\?.*)?$/);
           let dir: string = match[1];
           let name: string = match[2];
           let ext: string = match[3];
-          // let newFilename: string = new Date().getTime() + ext;
-          // console.log('###', dir, name,
-          //   this.file.dataDirectory, newFilename
-          // );
           console.log('this.file.dataDirectory', this.file.dataDirectory);
           return this.file.copyFile(
             dir, name + ext,
@@ -64,14 +82,12 @@ export class CustomPage {
             uri: resizedFileEntry.nativeURL, // .fullPath
             // folderName: 'Protonet',
             quality: 100,
-            width: this.width,
-            height: this.height
+            width: this.resizeWidth,
+            height: this.resizeHeight
           } as ImageResizerOptions)
         })
         .then((resizedFilePath) => {
-          console.log('Resize rv=', resizedFilePath);
           this.imageUrl = resizedFilePath;
-          console.log('Resized ', this.imageUrl);
         }).catch(e => {
           console.error(e);
           this.showError('Error resizing image: ' + e.toString());

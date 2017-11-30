@@ -16,8 +16,8 @@ export class DogePage extends Meme {
   height: number = 450;
 
   constructor(
-    private elRef: ElementRef,
-    private containerSizeService: ContainerSizeService
+    public elRef: ElementRef,
+    public containerSizeService: ContainerSizeService
   ) {
     super(elRef, containerSizeService);
   }

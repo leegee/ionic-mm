@@ -1,0 +1,22 @@
+page-splash {
+  #splash {
+    display: table;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    background: black;
+    border-radius: 50%;
+    height: 50%;
+    width: 50%;
+    margin: 0;
+    background: radial-gradient(circle at 30% 30%, #5cabff, #000);
+  }
+  #splash span {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-family: "Comic Sans", PermanentMarkerRegular;
+    font-size: 5vh;
+    color: #FFFFFF99;
+}
+}

@@ -17,8 +17,8 @@ export class WonkaPage extends Meme {
   height: number = 545;
 
   constructor(
-    private elRef: ElementRef,
-    private containerSizeService: ContainerSizeService
+    public elRef: ElementRef,
+    public containerSizeService: ContainerSizeService
   ) {
     super(elRef, containerSizeService);
   }

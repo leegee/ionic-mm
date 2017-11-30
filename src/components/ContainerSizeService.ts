@@ -7,8 +7,8 @@ export class ContainerSizeService {
     constructor() { }
 
     static getRenderedSize(cWidth, cHeight, width, height, pos) {
-        let oRatio = width / height,
-            cRatio = cWidth / cHeight;
+        let oRatio = width / height;
+        let cRatio = cWidth / cHeight;
         return function () {
             if (oRatio > cRatio) {
                 this.width = cWidth;
@@ -17,8 +17,8 @@ export class ContainerSizeService {
                 this.width = cHeight * oRatio;
                 this.height = cHeight;
             }
-            this.left = (cWidth - this.width) * (pos / 100);
-            this.right = this.width + this.left;
+            // this.left = (cWidth - this.width) * (pos / 100);
+            // this.right = this.width + this.left;
             return this;
         }.call({});
     }
@@ -40,7 +40,7 @@ export class ContainerSizeService {
         //   y: renderedImg.height / DogePage.height
         // };
 
-        return { width: renderedImg.width + 'px', height: renderedImg.height + 'px'};
+        return { width: renderedImg.width + 'px', height: renderedImg.height + 'px' };
         // this.container.style.width = renderedImg.width + 'px';
         // this.container.style.height = renderedImg.height + 'px';
     }

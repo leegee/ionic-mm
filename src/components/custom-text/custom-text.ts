@@ -1,5 +1,4 @@
 import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
@@ -30,8 +29,7 @@ export class CustomTextComponent implements AfterViewChecked {
   public fontSize: number;
 
   constructor(
-    private elRef: ElementRef,
-    private sanitizer: DomSanitizer
+    private elRef: ElementRef
   ) {
     this.widthOfASpace = this.getChrWidth('_');
     this.fontSize = this.config.fontSize;

@@ -10,6 +10,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
+import { SplashPage } from '../pages/splash/splash';
 import { HomePage } from '../pages/home/home';
 import { CustomPage } from '../pages/custom/custom';
 import { CustomTextComponent } from '../components/custom-text/custom-text';
@@ -26,6 +27,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
 
 @NgModule({
   declarations: [
+    SplashPage,
     MyApp,
     TextBlockComponent,
     CustomTextComponent,
@@ -43,6 +45,7 @@ import { PepePage } from '../pages/memes/pepe/pepe';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    SplashPage,
     MyApp,
     HomePage,
     CustomPage,

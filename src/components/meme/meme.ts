@@ -16,13 +16,10 @@ export abstract class Meme implements AfterViewChecked {
   public textBlocks: { [key: string]: TextBlockComponent } = {};
 
   public constructor(
-    // private navCtrl: NavController,
-    // private navParams: NavParams,
-    private elRef: ElementRef,
-    private containerSizeService: ContainerSizeService
+    public elRef: ElementRef,
+    public containerSizeService: ContainerSizeService
   ) {
-    this.elRef = elRef;
-    console.log(this.containerSizeService);
+    // this.elRef = elRef;
   }
 
   ngAfterViewChecked() {
@@ -31,6 +28,7 @@ export abstract class Meme implements AfterViewChecked {
       this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
     }
     let { width, height } = this.containerSizeService.containerSizeFromImg(this.img, this.container);
+    console.log('w/h: ', width, height);
     this.container.style.width = width;
     this.container.style.height = height;
   }
