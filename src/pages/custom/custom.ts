@@ -1,8 +1,9 @@
+import { CustomTextComponent } from './../../components/custom-text/custom-text';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, SimpleChanges } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../components/ContainerSizeService';
 import { AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -10,7 +11,7 @@ import { AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core/src/meta
 @IonicPage()
 @Component({
   selector: 'page-custom',
-  templateUrl: 'custom.html',
+  templateUrl: 'custom.html'
 })
 export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
   public isWeb: boolean;
@@ -19,6 +20,7 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
   public resizeHeight: number = 800;
   public width: string = "800";
   public height: string = "800";
+  public instance: any;
 
   private lastImage: string;
   private container: HTMLElement;
@@ -37,6 +39,7 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
     private containerSizeService: ContainerSizeService,
     private elRef: ElementRef
   ) {
+    this.instance = this;
     this.isWeb = !this.platform.is('android');
     console.log('isWeb?', this.isWeb);
   }
@@ -49,16 +52,26 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
   }
 
   ngAfterViewChecked() {
+    // if (this.img) {
+    //   setTimeout( () => {this.setSizes() }, 1);
+    // }
   }
 
   ngDoCheck() {
-      if (this.img) {
-        let { width, height } = this.containerSizeService.containerSizeFromImg(this.img);
-        this.width = width;
-        this.height = height;
-        // this.container.style.width = width;
-        // this.container.style.height = height;
-      }
+    if (this.img) {
+      this.setSizes();
+    }
+  }
+
+  setSizes() {
+    let { width, height } = this.containerSizeService.containerSizeFromImg(this.img);
+    if (width !== null) {
+      this.width = width;
+      this.height = height;
+      this.container.style.width = width;
+      this.container.style.height = height;
+    }
+    console.log('Custom.ts: Container/img size: ', this.width, this.height);
   }
 
   androidPickImage() {
@@ -125,7 +138,15 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
     reader.onload = (e: Event) => {
       this.imageUrl = (<FileReader>e.target).result;
     };
-
     reader.readAsDataURL(imgBlob);
+  }
+
+  public imageOnLoad() {
+    //   console.log('Now...', this.img, this.img.width, this.img.height);
+    // Just having this 'onLoad' handler in place slows down the
+    // code enough that the image render  -- apparently and undocumented async --
+    // has completed by the time the view-updated lifecycle hook is called.
+    // However, best to do the job properly:
+    this.setSizes();
   }
 }

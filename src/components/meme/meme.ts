@@ -27,6 +27,10 @@ export abstract class Meme implements AfterViewChecked {
       this.img = this.elRef.nativeElement.querySelector('img');
       this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
     }
+    this.setContainerSize();
+  }
+
+  setContainerSize() {
     let { width, height } = this.containerSizeService.containerSizeFromImg(this.img);
     this.container.style.width = width;
     this.container.style.height = height;

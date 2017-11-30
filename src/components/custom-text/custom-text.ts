@@ -1,17 +1,17 @@
-import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent implements AfterViewChecked {
+export class CustomTextComponent implements AfterViewChecked, OnChanges {
 
   @Input('width') public width: string;
   @Input('height') public height: string;
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
-  private static fontScaleUnit: number = 1;
+  private static fontScaleBy: number = 0.5;
 
   public config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
@@ -35,6 +35,15 @@ export class CustomTextComponent implements AfterViewChecked {
     this.fontSize = this.config.fontSize;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.width) {
+      this.width = changes.width.currentValue;
+    }
+    if (changes.height) {
+      this.height = changes.height.currentValue;
+    }
+  }
+
   ngAfterViewChecked() {
     if (!this.el) {
       this.el = this.elRef.nativeElement.querySelector('textarea');
@@ -53,7 +62,7 @@ export class CustomTextComponent implements AfterViewChecked {
       let caretAtEnd = caret == this.el.innerHTML.length;
 
       this.oldTextValue = this.text;
-      this.text = this.flow(this.oldTextValue);
+      this.flow(this.oldTextValue);
 
       if (caretAtEnd) {
         caret = this.el.innerHTML.length;
@@ -67,7 +76,10 @@ export class CustomTextComponent implements AfterViewChecked {
     }
   }
 
-  // Requires textbox overflow: auto;
+  /*
+    Flow text into lines of specific lengths.
+    Requires textbox overflow: auto;
+   */
   flowFitIrregular(unFlowedText: string) {
     let rv = "";
     let line = {
@@ -131,7 +143,7 @@ export class CustomTextComponent implements AfterViewChecked {
       rv += line.content;
     }
 
-    return initialSpace + rv;
+    this.text = initialSpace + rv;
   }
 
   private getChrWidth(chrs: string) {
@@ -152,27 +164,38 @@ export class CustomTextComponent implements AfterViewChecked {
     return rv;
   }
 
-  flow(text: string) {
-    let shrunk = false;
-    let hasHorizontalScrollbar = this.el.scrollWidth > this.el.clientWidth;
-    let hasVerticalScrollbar = this.el.scrollHeight > this.el.clientHeight;
+  /* Fit text to bouds */
+  flow(text: string, tooBig?: boolean) {
+    let hasHorizontalScrollbar;
+    let hasVerticalScrollbar;
 
     // While text fits  bounding box, expand font size
+    do {
+      hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
+      hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
+      if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
+        this.fontSize += CustomTextComponent.fontScaleBy;
+        this.el.style.fontSize = this.fontSize + 'vh';
+      }
+    } while (!hasHorizontalScrollbar && !hasVerticalScrollbar);
+
     // While text does not fit bounding box, contract  font size
+    do {
+      hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
+      hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
+      if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+        this.fontSize -= CustomTextComponent.fontScaleBy;
+        this.el.style.fontSize = this.fontSize + 'vh';
+      }
+    } while (hasHorizontalScrollbar || hasVerticalScrollbar);
 
-    if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
-      this.fontSize += CustomTextComponent.fontScaleUnit;
-    } else {
-      this.fontSize -= CustomTextComponent.fontScaleUnit;
-      shrunk = true;
-    }
+    console.log(
+      "Font %s, tooBig? %s scrollbar? %s,%s, %s x %s",
+      this.fontSize, tooBig, hasHorizontalScrollbar,
+      hasVerticalScrollbar,
+      this.width, this.height
+    );
 
-    this.el.style.fontSize = this.fontSize + 'vh';
-
-    console.log(this.fontSize, hasHorizontalScrollbar, this.width, 'x', this.height);
-
-    if (this.fontSize > 100) shrunk = true;
-
-    return shrunk ? text : this.flow(text);
+    return text;
   }
 }
