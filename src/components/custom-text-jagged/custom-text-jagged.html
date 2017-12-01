@@ -1,0 +1,8 @@
+<textarea
+  class='meme-text-container'
+  [(ngModel)]='text'
+  placeholder='{{placeholder}}'
+  [style.fontSize]='fontSize + "vh"'
+  (focus)='onFocus($event)'
+  (input)='sizeText($event)'
+></textarea>>

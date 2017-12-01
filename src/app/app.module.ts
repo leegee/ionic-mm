@@ -25,12 +25,20 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PepePage } from '../pages/memes/pepe/pepe';
 
+import { CustomTextJaggedComponent } from '../components/custom-text-jagged/custom-text-jagged';
+
 @NgModule({
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
+  ],
+  bootstrap: [IonicApp],
   declarations: [
     SplashPage,
     MyApp,
     TextBlockComponent,
     CustomTextComponent,
+    CustomTextJaggedComponent,
     HomePage,
     CustomPage,
     DogePage,
@@ -39,11 +47,6 @@ import { PepePage } from '../pages/memes/pepe/pepe';
     PepePage,
     BatmanPage
   ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-  ],
-  bootstrap: [IonicApp],
   entryComponents: [
     SplashPage,
     MyApp,
