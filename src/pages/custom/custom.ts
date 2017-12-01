@@ -7,14 +7,15 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../components/ContainerSizeService';
-import { AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @IonicPage()
 @Component({
   selector: 'page-custom',
   templateUrl: 'custom.html'
 })
-export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
+export class CustomPage implements AfterViewInit, DoCheck {
+
   public isWeb: boolean;
   public imageUrl: string;
   public resizeWidth: number = 800;
@@ -50,12 +51,6 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
       this.img = this.elRef.nativeElement.querySelector('img');
       this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
     }
-  }
-
-  ngAfterViewChecked() {
-    // if (this.img) {
-    //   setTimeout( () => {this.setSizes() }, 1);
-    // }
   }
 
   ngDoCheck() {
