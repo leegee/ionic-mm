@@ -8,7 +8,7 @@ import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitizati
 export class CustomTextComponent {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
-  private static fontScaleBy: number = 0.5;
+  private static fontScaleBy: number = 0.1;
 
   public config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
