@@ -6,8 +6,8 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 To Do
 -----
 
-- [ ] Fix text position by percentages on mobile
-- [ ] Improve per-meme text flow in CSS (import eCards)
+- `custom-text` in various positions with various sizes.
+- export `custom`
 
 Build
 -----
