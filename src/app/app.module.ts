@@ -1,3 +1,4 @@
+import { PopoverPage } from './../pages/custom/PopoverPage';
 import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
@@ -39,6 +40,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     TextBlockComponent,
     CustomTextComponent,
     CustomTextJaggedComponent,
+    PopoverPage,
     HomePage,
     CustomPage,
     DogePage,
@@ -52,6 +54,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     MyApp,
     HomePage,
     CustomPage,
+    PopoverPage,
     DogePage,
     WonkaPage,
     SuccPage,

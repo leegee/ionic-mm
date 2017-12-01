@@ -108,13 +108,9 @@ export class CustomTextComponent implements AfterViewChecked {
       }
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);
 
-    // console.log(
-    //   "Font %s, scrollbar? %s,%s, %s x %s",
-    //   this.fontSize, hasHorizontalScrollbar,
-    //   hasVerticalScrollbar,
-    //   this.width, this.height
-    // );
-
-    this.text = text;
+    console.log(
+      "FLOW Font %s, h-scroll %s, v-scroll %s",
+      this.fontSize, hasHorizontalScrollbar, hasVerticalScrollbar
+    );
   }
 }

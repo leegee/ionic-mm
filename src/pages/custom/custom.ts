@@ -1,3 +1,5 @@
+import { PopoverPage } from './PopoverPage';
+import { PopoverController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
@@ -26,6 +28,7 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
 
   // private imagePicker: ImagePicker;
   constructor(
+    public popoverCtrl: PopoverController,
     public navCtrl: NavController,
     public navParams: NavParams,
     private file: File,
@@ -121,15 +124,7 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
     }
   }
 
-  private showError(text) {
-    this.toastCtrl.create({
-      message: text,
-      duration: 20000,
-      position: 'top'
-    }).present();
-  }
-
-  public getImageFile(event) {
+  getImageFile(event) {
     let imgBlob = event.target.files[0];
     let reader = new FileReader();
     reader.onload = (e: Event) => {
@@ -138,12 +133,27 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
     reader.readAsDataURL(imgBlob);
   }
 
-  public imageOnLoad() {
+  imageOnLoad() {
     //   console.log('Now...', this.img, this.img.width, this.img.height);
     // Just having this 'onLoad' handler in place slows down the
     // code enough that the image render  -- apparently and undocumented async --
     // has completed by the time the view-updated lifecycle hook is called.
     // However, best to do the job properly:
     this.setSizes();
+  }
+
+  presentPopover(event) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: event
+    });
+  }
+
+  private showError(text) {
+    this.toastCtrl.create({
+      message: text,
+      duration: 20000,
+      position: 'top'
+    }).present();
   }
 }
