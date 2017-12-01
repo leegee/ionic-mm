@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
-// @see https://stackoverflow.com/questions/37256745/object-fit-get-resulting-dimensions
+/*
+ * Return the actual displayed size of an image.
+ * @see https://stackoverflow.com/questions/37256745/object-fit-get-resulting-dimensions
+ */
 
 @Injectable()
 export class ContainerSizeService {
