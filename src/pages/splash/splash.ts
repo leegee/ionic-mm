@@ -1,6 +1,6 @@
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
+import { IonicPage, ViewController, Platform } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,11 +17,10 @@ export class SplashPage {
   }
 
   ionViewDidEnter() {
-    let showTime = this.platform.is('android')? 2000 : 0;
     this.splashScreen.hide();
-    setTimeout(() => {
+    this.platform.is('android')? setTimeout(() => {
       this.viewCtrl.dismiss();
-    }, showTime);
+    }, 2000) : this.viewCtrl.dismiss();
   }
 }
 

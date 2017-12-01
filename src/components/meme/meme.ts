@@ -1,6 +1,5 @@
 import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
 import { TextBlockComponent } from '../text-block/text-block';
 import { ContainerSizeService } from '../../components/ContainerSizeService';
 

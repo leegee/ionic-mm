@@ -1,11 +1,11 @@
-import { Component, ElementRef, AfterViewChecked  } from '@angular/core';
+import { Component  } from '@angular/core';
 import { CustomTextComponent } from '../custom-text/custom-text';
 
 @Component({
   selector: 'custom-text-jagged',
   templateUrl: 'custom-text-jagged.html'
 })
-export class CustomTextJaggedComponent extends CustomTextComponent implements AfterViewChecked {
+export class CustomTextJaggedComponent extends CustomTextComponent  {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
 
@@ -14,18 +14,6 @@ export class CustomTextJaggedComponent extends CustomTextComponent implements Af
     fontSize: 5,
     leading: 0.1
   };
-
-//   constructor(
-//     private _elRef: ElementRef
-//   ) {
-//       super(_elRef);
-//   }
-
-  ngAfterViewChecked() {
-    if (!this.el) {
-      this.el = this.elRef.nativeElement.querySelector('textarea');
-    }
-  }
 
   /*
     Flow text into lines of specific lengths.

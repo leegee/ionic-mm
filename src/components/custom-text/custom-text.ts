@@ -1,11 +1,10 @@
 import { Component, ElementRef, AfterViewChecked  } from '@angular/core';
-import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent {
+export class CustomTextComponent implements AfterViewChecked {
 
   private static fontScaleBy: number = 0.1;
 

@@ -1,9 +1,8 @@
-import { CustomTextComponent } from './../../components/custom-text/custom-text';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { Component, ElementRef, SimpleChanges } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../components/ContainerSizeService';
 import { AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -22,7 +21,6 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
   public height: string = "800";
   public instance: any;
 
-  private lastImage: string;
   private container: HTMLElement;
   private img: HTMLImageElement;
 
@@ -79,7 +77,6 @@ export class CustomPage implements AfterViewInit, AfterViewChecked, DoCheck {
       maximumImagesCount: 1
     }).then((results) => {
       let path: string = results[0];
-      let filename: string;
       this.filePath.resolveNativePath(path)
         .then(path => {
           let match = path.match(/^(.+?)\/([^/]+)(\.\w+)(?:\?.*)?$/);

@@ -1,6 +1,6 @@
 import { ContainerSizeService } from './../../../components/ContainerSizeService';
 import { Component, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 import { Meme } from '../../../components/meme/meme';
 
 @IonicPage()
