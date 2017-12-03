@@ -2,6 +2,7 @@ import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'custom-text',
@@ -24,109 +25,112 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
   protected widthOfASpace: number;
   private oldTextValue: string;
 
-constructor(
-  private MemeStyleService: MemeStyleService,
-  protected elRef: ElementRef
-) {
-  this.widthOfASpace = this.getChrWidth('_');
-  this.fontSize = this.config.fontSize;
-  this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
-    changed => {
-      console.log('SUBSCRIPTION: ', changed);
-    }
-  );
-}
-
-ngOnDestroy() {
-  // prevent memory leak when component destroyed
-  this.userSettingsSubscription.unsubscribe();
-}
-
-ngAfterViewChecked() {
-  if (!this.el) {
-    this.el = this.elRef.nativeElement.querySelector('textarea');
-  }
-  console.log('custom-text afterViewChecked style=', this.style)
-}
-
-getStyle() {
-  return this.style; // TODO Serialise
-}
-
-onFocus(e) {
-  // this.fontSize = this.config.fontSize;
-  // this.el.style.fontSize = this.fontSize + 'vh';
-  // console.log('focus');
-}
-
-sizeText(e: KeyboardEvent) {
-  if (!this.running && !e.ctrlKey) {
-    this.running = true;
-    let caret = this.el.selectionStart;
-
-    let caretAtEnd = caret == this.el.innerHTML.length;
-
-    this.oldTextValue = this.text;
-    this.flow(this.oldTextValue);
-
-    if (caretAtEnd) {
-      caret = this.el.innerHTML.length;
-    }
-
-    this.el.focus();
-    this.el.setSelectionRange(caret, caret);
-    this.el.focus();
-
-    this.running = false;
-  }
-}
-
-getChrWidth(chrs: string) {
-  let rv = 0;
-  if (this.el) { // For TS
-    chrs = chrs.replace(/\s/g, '_');
-    let el = document.createElement('span');
-    el.setAttribute('class', 'text');
-    el.setAttribute('style',
-      'fontSize:' + this.config.fontSize + 'vh;' + 'position: "absolute";left: 0;top: 0'
-      // TODO lineheight
+  constructor(
+    private MemeStyleService: MemeStyleService,
+    protected elRef: ElementRef,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.widthOfASpace = this.getChrWidth('_');
+    this.fontSize = this.config.fontSize;
+    this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
+      (changed: { [key: string]: any }) => {
+        console.log('SUBSCRIPTION: ', changed);
+        if (changed.style) {
+          this.style = changed.style;
+        }
+      }
     );
-    el.innerHTML = chrs;
-    this.el.parentElement.appendChild(el);
-    rv = el.getBoundingClientRect().width;
-    el.outerHTML = '';
   }
-  return rv;
-}
 
-/* Fit text to bouds */
-flow(text: string) {
-  let hasHorizontalScrollbar;
-  let hasVerticalScrollbar;
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.userSettingsSubscription.unsubscribe();
+  }
 
-  // While text fits  bounding box, expand font size
-  do {
-    hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
-    hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
-    if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
-      this.fontSize += CustomTextComponent.fontScaleBy;
-      this.el.style.fontSize = this.fontSize + 'vh';
+  ngAfterViewChecked() {
+    if (!this.el) {
+      this.el = this.elRef.nativeElement.querySelector('textarea');
     }
-  } while (!hasHorizontalScrollbar && !hasVerticalScrollbar);
+  }
 
-  // While text does not fit bounding box, contract  font size
-  do {
-    hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
-    hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
-    if (hasHorizontalScrollbar || hasVerticalScrollbar) {
-      this.fontSize -= CustomTextComponent.fontScaleBy;
-      this.el.style.fontSize = this.fontSize + 'vh';
+  getStyle() {
+    let styleAtrStr = '';
+    for (let rule in this.style) {
+      styleAtrStr += rule + ':' + this.style[rule] + ';';
     }
-  } while (hasHorizontalScrollbar || hasVerticalScrollbar);
+    return this.domSanitizer.bypassSecurityTrustStyle( styleAtrStr );
+  }
 
-  console.log(
-    "FLOW Font %s, h-scroll %s, v-scroll %s",
-    this.fontSize, hasHorizontalScrollbar, hasVerticalScrollbar, this.style
-  );
-}
+  onFocus(e) { }
+
+  sizeText(e: KeyboardEvent) {
+    if (!this.running && !e.ctrlKey) {
+      this.running = true;
+      let caret = this.el.selectionStart;
+
+      let caretAtEnd = caret == this.el.innerHTML.length;
+
+      this.oldTextValue = this.text;
+      this.flow(this.oldTextValue);
+
+      if (caretAtEnd) {
+        caret = this.el.innerHTML.length;
+      }
+
+      this.el.focus();
+      this.el.setSelectionRange(caret, caret);
+      this.el.focus();
+
+      this.running = false;
+    }
+  }
+
+  getChrWidth(chrs: string) {
+    let rv = 0;
+    if (this.el) { // For TS
+      chrs = chrs.replace(/\s/g, '_');
+      let el = document.createElement('span');
+      el.setAttribute('class', 'text');
+      el.setAttribute('style',
+        'fontSize:' + this.config.fontSize + 'vh;' + 'position: "absolute";left: 0;top: 0'
+        // TODO lineheight
+      );
+      el.innerHTML = chrs;
+      this.el.parentElement.appendChild(el);
+      rv = el.getBoundingClientRect().width;
+      el.outerHTML = '';
+    }
+    return rv;
+  }
+
+  /* Fit text to bouds */
+  flow(text: string) {
+    let hasHorizontalScrollbar;
+    let hasVerticalScrollbar;
+
+    // While text fits  bounding box, expand font size
+    do {
+      hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
+      hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
+      if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
+        this.fontSize += CustomTextComponent.fontScaleBy;
+        this.el.style.fontSize = this.fontSize + 'vh';
+      }
+    } while (!hasHorizontalScrollbar && !hasVerticalScrollbar);
+
+    // While text does not fit bounding box, contract  font size
+    do {
+      hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
+      hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
+      if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+        this.fontSize -= CustomTextComponent.fontScaleBy;
+        this.el.style.fontSize = this.fontSize + 'vh';
+      }
+    } while (hasHorizontalScrollbar || hasVerticalScrollbar);
+
+    console.log(
+      "FLOW Font %s, h-scroll %s, v-scroll %s",
+      this.fontSize, hasHorizontalScrollbar, hasVerticalScrollbar, this.style
+    );
+  }
 }
