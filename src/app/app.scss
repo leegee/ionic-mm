@@ -76,9 +76,9 @@ img.meme-img {
 ion-content {
    background-color: map-get($colors, dark) !important;
  }
- .toolbar-title {
+.toolbar-title {
   color: map-get($colors,primary) !important;
- }
- .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+}
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
    color: white;
- }
+}

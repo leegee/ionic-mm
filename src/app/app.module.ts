@@ -15,7 +15,8 @@ import { SplashPage } from '../pages/splash/splash';
 import { HomePage } from '../pages/home/home';
 import { CustomPage } from '../pages/custom/custom';
 import { CustomTextComponent } from '../components/custom-text/custom-text';
-import { ContainerSizeService } from '../components/ContainerSizeService';
+import { ContainerSizeService } from '../services/ContainerSizeService';
+import { MemeStyleService } from '../services/MemeStyleService';
 
 import { BatmanPage } from '../pages/memes/batman/batman';
 import { DogePage } from '../pages/memes/doge/doge';
@@ -63,6 +64,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
   ],
   providers: [
     ContainerSizeService,
+    MemeStyleService,
     StatusBar,
     SplashScreen,
     SocialSharing,

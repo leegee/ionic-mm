@@ -1,4 +1,4 @@
-import { ContainerSizeService } from './../../../components/ContainerSizeService';
+import { ContainerSizeService } from './../../../services/ContainerSizeService';
 import { Component, ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { Meme } from '../../../components/meme/meme';

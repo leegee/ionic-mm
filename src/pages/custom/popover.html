@@ -1,0 +1,27 @@
+<!-- <ion-list radio-group (ionChange)="updateRadio($event)" [(ngModel)]="textWrap">
+  <ion-list-header>Word Wrap</ion-list-header>
+
+  <ion-item>
+    <ion-label>Go</ion-label>
+    <ion-radio checked="true" value="go"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Go 2</ion-label>
+    <ion-radio checked="false" value="go2"></ion-radio>
+  </ion-item>
+
+  <button ion-item (click)="close()">Learn Ionic</button>
+</ion-list>
+-->
+
+<ion-list>
+  <ion-item>
+    <ion-label>Word wrap</ion-label>
+    <ion-toggle color='primary' [(ngModel)]="_selections.wordWrapBreakWord" (ionChange)='changed("wordWrap")'></ion-toggle>
+  </ion-item>
+</ion-list>
+
+<!--
+overflow-wrap: normal;
+overflow-wrap: break-word; -->

@@ -13,7 +13,7 @@ export class ContainerSizeService {
         cWidth: number, cHeight: number,
         width: number, height: number
     ) {
-        console.log('E:', cWidth, cHeight, width, height);
+        // console.log('E:', cWidth, cHeight, width, height);
         let oRatio = width / height;
         let cRatio = cWidth / cHeight;
         // console.log('1: ', oRatio, cRatio);

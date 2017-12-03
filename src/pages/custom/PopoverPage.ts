@@ -1,23 +1,38 @@
-import { Component } from '@angular/core';
+import { MemeStyleService } from './../../services/MemeStyleService';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 
 @Component({
-    template: `
-    <ion-list>
-      <ion-list-header>Text Options</ion-list-header>
-      <button ion-item (click)="close()">Learn Ionic</button>
-      <button ion-item (click)="close()">Documentation</button>
-      <button ion-item (click)="close()">Showcase</button>
-      <button ion-item (click)="close()">GitHub Repo</button>
-    </ion-list>
-  `
+    templateUrl: 'popover.html'
 })
 export class PopoverPage {
+
+    _selections = { wordWrapBreakWord: true };
+
     constructor(
-        public viewCtrl: ViewController
+        public viewCtrl: ViewController,
+        private MemeStyleService: MemeStyleService
     ) { }
 
     close() {
         this.viewCtrl.dismiss();
+    }
+
+    // Cheaper than ngDoCheck/etc.
+    public changed(rule) {
+        if (rule === 'wordWrap') {
+            console.log('Call MemeStyleService.set');
+            this.MemeStyleService.set(
+                {
+                    style: {
+                        wordWrap: this._selections.wordWrapBreakWord ? 'break-word' : 'normal'
+                    }
+                }
+            );
+        }
+
+        else {
+            console.warn('Unknown switch, ', rule);
+        }
     }
 }

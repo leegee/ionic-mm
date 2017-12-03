@@ -1,3 +1,5 @@
+import { MemeStyleService } from '../../services/MemeStyleService';
+import { CustomTextComponent } from './../../components/custom-text/custom-text';
 import { PopoverPage } from './PopoverPage';
 import { PopoverController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
@@ -6,7 +8,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
-import { ContainerSizeService } from '../../components/ContainerSizeService';
+import { ContainerSizeService } from '../../services/ContainerSizeService';
 import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @IonicPage()
@@ -27,7 +29,6 @@ export class CustomPage implements AfterViewInit, DoCheck {
   private container: HTMLElement;
   private img: HTMLImageElement;
 
-  // private imagePicker: ImagePicker;
   constructor(
     public popoverCtrl: PopoverController,
     public navCtrl: NavController,
@@ -39,6 +40,7 @@ export class CustomPage implements AfterViewInit, DoCheck {
     private imagePicker: ImagePicker,
     private imageResizer: ImageResizer,
     private containerSizeService: ContainerSizeService,
+    private MemeStyleService: MemeStyleService,
     private elRef: ElementRef
   ) {
     this.instance = this;
@@ -67,7 +69,6 @@ export class CustomPage implements AfterViewInit, DoCheck {
       this.container.style.width = width;
       this.container.style.height = height;
     }
-    console.log('Custom.ts: Container/img size: ', this.width, this.height);
   }
 
   androidPickImage() {
@@ -128,7 +129,7 @@ export class CustomPage implements AfterViewInit, DoCheck {
     reader.readAsDataURL(imgBlob);
   }
 
-  imageOnLoad() {
+  onImageLoad() {
     //   console.log('Now...', this.img, this.img.width, this.img.height);
     // Just having this 'onLoad' handler in place slows down the
     // code enough that the image render  -- apparently and undocumented async --
@@ -151,4 +152,5 @@ export class CustomPage implements AfterViewInit, DoCheck {
       position: 'top'
     }).present();
   }
+
 }

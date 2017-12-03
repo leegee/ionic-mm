@@ -15,6 +15,7 @@ export class CustomTextJaggedComponent extends CustomTextComponent  {
     leading: 0.1
   };
 
+
   /*
     Flow text into lines of specific lengths.
     Requires textbox overflow: auto;

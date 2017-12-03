@@ -1,7 +1,7 @@
 import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked } from '@angular/core';
 import { TextBlockComponent } from '../text-block/text-block';
-import { ContainerSizeService } from '../../components/ContainerSizeService';
+import { ContainerSizeService } from '../../services/ContainerSizeService';
 
 export abstract class Meme implements AfterViewChecked {
   static title: string;
