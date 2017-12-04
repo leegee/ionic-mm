@@ -1,4 +1,4 @@
-import { StylePopoverPage } from './../../pages/custom/StylePopoverPage';
+import { StylePopoverPage } from './../../pages/custom/style-popover';
 import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
