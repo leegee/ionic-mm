@@ -18,7 +18,12 @@
 <ion-list>
   <ion-item>
     <ion-label>Word wrap</ion-label>
-    <ion-toggle color='primary' [(ngModel)]="_selections.wordWrapBreakWord" (ionChange)='changed("wordWrap")'></ion-toggle>
+    <ion-toggle color='secondary' [(ngModel)]="selections['word-wrap']" (ionChange)='onChange()'></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Overflow wrap</ion-label>
+    <ion-toggle color='secondary' [(ngModel)]="selections['overflow-wrap']" (ionChange)='onChange()'></ion-toggle>
   </ion-item>
 </ion-list>
 

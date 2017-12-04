@@ -28,6 +28,10 @@ export class CustomPage implements AfterViewInit, DoCheck {
 
   private container: HTMLElement;
   private img: HTMLImageElement;
+  private memeStyles = {
+    'word-wrap': 'break-word',
+    'overflow-wrap': 'break-word'
+  };
 
   constructor(
     public popoverCtrl: PopoverController,
@@ -139,7 +143,7 @@ export class CustomPage implements AfterViewInit, DoCheck {
   }
 
   presentPopover(event) {
-    let popover = this.popoverCtrl.create(PopoverPage);
+    let popover = this.popoverCtrl.create(PopoverPage, {state: this.memeStyles});
     popover.present({
       ev: event
     });

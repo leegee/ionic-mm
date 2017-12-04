@@ -54,10 +54,11 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
   }
 
   getStyle() {
-    let styleAtrStr = '';
+    let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
     for (let rule in this.style) {
       styleAtrStr += rule + ':' + this.style[rule] + ';';
     }
+    console.log('getStyle: ', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle( styleAtrStr );
   }
 
