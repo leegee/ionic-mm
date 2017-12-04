@@ -1,3 +1,4 @@
+import { StylePopoverPage } from './../../pages/custom/StylePopoverPage';
 import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
@@ -19,7 +20,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
   public placeholder: string = "Type here";
   public text: string = '';
   public fontSize: number;
-  private style = {};
+  private style: {};
   protected el: HTMLInputElement;
   private running: boolean;
   protected widthOfASpace: number;
@@ -37,6 +38,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
          this.style = Object.assign( this.style, changed );
         }
     );
+    this.style = StylePopoverPage.initialState;
   }
 
   ngOnDestroy() {

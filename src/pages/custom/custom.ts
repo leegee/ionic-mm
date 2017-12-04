@@ -45,7 +45,6 @@ export class CustomPage implements AfterViewInit, DoCheck {
   ) {
     this.instance = this;
     this.isWeb = !this.platform.is('android');
-    console.log('isWeb?', this.isWeb);
   }
 
   ngAfterViewInit() {

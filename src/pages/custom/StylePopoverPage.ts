@@ -6,8 +6,9 @@ import { ViewController, NavParams } from 'ionic-angular';
     templateUrl: 'stylepopover.html'
 })
 export class StylePopoverPage {
-    public selections: {} = {};
-    private state = {
+    public selections = {};
+    private state = {};
+    public static initialState = {
         'word-wrap': 'break-word',
         'overflow-wrap': 'break-word',
         'white-space': 'nowrap' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
@@ -18,7 +19,7 @@ export class StylePopoverPage {
         public navParams: NavParams,
         private MemeStyleService: MemeStyleService,
     ) {
-        this.state = this.navParams.get('state');
+        this.state = StylePopoverPage.initialState;
         this.state2selections();
         // Notify of initial state:
         this.onChange();
@@ -53,8 +54,7 @@ export class StylePopoverPage {
     }
 
     public onChange() {
-        this.MemeStyleService.set(
-            this.selections2state()
-        );
+        let newState = this.selections2state();
+        this.MemeStyleService.set( newState );
     }
 }
