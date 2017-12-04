@@ -15,23 +15,19 @@ export class MemeStyleService {
     private changeSource = new Subject();
     public changeAnnounced$ = this.changeSource.asObservable();
 
-    private static _defaultSettings = {
-        style: {
-            wordWrap: 'break-word'
-        }
-    };
+    private static _defaultState = {};
 
-    private _settings = MemeStyleService._defaultSettings;
+    private _state = MemeStyleService._defaultState;
 
     constructor() { }
 
     public set(model) {
         console.log('EditableStyleService.set ', model);
-        this._settings = Object.assign(
-            this._settings,
+        this._state = Object.assign(
+            this._state,
             model
         );
-        this.changeSource.next( this._settings );
+        this.changeSource.next( this._state );
     }
 }
 

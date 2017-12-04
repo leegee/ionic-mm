@@ -16,6 +16,8 @@ export class PopoverPage {
     ) {
         this.state = this.navParams.get('state');
         this.state2selections();
+        // Notify of initial state:
+        this.onChange();
     };
 
     close() {

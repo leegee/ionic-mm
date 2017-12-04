@@ -19,7 +19,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
   public placeholder: string = "Type here";
   public text: string = '';
   public fontSize: number;
-  private style;
+  private style = {};
   protected el: HTMLInputElement;
   private running: boolean;
   protected widthOfASpace: number;
@@ -30,20 +30,16 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
     protected elRef: ElementRef,
     private domSanitizer: DomSanitizer
   ) {
-    this.widthOfASpace = this.getChrWidth('_');
     this.fontSize = this.config.fontSize;
+    this.widthOfASpace = this.getChrWidth('_');
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
-        console.log('SUBSCRIPTION: ', changed);
-        if (changed.style) {
-          this.style = changed.style;
+         this.style = Object.assign( this.style, changed );
         }
-      }
     );
   }
 
   ngOnDestroy() {
-    // prevent memory leak when component destroyed
     this.userSettingsSubscription.unsubscribe();
   }
 
