@@ -10,24 +10,24 @@ import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
 import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Meme } from '../../components/meme/meme';
 
 @IonicPage()
 @Component({
   selector: 'page-custom',
   templateUrl: 'custom.html'
 })
-export class CustomPage implements AfterViewInit, DoCheck {
+export class CustomPage extends Meme implements AfterViewInit, DoCheck {
 
   public isWeb: boolean;
   public imageUrl: string;
   public resizeWidth: number = 800;
   public resizeHeight: number = 800;
-  public width: string = "800";
-  public height: string = "800";
-  public instance: any;
 
-  private container: HTMLElement;
-  private img: HTMLImageElement;
+  // public width: string = "800";
+  // public height: string = "800";
+  // private container: HTMLElement;
+  // private img: HTMLImageElement;
 
   constructor(
     public popoverCtrl: PopoverController,
@@ -39,11 +39,11 @@ export class CustomPage implements AfterViewInit, DoCheck {
     private platform: Platform,
     private imagePicker: ImagePicker,
     private imageResizer: ImageResizer,
-    private containerSizeService: ContainerSizeService,
+    protected containerSizeService: ContainerSizeService,
     private MemeStyleService: MemeStyleService,
-    private elRef: ElementRef
+    protected elRef: ElementRef
   ) {
-    this.instance = this;
+    super(elRef, containerSizeService);
     this.isWeb = !this.platform.is('android');
   }
 

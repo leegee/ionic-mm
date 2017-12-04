@@ -7,18 +7,17 @@ export abstract class Meme implements AfterViewChecked {
   static title: string;
   static thumbnailUrl: string;
   private static textStyleRules = ['textAlign', 'color', 'fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
-  private container: HTMLElement;
-  private img: HTMLImageElement;
+  protected container: HTMLElement;
+  protected img: HTMLImageElement;
   public imageUrl: string;
   public width: number;
   public height: number;
   public textBlocks: { [key: string]: TextBlockComponent } = {};
 
   public constructor(
-    public elRef: ElementRef,
-    public containerSizeService: ContainerSizeService
+    protected elRef: ElementRef,
+    protected containerSizeService: ContainerSizeService
   ) {
-    // this.elRef = elRef;
   }
 
   ngAfterViewChecked() {
