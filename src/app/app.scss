@@ -82,3 +82,7 @@ ion-content {
 .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
    color: white;
 }
+
+page-home ion-content .item-inner {
+  padding-right:0 !important;
+}
