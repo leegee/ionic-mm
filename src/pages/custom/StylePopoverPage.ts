@@ -3,11 +3,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';
 
 @Component({
-    templateUrl: 'popover.html'
+    templateUrl: 'stylepopover.html'
 })
-export class PopoverPage {
+export class StylePopoverPage {
     public selections: {} = {};
-    private state: {};
+    private state = {
+        'word-wrap': 'break-word',
+        'overflow-wrap': 'break-word',
+        'white-space': 'nowrap' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+    };
 
     constructor(
         public viewCtrl: ViewController,
@@ -27,7 +31,10 @@ export class PopoverPage {
     private state2selections() {
         for (let rule in this.state) {
             if (rule === 'word-wrap' || rule === 'overflow-wrap') {
-                this.selections[rule] = this.state[rule] === 'break-word'? true : false;
+                this.selections[rule] = this.state[rule] === 'break-word' ? true : false;
+            }
+            else if (rule === 'white-space') {
+                this.selections[rule] = this.state[rule] === 'no-wrap' ? true : false;
             }
         }
     }
@@ -37,6 +44,9 @@ export class PopoverPage {
         for (let rule in this.selections) {
             if (rule === 'word-wrap' || rule === 'overflow-wrap') {
                 newState[rule] = this.selections[rule] ? 'break-word' : 'normal';
+            }
+            else if (rule === 'white-space') {
+                newState[rule] = this.selections[rule] ? 'nowrap' : 'normal';
             }
         }
         return newState;

@@ -2,13 +2,13 @@ import { CustomTextComponent } from './../../components/custom-text/custom-text'
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CustomPage } from './custom';
-import { PopoverPage } from './PopoverPage';
+import { StylePopoverPage } from './StylePopoverPage';
 
 @NgModule({
   declarations: [
     CustomPage,
     CustomTextComponent,
-    PopoverPage
+    StylePopoverPage
   ],
   imports: [
     IonicPageModule.forChild(CustomPage)

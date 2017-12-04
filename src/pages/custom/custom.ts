@@ -1,6 +1,6 @@
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { CustomTextComponent } from './../../components/custom-text/custom-text';
-import { PopoverPage } from './PopoverPage';
+import { StylePopoverPage } from './StylePopoverPage';
 import { PopoverController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
@@ -28,10 +28,6 @@ export class CustomPage implements AfterViewInit, DoCheck {
 
   private container: HTMLElement;
   private img: HTMLImageElement;
-  private memeStyles = {
-    'word-wrap': 'break-word',
-    'overflow-wrap': 'break-word'
-  };
 
   constructor(
     public popoverCtrl: PopoverController,
@@ -143,7 +139,7 @@ export class CustomPage implements AfterViewInit, DoCheck {
   }
 
   presentPopover(event) {
-    let popover = this.popoverCtrl.create(PopoverPage, {state: this.memeStyles});
+    let popover = this.popoverCtrl.create(StylePopoverPage, {});
     popover.present({
       ev: event
     });
