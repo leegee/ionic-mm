@@ -82,10 +82,16 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
       this.el.focus();
       this.el.setSelectionRange(caret, caret);
       this.el.focus();
-
       setTimeout(
         () => {
           this.running = false;
+        }, CustomTextComponent.DEBOUNCE_DELAY_MS
+      );
+    }
+
+    else {
+      setTimeout(
+        () => {
           this.sizeText(e);
         }, CustomTextComponent.DEBOUNCE_DELAY_MS
       );

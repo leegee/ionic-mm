@@ -77,10 +77,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
       let path: string = results[0];
       this.filePath.resolveNativePath(path)
         .then(path => {
-          let match = path.match(/^(.+?)\/([^/]+)(\.\w+)(?:\?.*)?$/);
-          let dir: string = match[1];
-          let name: string = match[2];
-          let ext: string = match[3];
+          let [, dir, name, ext] = path.match(/^(.+?)\/([^/]+)(\.\w+)(?:\?.*)?$/);
           console.log('this.file.dataDirectory', this.file.dataDirectory);
           return this.file.copyFile(
             dir, name + ext,
