@@ -1,4 +1,4 @@
-import { StylePopoverPage } from './../pages/custom/StylePopoverPage';
+import { StylePopoverPage } from './../pages/custom/style-popover';
 import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
@@ -22,6 +22,7 @@ import { BatmanPage } from '../pages/memes/batman/batman';
 import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
 import { WonkaPage } from '../pages/memes/wonka/wonka';
+import { ExpandingConsciousness } from '../pages/memes/expanding-consciousness/expanding-consciousness';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -48,6 +49,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     WonkaPage,
     SuccPage,
     PepePage,
+    ExpandingConsciousness,
     BatmanPage
   ],
   entryComponents: [
@@ -60,6 +62,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     WonkaPage,
     SuccPage,
     PepePage,
+    ExpandingConsciousness,
     BatmanPage
   ],
   providers: [

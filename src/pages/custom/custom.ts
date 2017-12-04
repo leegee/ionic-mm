@@ -1,6 +1,6 @@
 // import { MemeStyleService } from '../../services/MemeStyleService';
 // import { CustomTextComponent } from './../../components/custom-text/custom-text';
-import { StylePopoverPage } from './StylePopoverPage';
+import { StylePopoverPage } from './style-popover';
 import { PopoverController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
