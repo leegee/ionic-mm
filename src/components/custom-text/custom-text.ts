@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: 'custom-text.html'
 })
 export class CustomTextComponent implements AfterViewChecked, OnDestroy {
-  private static fontScaleBy: number = 0.1;
+  private static fontScaleBy: number = 0.05;
   public userSettingsSubscription: Subscription;
   public config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
