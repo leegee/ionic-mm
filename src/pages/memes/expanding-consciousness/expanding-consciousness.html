@@ -9,13 +9,20 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content  >
   <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
-  <!-- (click)="setAnchor($event.offsetX, $event.offsetY)" -->
   <div id="meme-text-container" tappable>
-    <text-block (updated)="updated($event)" text="...your text..." x=0.5% y=2%></text-block>
-    <text-block (updated)="updated($event)" text="..." x=0.5% y=27% bx=49% by=49%></text-block>
-    <text-block (updated)="updated($event)" text="..." x=0.5% y=50% ></text-block>
-    <text-block (updated)="updated($event)" text="..." x=0.5% y=76%></text-block>
+    <div style='position:absolute; top: 1vh; left: 1vh; height: 20vh; width: 47%; background:#dddddddd'>
+      <custom-text></custom-text>
+    </div>
+    <div style='position:absolute; top: 23vh; left: 1vh; height: 20.5vh; width: 47%; background:#dddddddd'>
+      <custom-text></custom-text>
+    </div>
+    <div style='position:absolute; top: 46vh; left: 1vh; height: 18.5vh; width: 47%; background:#dddddddd'>
+      <custom-text></custom-text>
+    </div>
+    <div style='position:absolute; top: 68vh; left: 1vh; height: 18.5vh; width: 47%; background:#dddddddd'>
+      <custom-text></custom-text>
+    </div>
   </div>
 </ion-content>

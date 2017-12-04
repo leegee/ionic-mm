@@ -12,6 +12,6 @@
 <ion-content padding>
   <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
   <div id="meme-text-container" tappable>
-    <text-block text="Yol no know" x=55% y=80% clr='black'></text-block>
+    <text-block text="Yol no know" x=55% y=80% clr='black' (updated)="updated($event)"></text-block>
   </div>
 </ion-content>

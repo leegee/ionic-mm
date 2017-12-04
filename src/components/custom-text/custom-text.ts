@@ -1,5 +1,5 @@
 import { StylePopoverPage } from './../../pages/custom/style-popover';
-import { Component, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked, EventEmitter, Output } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -10,8 +10,12 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: 'custom-text.html'
 })
 export class CustomTextComponent implements AfterViewChecked, OnDestroy {
+
+  @Output() updated: EventEmitter<CustomTextComponent> = new EventEmitter<CustomTextComponent>();
+
   private static FONT_SCALE_BY: number = 0.05;
   private static DEBOUNCE_DELAY_MS = 333;
+  public id: string;
   public userSettingsSubscription: Subscription;
   public config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
@@ -51,6 +55,10 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
     if (!this.el) {
       this.el = this.elRef.nativeElement.querySelector('textarea');
     }
+    // Can only set an ID when we have the necessary data from the template
+    if (this.id === undefined) {
+      this.id = 'custom-text-block-' + new Date().getTime(); // + Math.random().toString().substring(0,2);
+    }
   }
 
   getStyle() {
@@ -58,7 +66,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
     for (let rule in this.style) {
       styleAtrStr += rule + ':' + this.style[rule] + ';';
     }
-    console.log('getStyle: ', styleAtrStr);
+    // console.log('getStyle: ', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
@@ -140,10 +148,12 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
         this.el.style.fontSize = this.fontSize + 'vh';
       }
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);
-
-    console.log(
-      "FLOW Font %s, h-scroll %s, v-scroll %s",
-      this.fontSize, hasHorizontalScrollbar, hasVerticalScrollbar, this.style
-    );
   }
+
+  onUpdated() {
+    // The blur event is missing in Ionic since at least July 2017
+     // TODO Don't blur if user touched the input box
+     this.updated.emit(this);
+   }
+
 }

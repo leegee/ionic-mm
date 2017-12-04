@@ -5,6 +5,5 @@
   [style]='getStyle()'
   (focus)='onFocus($event)'
   (blur)='sizeText($event)'
-  (input)='sizeText($event)'
-></textarea>>
-  <!-- [style.fontSize]='fontSize + "vh"' -->
+  (input)='sizeText($event); onUpdated($event)'
+></textarea>

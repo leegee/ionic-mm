@@ -2,6 +2,7 @@ import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked } from '@angular/core';
 import { TextBlockComponent } from '../text-block/text-block';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
+import { CustomTextComponent } from '../custom-text/custom-text';
 
 export abstract class Meme implements AfterViewChecked {
   static title: string;
@@ -12,7 +13,7 @@ export abstract class Meme implements AfterViewChecked {
   public imageUrl: string;
   public width: number;
   public height: number;
-  public textBlocks: { [key: string]: TextBlockComponent } = {};
+  public textBlocks: { [key: string]: TextBlockComponent|CustomTextComponent } = {};
 
   public constructor(
     protected elRef: ElementRef,
@@ -34,7 +35,8 @@ export abstract class Meme implements AfterViewChecked {
     this.container.style.height = height;
   }
 
-  updated(textblock: TextBlockComponent) {
+  updated(textblock: TextBlockComponent|CustomTextComponent) {
+    console.log('meme updated!');
     this.textBlocks[textblock.id] = textblock;
   }
 
@@ -48,6 +50,7 @@ export abstract class Meme implements AfterViewChecked {
     img.src = this.img.src;
 
     let getStyles = (textBlock) => {
+      console.log( this.container, "\n", textBlock);
       let textBlockStyle = Object.assign(
         {},
         document.defaultView.getComputedStyle(this.container),
