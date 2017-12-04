@@ -43,12 +43,6 @@ export abstract class Meme implements AfterViewChecked {
     Shareable.share(img);
   }
 
-  // getStyles() {
-  //   return this.fontWeight + ' '
-  //     + this.fontSize + '/' + this.lineHeight + ' '
-  //     + this.fontFamily;
-  // }
-
   base64memeImage() {
     let img: HTMLImageElement = new Image(this.width, this.height);
     img.src = this.img.src;

@@ -4,7 +4,10 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>New Meme {{width}} x {{height}}</ion-title>
-    <ion-buttons end  [hidden]="!imageUrl">
+    <ion-buttons end [hidden]="!imageUrl">
+      <button ion-button icon-only (click)="share()">
+        <ion-icon name="share"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -16,7 +19,7 @@
 
   <div id='editable-image' [hidden]="!imageUrl">
     <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
-      <<div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'>
+    <div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'>
       <!-- for dev: cover whole image -->
       <custom-text></custom-text>
     </div>

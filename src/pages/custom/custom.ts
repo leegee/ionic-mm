@@ -1,5 +1,5 @@
-import { MemeStyleService } from '../../services/MemeStyleService';
-import { CustomTextComponent } from './../../components/custom-text/custom-text';
+// import { MemeStyleService } from '../../services/MemeStyleService';
+// import { CustomTextComponent } from './../../components/custom-text/custom-text';
 import { StylePopoverPage } from './StylePopoverPage';
 import { PopoverController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
@@ -40,7 +40,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     private imagePicker: ImagePicker,
     private imageResizer: ImageResizer,
     protected containerSizeService: ContainerSizeService,
-    private MemeStyleService: MemeStyleService,
+    // private memeStyleService: MemeStyleService,
     protected elRef: ElementRef
   ) {
     super(elRef, containerSizeService);
@@ -61,12 +61,12 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
   }
 
   setSizes() {
-    let { width, height } = this.containerSizeService.containerSizeFromImg(this.img);
-    if (width !== null) {
-      this.width = width;
-      this.height = height;
-      this.container.style.width = width;
-      this.container.style.height = height;
+    let sizes = this.containerSizeService.containerSizeFromImg(this.img);
+    if (sizes.width !== null) {
+      this.width = sizes.widthNumber;
+      this.height = sizes.heightNumber;
+      this.container.style.width = sizes.width;
+      this.container.style.height = sizes.height;
     }
   }
 

@@ -11,7 +11,7 @@ export class StylePopoverPage {
     public static initialState = {
         'word-wrap': 'break-word',
         'overflow-wrap': 'break-word',
-        'white-space': 'nowrap' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+        'white-space': 'noraml' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
     };
 
     constructor(

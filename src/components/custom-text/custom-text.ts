@@ -10,7 +10,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: 'custom-text.html'
 })
 export class CustomTextComponent implements AfterViewChecked, OnDestroy {
-  private static fontScaleBy: number = 0.05;
+  private static FONT_SCALE_BY: number = 0.05;
+  private static DEBOUNCE_DELAY_MS = 333;
   public userSettingsSubscription: Subscription;
   public config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
@@ -35,8 +36,9 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
     this.widthOfASpace = this.getChrWidth('_');
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
-         this.style = Object.assign( this.style, changed );
-        }
+        this.style = Object.assign(this.style, changed);
+        this.sizeText();
+      }
     );
     this.style = StylePopoverPage.initialState;
   }
@@ -57,13 +59,14 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
       styleAtrStr += rule + ':' + this.style[rule] + ';';
     }
     console.log('getStyle: ', styleAtrStr);
-    return this.domSanitizer.bypassSecurityTrustStyle( styleAtrStr );
+    return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
   onFocus(e) { }
 
-  sizeText(e: KeyboardEvent) {
-    if (!this.running && !e.ctrlKey) {
+  sizeText(e?: KeyboardEvent) {
+    let noModifierKey = !e || !e.ctrlKey;
+    if (!this.running && noModifierKey) {
       this.running = true;
       let caret = this.el.selectionStart;
 
@@ -80,7 +83,12 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
       this.el.setSelectionRange(caret, caret);
       this.el.focus();
 
-      this.running = false;
+      setTimeout(
+        () => {
+          this.running = false;
+          this.sizeText(e);
+        }, CustomTextComponent.DEBOUNCE_DELAY_MS
+      );
     }
   }
 
@@ -112,7 +120,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
       hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
       hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
       if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
-        this.fontSize += CustomTextComponent.fontScaleBy;
+        this.fontSize += CustomTextComponent.FONT_SCALE_BY;
         this.el.style.fontSize = this.fontSize + 'vh';
       }
     } while (!hasHorizontalScrollbar && !hasVerticalScrollbar);
@@ -122,7 +130,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
       hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
       hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
       if (hasHorizontalScrollbar || hasVerticalScrollbar) {
-        this.fontSize -= CustomTextComponent.fontScaleBy;
+        this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
         this.el.style.fontSize = this.fontSize + 'vh';
       }
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);

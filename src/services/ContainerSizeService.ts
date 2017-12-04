@@ -47,10 +47,14 @@ export class ContainerSizeService {
 
         return Number(renderedImg.width) ? {
             width: renderedImg.width + 'px',
-            height: renderedImg.height + 'px'
+            height: renderedImg.height + 'px',
+            widthNumber: renderedImg.width,
+            heightNumber: renderedImg.height
         } : {
                 width: null,
-                height: null
+                height: null,
+                widthNumber: null,
+                heightNumber: null
             };
     }
 }
