@@ -1,19 +1,23 @@
 import { Shareable } from './../shareable';
-import { ElementRef, AfterViewChecked } from '@angular/core';
-import { TextBlockComponent } from '../text-block/text-block';
+import { ElementRef, AfterViewChecked, QueryList, ViewChildren } from '@angular/core';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
+import { TextBlockComponent } from '../text-block/text-block';
 import { CustomTextComponent } from '../custom-text/custom-text';
+import { TextBlockInterface } from '../text-block-interface';
 
 export abstract class Meme implements AfterViewChecked {
+
+  @ViewChildren('textinput') textBlocks: QueryList<TextBlockInterface>;
+
   static title: string;
   static thumbnailUrl: string;
-  private static textStyleRules = ['textAlign', 'color', 'fontSize', 'fontFamily', 'fontWeight', 'lineHeight'];
+  private static textStyleRules = ['textAlign', 'color', 'fontSize', 'fontFamily', 'fontWeight', 'lineHeight', 'position', 'left', 'top', 'bottom', 'right'];
   protected container: HTMLElement;
   protected img: HTMLImageElement;
   public imageUrl: string;
   public width: number;
   public height: number;
-  public textBlocks: { [key: string]: TextBlockComponent|CustomTextComponent } = {};
+  // public textBlocks: { [key: string]: TextBlockComponent | CustomTextComponent } = {};
 
   public constructor(
     protected elRef: ElementRef,
@@ -35,43 +39,44 @@ export abstract class Meme implements AfterViewChecked {
     this.container.style.height = height;
   }
 
-  updated(textblock: TextBlockComponent|CustomTextComponent) {
-    console.log('meme updated!');
-    this.textBlocks[textblock.id] = textblock;
-  }
+  // updated(textblock: TextBlockComponent | CustomTextComponent) {
+  //   console.log('meme updated!');
+  //   this.textBlocks[textblock.id] = textblock;
+  // }
 
   share() {
-    let img = this.base64memeImage();
+    console.log('SHARE ', this.textBlocks, "\n---------------------");
+    let img = this._base64memeImage();
     Shareable.share(img);
   }
 
-  base64memeImage() {
+  private _getStyles = (textBlock: TextBlockInterface) => {
+    console.log(this.container, "\n", textBlock);
+    let textBlockStyle = Object.assign(
+      {},
+      document.defaultView.getComputedStyle(this.container),
+      document.defaultView.getComputedStyle(textBlock.getElement()),
+    );
+    let rv = Object.keys(textBlockStyle)
+      .filter(ruleName => Meme.textStyleRules.some(
+        wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
+      )
+      ).reduce((styles, ruleName) => {
+        styles[ruleName] = textBlockStyle[ruleName];
+        return styles;
+      }, {}
+      );
+    return rv;
+  };
+
+  private _literal(pc, xy) {
+    let integer = pc.match(/^(\d+)/)[1];
+    return integer * (xy / 100);
+  }
+
+  private _base64memeImage() {
     let img: HTMLImageElement = new Image(this.width, this.height);
     img.src = this.img.src;
-
-    let getStyles = (textBlock) => {
-      console.log( this.container, "\n", textBlock);
-      let textBlockStyle = Object.assign(
-        {},
-        document.defaultView.getComputedStyle(this.container),
-        document.defaultView.getComputedStyle(textBlock.el),
-      );
-      let rv = Object.keys(textBlockStyle)
-        .filter(ruleName => Meme.textStyleRules.some(
-          wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
-        )
-        ).reduce((styles, ruleName) => {
-          styles[ruleName] = textBlockStyle[ruleName];
-          return styles;
-        }, {}
-        );
-      return rv;
-    };
-
-    function literal(pc, xy) {
-      let integer = pc.match(/^(\d+)/)[1];
-      return integer * (xy / 100);
-    }
 
     let canvas = document.createElement("canvas");
     canvas.id = "screenshot-canvas";
@@ -82,28 +87,25 @@ export abstract class Meme implements AfterViewChecked {
     ctx.canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
 
-    for (let id in this.textBlocks) {
-      let blockStyles: { [key: string]: string } = getStyles(this.textBlocks[id]);
+    this.textBlocks.forEach( (textBlock) => {
+      let blockStyles: { [key: string]: string } = this._getStyles(textBlock);
+      // console.log('textblock ', id, this.textBlocks[id], "\n", blockStyles, "\nMEME TEXT:", this.textBlocks[id].text);
       ctx.font = [
         blockStyles.fontWeight || '',
         blockStyles.fontSize || '',
         blockStyles.fontFamily || ''
       ].join(' ');
-
-      console.log('FONT=', ctx.font);
-
       if (blockStyles.textAlign) {
         ctx.textAlign = blockStyles.textAlign;
       }
       ctx.textBaseline = 'middle';
-
-      ctx.fillStyle = this.textBlocks[id].clr;
+      ctx.fillStyle = textBlock.getClr() || '#000000';
       ctx.fillText(
-        this.textBlocks[id].text,
-        literal(this.textBlocks[id].x, img.width),
-        literal(this.textBlocks[id].y, img.height)
+        textBlock.getText(),
+        this._literal(textBlock.getX(), img.width),
+        this._literal(textBlock.getY(), img.height)
       );
-    }
+    });
 
     let imgExport = new Image(this.width, this.height);
     imgExport.src = canvas.toDataURL();

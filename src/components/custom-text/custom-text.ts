@@ -1,18 +1,17 @@
+import { Md5 } from 'ts-md5/dist/md5';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
-import { Component, ElementRef, AfterViewChecked, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TextBlockInterface } from '../text-block-interface';
 
 @Component({
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent implements AfterViewChecked, OnDestroy {
-
-  @Output() updated: EventEmitter<CustomTextComponent> = new EventEmitter<CustomTextComponent>();
-
+export class CustomTextComponent implements TextBlockInterface, AfterViewChecked, OnDestroy {
   private static FONT_SCALE_BY: number = 0.05;
   private static DEBOUNCE_DELAY_MS = 333;
   public id: string;
@@ -57,7 +56,7 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
     }
     // Can only set an ID when we have the necessary data from the template
     if (this.id === undefined) {
-      this.id = 'custom-text-block-' + new Date().getTime(); // + Math.random().toString().substring(0,2);
+      this.id = 'custom-text-block-' + Md5.hashStr( new Date().getTime() + Math.random().toString() );
     }
   }
 
@@ -150,10 +149,20 @@ export class CustomTextComponent implements AfterViewChecked, OnDestroy {
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);
   }
 
-  onUpdated() {
-    // The blur event is missing in Ionic since at least July 2017
-     // TODO Don't blur if user touched the input box
-     this.updated.emit(this);
-   }
+   getText() {
+    return this.text;
+  }
+  getX() {
+    return "1"; // this.x;
+  }
+  getY() {
+    return "1"; // this.y;
+  }
+  getClr() {
+    return 'white'; // this.clr;
+  }
+  getElement() {
+    return this.el;
+  }
 
 }

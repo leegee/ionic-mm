@@ -1,9 +1,10 @@
 <textarea
+  #textinput
   class='meme-text-container'
   [(ngModel)]='text'
   placeholder='{{placeholder}}'
   [style]='getStyle()'
   (focus)='onFocus($event)'
   (blur)='sizeText($event)'
-  (input)='sizeText($event); onUpdated($event)'
+  (input)='sizeText($event)'
 ></textarea>

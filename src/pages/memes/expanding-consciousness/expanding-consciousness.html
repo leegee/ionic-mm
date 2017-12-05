@@ -9,20 +9,10 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content  >
+<ion-content>
   <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
   <div id="meme-text-container" tappable>
-    <div style='position:absolute; top: 1vh; left: 1vh; height: 20vh; width: 47%; background:#dddddddd'>
-      <custom-text></custom-text>
-    </div>
-    <div style='position:absolute; top: 23vh; left: 1vh; height: 20.5vh; width: 47%; background:#dddddddd'>
-      <custom-text></custom-text>
-    </div>
-    <div style='position:absolute; top: 46vh; left: 1vh; height: 18.5vh; width: 47%; background:#dddddddd'>
-      <custom-text></custom-text>
-    </div>
-    <div style='position:absolute; top: 68vh; left: 1vh; height: 18.5vh; width: 47%; background:#dddddddd'>
-      <custom-text></custom-text>
-    </div>
+    <custom-text #textinput style='position:absolute; top: 1vh; left: 1vh; height: 20vh; width: 47%; background:#dddddddd'></custom-text>
+    <custom-text #textinput style='position:absolute; top: 23vh; left: 1vh; height: 20.5vh; width: 47%; background:#dddddddd'></custom-text>
   </div>
 </ion-content>

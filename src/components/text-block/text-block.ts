@@ -1,41 +1,47 @@
-import { Component, ElementRef, Input, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
+import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
+import { TextBlockInterface } from '../text-block-interface';
 
 @Component({
   selector: 'text-block',
   templateUrl: 'text-block.html'
 })
-export class TextBlockComponent {
+export class TextBlockComponent implements TextBlockInterface, AfterViewChecked {
   @Input('text') text: string;
-  @Input('id') id: string;
   @Input('clr') clr: string;
   @Input('x') x: any;
   @Input('y') y: any;
-  @Output() updated: EventEmitter<TextBlockComponent> = new EventEmitter<TextBlockComponent>();
 
-  private el: any;
+  private el: HTMLElement;
   private elRef: ElementRef;
-  public editing: boolean;
+  public editing: boolean = false;
+  public placeholder: string = "Your text";
 
   constructor(elRef: ElementRef) {
     this.elRef = elRef;
   }
 
-  ngDoCheck() {
-    // Can only set an ID when we have the necessary data from the template
-    if (this.id === undefined) {
-      this.id = 'text-block-' + new Date().getTime(); // + Math.random().toString().substring(0,2);
-    }
-  }
-
   ngAfterViewChecked() {
-    // Can ony get an element when its ID has been composed
-    if (!this.el) {
-      this.el = this.elRef.nativeElement.querySelector('#' + this.id);
-    }
-    this.position();
+    this._setPosition();
   }
 
-  onActivated() {
+  getText() {
+    return this.text;
+  }
+  getX() {
+    return this.x;
+  }
+  getY() {
+    return this.y;
+  }
+  getClr() {
+    return this.clr;
+  }
+  getElement() {
+    return this.el;
+  }
+
+  onVisible() {
     this.editing = true;
     setTimeout(() => {
       var el = this.elRef.nativeElement.querySelector('input');
@@ -44,20 +50,12 @@ export class TextBlockComponent {
     }, 1);
   }
 
-  onUpdated() {
-   // The blur event is missing in Ionic since at least July 2017
-    // TODO Don't blur if user touched the input box
-    this.updated.emit(this);
-    this.editing = false;
-  }
-
-  private position() {
+  private _setPosition() {
+    this.el = this.el || this.elRef.nativeElement.querySelector('.text-block-container');
+    // Eventually move into style.top etc
     this.el.style.left = this.x;
     this.el.style.top = this.y;
     this.el.style.color = this.clr;
-    this.updated.emit(this);
   }
 
 }
-
-

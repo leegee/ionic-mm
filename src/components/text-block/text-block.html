@@ -1,6 +1,6 @@
-<div id="{{id}}" class='text-block'>
-  <div id="{{id}}_overlay" class="screen-overlay" *ngIf="editing"></div>
-  <ion-input id="{{id}}_input" class='input' *ngIf="editing" placeholder="Such input" [(ngModel)]="text" (ionBlur)="onUpdated($event)"></ion-input>
-  <div id="{{id}}_display" class='display' *ngIf="!editing" (click)="onActivated()">{{text}}</div>
+<div class='text-block-container'>
+  <div class="screen-overlay" *ngIf="editing"></div>
+  <ion-input class='input' *ngIf="editing" placeholder="{{placeholder}}" [(ngModel)]="text" (ionBlur)="editing=false"></ion-input>
+  <div class='display' *ngIf="!editing" (click)="onVisible()">{{text}}</div>
 </div>
 

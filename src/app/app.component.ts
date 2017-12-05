@@ -15,7 +15,7 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
   constructor(
     public platform: Platform,
@@ -27,7 +27,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Dank Memes', component: HomePage},
+      { title: 'Dank Memes', component: HomePage },
       { title: 'Create a Meme', component: CustomPage }
     ];
 
@@ -40,6 +40,10 @@ export class MyApp {
       this.statusBar.styleDefault();
       // this.splashScreen.hide();
       let splash = this.modalCtrl.create(SplashPage);
+
+      var scale = 'scale(1)';
+      document.body.style.webkitTransform = scale;
+      document.body.style.transform = scale;
       splash.present();
     });
   }
