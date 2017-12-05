@@ -14,20 +14,13 @@ import { TextBlockInterface } from '../text-block-interface';
 export class CustomTextComponent implements TextBlockInterface, AfterViewChecked, OnDestroy {
   private static FONT_SCALE_BY: number = 0.05;
   private static DEBOUNCE_DELAY_MS = 333;
-  public id: string;
   public userSettingsSubscription: Subscription;
-  public config: { [key: string]: any } = {
-    requiredLineLengthsPx: [10, 5, 10],
-    fontSize: 5,
-    leading: 0.1
-  };
   public placeholder: string = "Type here";
   public text: string = '';
-  public fontSize: number;
-  private style: {};
+  public fontSize: number = 2;
   protected el: HTMLInputElement;
   private running: boolean;
-  protected widthOfASpace: number;
+  private style: {};
   private oldTextValue: string;
 
   constructor(
@@ -35,8 +28,6 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     protected elRef: ElementRef,
     private domSanitizer: DomSanitizer
   ) {
-    this.fontSize = this.config.fontSize;
-    this.widthOfASpace = this.getChrWidth('_');
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
         this.style = Object.assign(this.style, changed);
@@ -54,18 +45,13 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     if (!this.el) {
       this.el = this.elRef.nativeElement.querySelector('textarea');
     }
-    // Can only set an ID when we have the necessary data from the template
-    if (this.id === undefined) {
-      this.id = 'custom-text-block-' + Md5.hashStr( new Date().getTime() + Math.random().toString() );
-    }
   }
 
-  getStyle() {
+  getStyleAttr() {
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
     for (let rule in this.style) {
       styleAtrStr += rule + ':' + this.style[rule] + ';';
     }
-    // console.log('getStyle: ', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
@@ -89,39 +75,10 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
       this.el.focus();
       this.el.setSelectionRange(caret, caret);
       this.el.focus();
-      setTimeout(
-        () => {
-          this.running = false;
-        }, CustomTextComponent.DEBOUNCE_DELAY_MS
-      );
-    }
-
-    else {
-      setTimeout(
-        () => {
-          this.sizeText(e);
-        }, CustomTextComponent.DEBOUNCE_DELAY_MS
-      );
+      this.running = false;
     }
   }
 
-  getChrWidth(chrs: string) {
-    let rv = 0;
-    if (this.el) { // For TS
-      chrs = chrs.replace(/\s/g, '_');
-      let el = document.createElement('span');
-      el.setAttribute('class', 'text');
-      el.setAttribute('style',
-        'fontSize:' + this.config.fontSize + 'vh;' + 'position: "absolute";left: 0;top: 0'
-        // TODO lineheight
-      );
-      el.innerHTML = chrs;
-      this.el.parentElement.appendChild(el);
-      rv = el.getBoundingClientRect().width;
-      el.outerHTML = '';
-    }
-    return rv;
-  }
 
   /* Fit text to bouds */
   flow(text: string) {
@@ -149,7 +106,7 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);
   }
 
-   getText() {
+  getText() {
     return this.text;
   }
   getX() {
