@@ -9,6 +9,8 @@ export class CustomTextJaggedComponent extends CustomTextComponent {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
 
+  private widthOfASpace: number;
+
   public config: { [key: string]: any } = {
     requiredLineLengthsPx: [10, 5, 10],
     fontSize: 5,

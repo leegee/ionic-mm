@@ -1,5 +1,3 @@
-// import { MemeStyleService } from '../../services/MemeStyleService';
-// import { CustomTextComponent } from './../../components/custom-text/custom-text';
 import { StylePopoverPage } from './style-popover';
 import { PopoverController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
@@ -7,7 +5,7 @@ import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Component, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
 import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Meme } from '../../components/meme/meme';
@@ -24,15 +22,9 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
   public resizeWidth: number = 800;
   public resizeHeight: number = 800;
 
-  // public width: string = "800";
-  // public height: string = "800";
-  // private container: HTMLElement;
-  // private img: HTMLImageElement;
-
   constructor(
     public popoverCtrl: PopoverController,
     public navCtrl: NavController,
-    public navParams: NavParams,
     private file: File,
     private filePath: FilePath,
     private toastCtrl: ToastController,
@@ -40,10 +32,9 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     private imagePicker: ImagePicker,
     private imageResizer: ImageResizer,
     protected containerSizeService: ContainerSizeService,
-    // private memeStyleService: MemeStyleService,
     protected elRef: ElementRef
   ) {
-    super(elRef, containerSizeService);
+    super(navCtrl, elRef, containerSizeService);
     this.isWeb = !this.platform.is('android');
   }
 

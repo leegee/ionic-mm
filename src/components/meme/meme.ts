@@ -1,3 +1,4 @@
+import { NavController } from 'ionic-angular';
 import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked, QueryList, ViewChildren } from '@angular/core';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
@@ -17,9 +18,9 @@ export abstract class Meme implements AfterViewChecked {
   public imageUrl: string;
   public width: number;
   public height: number;
-  // public textBlocks: { [key: string]: TextBlockComponent | CustomTextComponent } = {};
 
   public constructor(
+    public  navCtrl: NavController,
     protected elRef: ElementRef,
     protected containerSizeService: ContainerSizeService
   ) {
@@ -45,23 +46,20 @@ export abstract class Meme implements AfterViewChecked {
   // }
 
   share() {
-    console.log('SHARE ', this.textBlocks, "\n---------------------");
     let img = this._base64memeImage();
     Shareable.share(img);
+    console.log('this.navCtrl', this.navCtrl);
+    this.navCtrl.pop();
   }
 
   private _getStyles = (textBlock: TextBlockInterface) => {
-
-    console.log(this.container, textBlock.getText(),
-      document.defaultView.getComputedStyle(textBlock.getStyledParentElement()).left
-    );
-
     let textBlockStyle = Object.assign.apply(Object, [
       {},
       document.defaultView.getComputedStyle(this.container),
       document.defaultView.getComputedStyle(textBlock.getStyledParentElement()),
       document.defaultView.getComputedStyle(textBlock.getStyledElement()),
     ]);
+
     let rv = Object.keys(textBlockStyle)
       .filter(ruleName => Meme.textStyleRules.some(
         wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
@@ -80,6 +78,7 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   private _base64memeImage() {
+    console.log('this.width, this.height', this.width, this.height);
     let img: HTMLImageElement = new Image(this.width, this.height);
     img.src = this.img.src;
 
@@ -107,8 +106,8 @@ export abstract class Meme implements AfterViewChecked {
       ctx.fillStyle = textBlock.getClr() || '#000000';
       ctx.fillText(
         textBlock.getText(),
-        this._literal(textBlock.getX(), img.width),
-        this._literal(textBlock.getY(), img.height)
+        this._literal(blockStyles.left, img.width),
+        this._literal(blockStyles.top, img.height)
       );
     });
 

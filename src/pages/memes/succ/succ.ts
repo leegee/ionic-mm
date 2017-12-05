@@ -1,6 +1,6 @@
 import { ContainerSizeService } from './../../../services/ContainerSizeService';
 import { Component, ElementRef } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Meme } from '../../../components/meme/meme';
 
 @IonicPage()
@@ -16,9 +16,10 @@ export class SuccPage extends Meme {
   height: number = 600;
 
   constructor(
+    public navCtrl: NavController,
     public elRef: ElementRef,
     public containerSizeService: ContainerSizeService
   ) {
-    super(elRef, containerSizeService);
+    super(navCtrl, elRef, containerSizeService);
   }
 }
