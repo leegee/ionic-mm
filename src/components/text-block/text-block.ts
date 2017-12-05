@@ -28,17 +28,25 @@ export class TextBlockComponent implements TextBlockInterface, AfterViewChecked 
   getText() {
     return this.text;
   }
+
   getX() {
     return this.x;
   }
+
   getY() {
     return this.y;
   }
+
   getClr() {
     return this.clr;
   }
-  getElement() {
+
+  getStyledElement() {
     return this.el;
+  }
+
+  getStyledParentElement() {
+    return document.createElement('div');
   }
 
   onVisible() {

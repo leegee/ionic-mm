@@ -3,5 +3,6 @@ export declare abstract class TextBlockInterface {
     abstract getX(): string;
     abstract getY(): string;
     abstract getClr(): string;
-    abstract getElement(): HTMLElement;
+    abstract getStyledElement(): HTMLElement;
+    abstract getStyledParentElement(): HTMLElement;
 }

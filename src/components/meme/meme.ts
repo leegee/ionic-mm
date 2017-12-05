@@ -51,12 +51,17 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   private _getStyles = (textBlock: TextBlockInterface) => {
-    console.log(this.container, "\n", textBlock);
-    let textBlockStyle = Object.assign(
+
+    console.log(this.container, textBlock.getText(),
+      document.defaultView.getComputedStyle(textBlock.getStyledParentElement()).left
+    );
+
+    let textBlockStyle = Object.assign.apply(Object, [
       {},
       document.defaultView.getComputedStyle(this.container),
-      document.defaultView.getComputedStyle(textBlock.getElement()),
-    );
+      document.defaultView.getComputedStyle(textBlock.getStyledParentElement()),
+      document.defaultView.getComputedStyle(textBlock.getStyledElement()),
+    ]);
     let rv = Object.keys(textBlockStyle)
       .filter(ruleName => Meme.textStyleRules.some(
         wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
@@ -87,7 +92,7 @@ export abstract class Meme implements AfterViewChecked {
     ctx.canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
 
-    this.textBlocks.forEach( (textBlock) => {
+    this.textBlocks.forEach((textBlock) => {
       let blockStyles: { [key: string]: string } = this._getStyles(textBlock);
       // console.log('textblock ', id, this.textBlocks[id], "\n", blockStyles, "\nMEME TEXT:", this.textBlocks[id].text);
       ctx.font = [
