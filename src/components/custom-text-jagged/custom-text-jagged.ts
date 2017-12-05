@@ -1,11 +1,11 @@
-import { Component  } from '@angular/core';
+import { Component } from '@angular/core';
 import { CustomTextComponent } from '../custom-text/custom-text';
 
 @Component({
   selector: 'custom-text-jagged',
   templateUrl: 'custom-text-jagged.html'
 })
-export class CustomTextJaggedComponent extends CustomTextComponent  {
+export class CustomTextJaggedComponent extends CustomTextComponent {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
 
@@ -15,6 +15,23 @@ export class CustomTextJaggedComponent extends CustomTextComponent  {
     leading: 0.1
   };
 
+  getChrWidth(chrs: string) {
+    chrs = chrs.replace(/\s/g, '_');
+    let el = document.createElement('span');
+    el.setAttribute('class', 'text');
+    el.setAttribute('style',
+      'fontSize:' + this.config.fontSize + 'vh;' + 'position: "absolute";left: 0;top: 0'
+      // TODO lineheight
+    );
+    el.innerHTML = chrs;
+    let rv = 0;
+    if (this.el) { // For TS
+      this.el.parentElement.appendChild(el);
+      rv = el.getBoundingClientRect().width;
+      el.outerHTML = '';
+    }
+    return rv;
+  }
 
   /*
     Flow text into lines of specific lengths.
