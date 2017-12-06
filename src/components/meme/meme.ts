@@ -100,13 +100,14 @@ export abstract class Meme implements AfterViewChecked {
     ctx.drawImage(this.shareImg, 0, 0);
 
     this.textBlocks.forEach((textBlock) => {
-      console.log(textBlock.getText());
       let blockStyles: { [key: string]: string } = this._getStyles(textBlock);
       ctx.font = [
         blockStyles.fontWeight || '',
         this._scaleFont(blockStyles.fontSize) || '',
         blockStyles.fontFamily || ''
       ].join(' ');
+
+      console.log(textBlock.getText(), blockStyles);
 
       if (blockStyles.textAlign) {
         ctx.textAlign = blockStyles.textAlign;
