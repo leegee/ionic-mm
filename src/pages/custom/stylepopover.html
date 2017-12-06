@@ -16,6 +16,7 @@
 -->
 
 <ion-list>
+  <ion-list-header>Wrapping</ion-list-header>
   <ion-item>
     <ion-label>Word wrap</ion-label>
     <ion-toggle color='secondary' [(ngModel)]="selections['word-wrap']" (ionChange)='onChange()'></ion-toggle>
@@ -30,4 +31,23 @@
     <ion-label>Whitespace wrap</ion-label>
     <ion-toggle color='secondary' [(ngModel)]="selections['white-space']" (ionChange)='onChange()'></ion-toggle>
   </ion-item>
+</ion-list>
+
+<ion-list radio-group [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
+  <ion-list-header>Alignment</ion-list-header>
+  <ion-item>
+    <ion-label>Left</ion-label>
+    <ion-radio value="left"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Center</ion-label>
+    <ion-radio value="center"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Right</ion-label>
+    <ion-radio value="right"></ion-radio>
+  </ion-item>
+
 </ion-list>

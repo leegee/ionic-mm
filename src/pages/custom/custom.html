@@ -5,7 +5,7 @@
     </button>
     <ion-title>New Meme {{width}} x {{height}}</ion-title>
     <ion-buttons end [hidden]="!imageUrl">
-      <button ion-button icon-only (click)="share()">
+      <button ion-button icon-only (click)="share(false)">
         <ion-icon name="share"></ion-icon>
       </button>
       <button ion-button icon-only (click)="presentPopover($event)">

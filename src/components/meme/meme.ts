@@ -40,10 +40,12 @@ export abstract class Meme implements AfterViewChecked {
     this.container.style.height = height + 'px';
   }
 
-  share() {
+  share(goBack: boolean = true) {
     this._createShareImg();
     Shareable.share(this.shareImg);
-    this.navCtrl.pop(); // Back to the home page
+    if (goBack) {
+      this.navCtrl.pop();
+    }
   }
 
   private _getStyles = (textBlock: TextBlockInterface) => {

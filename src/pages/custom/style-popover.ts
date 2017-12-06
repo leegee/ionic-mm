@@ -9,6 +9,7 @@ export class StylePopoverPage {
     public selections = {};
     private state = {};
     public static initialState = {
+        'text-align': 'center',
         'word-wrap': 'break-word',
         'overflow-wrap': 'break-word',
         'white-space': 'noraml' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
@@ -20,7 +21,7 @@ export class StylePopoverPage {
         private MemeStyleService: MemeStyleService,
     ) {
         this.state = StylePopoverPage.initialState;
-        this.state2selections();
+        this.initialiseSelectionsState();
         // Notify of initial state:
         this.onChange();
     };
@@ -29,13 +30,17 @@ export class StylePopoverPage {
         this.viewCtrl.dismiss();
     }
 
-    private state2selections() {
+    private initialiseSelectionsState() {
         for (let rule in this.state) {
             if (rule === 'word-wrap' || rule === 'overflow-wrap') {
                 this.selections[rule] = this.state[rule] === 'break-word' ? true : false;
             }
             else if (rule === 'white-space') {
                 this.selections[rule] = this.state[rule] === 'no-wrap' ? true : false;
+            }
+            else {
+                console.log('input rule', rule, this.state[rule]);
+                this.selections[rule] = this.state[rule];
             }
         }
     }
@@ -48,6 +53,10 @@ export class StylePopoverPage {
             }
             else if (rule === 'white-space') {
                 newState[rule] = this.selections[rule] ? 'nowrap' : 'normal';
+            }
+            else {
+                console.log('output rule', rule, this.selections[rule]);
+                newState[rule] = this.selections[rule];
             }
         }
         return newState;
