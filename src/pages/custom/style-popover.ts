@@ -18,7 +18,7 @@ export class StylePopoverPage {
     constructor(
         public viewCtrl: ViewController,
         public navParams: NavParams,
-        private MemeStyleService: MemeStyleService,
+        private memeStyleService: MemeStyleService,
     ) {
         this.state = StylePopoverPage.initialState;
         this.initialiseSelectionsState();
@@ -64,6 +64,6 @@ export class StylePopoverPage {
 
     public onChange() {
         let newState = this.selections2state();
-        this.MemeStyleService.set( newState );
+        this.memeStyleService.set( newState );
     }
 }
