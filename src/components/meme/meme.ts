@@ -71,13 +71,12 @@ export abstract class Meme implements AfterViewChecked {
     let [, previewLiteral, type] = cssValue.match(/^([.\d]+)\s*([%\w]+)?/);
     if (type === 'px') {
       rv = Number(previewLiteral) * (this.shareImg[side] / this.containerSize[side]);
-      console.log(this[side], this.shareImg[side], previewLiteral, rv);
     } else {
       // if (type === '%') rv = Number(previewLiteral) * (this.img[side] / 100);
       console.error('Now only expecting px');
       debugger;
     }
-    // console.log( '--------------', side,':', this.containerSize[side],' v ', this.shareImg[side], ' = ', previewLiteral, 'v', rv);
+    console.log( '--------------', side,':', this.containerSize[side],' v ', this.shareImg[side], ' = ', previewLiteral, 'v', rv);
     return rv;
   }
 
@@ -111,7 +110,7 @@ export abstract class Meme implements AfterViewChecked {
       if (blockStyles.textAlign) {
         ctx.textAlign = blockStyles.textAlign;
       }
-      ctx.textBaseline = 'middle';
+      ctx.textBaseline = 'top';
       ctx.fillStyle = blockStyles.color;
       ctx.fillText(
         textBlock.getText(),
