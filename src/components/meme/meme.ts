@@ -1,4 +1,4 @@
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked, QueryList, ViewChildren } from '@angular/core';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
@@ -18,12 +18,15 @@ export abstract class Meme implements AfterViewChecked {
   public width: number;
   public height: number;
   private containerSize: { [key: string]: number };
+  protected isWeb: boolean;
+  private platform: Platform;
 
   public constructor(
     public navCtrl: NavController,
     protected elRef: ElementRef,
     protected containerSizeService: ContainerSizeService
   ) {
+    this.isWeb = ! new Platform().is('android');
   }
 
   ngAfterViewChecked() {
@@ -40,7 +43,7 @@ export abstract class Meme implements AfterViewChecked {
   share() {
     this._createShareImg();
     Shareable.share(this.shareImg);
-    // this.navCtrl.pop(); // Back to the home page
+    this.navCtrl.pop(); // Back to the home page
   }
 
   private _getStyles = (textBlock: TextBlockInterface) => {
@@ -66,7 +69,7 @@ export abstract class Meme implements AfterViewChecked {
       console.error('Now only expecting px');
       debugger;
     }
-    console.log(side,':', this.containerSize[side],' v ', this.shareImg[side], ' = ', cssValue, previewLiteral, 'v', rv);
+    console.log(side, ':', this.containerSize[side], ' v ', this.shareImg[side], ' = ', cssValue, previewLiteral, 'v', rv);
     return rv;
   }
 
@@ -113,7 +116,10 @@ export abstract class Meme implements AfterViewChecked {
 
     let imgExport = new Image(this.width, this.height);
     imgExport.src = canvas.toDataURL();
-    window.open().document.body.appendChild(imgExport);;
+
+    if (this.isWeb) {
+      window.open().document.body.appendChild(imgExport);;
+    }
 
     var imgB64 = canvas.toDataURL();
     canvas.outerHTML = '';

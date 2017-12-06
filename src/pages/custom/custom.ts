@@ -17,7 +17,6 @@ import { Meme } from '../../components/meme/meme';
 })
 export class CustomPage extends Meme implements AfterViewInit, DoCheck {
 
-  public isWeb: boolean;
   public imageUrl: string;
   public resizeWidth: number = 800;
   public resizeHeight: number = 800;
@@ -28,14 +27,12 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     private file: File,
     private filePath: FilePath,
     private toastCtrl: ToastController,
-    private platform: Platform,
     private imagePicker: ImagePicker,
     private imageResizer: ImageResizer,
     protected containerSizeService: ContainerSizeService,
     protected elRef: ElementRef
   ) {
     super(navCtrl, elRef, containerSizeService);
-    this.isWeb = !this.platform.is('android');
   }
 
   ngAfterViewInit() {
