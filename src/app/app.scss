@@ -77,12 +77,18 @@ ion-content {
    background-color: map-get($colors, dark) !important;
  }
 .toolbar-title {
-  color: map-get($colors,primary) !important;
+  color: map-get($colors,light) !important;
 }
-.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
-   color: white;
+.toolbar .bar-button-default-md,
+.toolbar .bar-button-clear-md-default,
+.toolbar .bar-button-md-default {
+  color: map-get($colors,light) !important;
 }
 
 page-home ion-content .item-inner {
   padding-right:0 !important;
+}
+
+.scroll-content {
+  overflow: auto;
 }

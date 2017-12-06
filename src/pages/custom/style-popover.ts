@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';
 
 @Component({
-    templateUrl: 'stylepopover.html'
+    templateUrl: 'style-popover.html'
 })
 export class StylePopoverPage {
     public selections = {};
@@ -26,8 +26,20 @@ export class StylePopoverPage {
         this.onChange();
     };
 
-    close() {
+    public close() {
         this.viewCtrl.dismiss();
+    }
+
+    public closeAndReflow() {
+        this.viewCtrl.dismiss();
+        setTimeout(
+            () => this.onChange()
+        );
+
+    }
+
+    public onChange() {
+        this.memeStyleService.set( this.selections2state() );
     }
 
     private initialiseSelectionsState() {
@@ -39,7 +51,6 @@ export class StylePopoverPage {
                 this.selections[rule] = this.state[rule] === 'no-wrap' ? true : false;
             }
             else {
-                console.log('input rule', rule, this.state[rule]);
                 this.selections[rule] = this.state[rule];
             }
         }
@@ -55,15 +66,9 @@ export class StylePopoverPage {
                 newState[rule] = this.selections[rule] ? 'nowrap' : 'normal';
             }
             else {
-                console.log('output rule', rule, this.selections[rule]);
                 newState[rule] = this.selections[rule];
             }
         }
         return newState;
-    }
-
-    public onChange() {
-        let newState = this.selections2state();
-        this.memeStyleService.set( newState );
     }
 }

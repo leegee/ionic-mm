@@ -11,18 +11,13 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class MemeStyleService {
-
     private changeSource = new Subject();
     public changeAnnounced$ = this.changeSource.asObservable();
-
-    private static _defaultState = {};
-
-    private _state = MemeStyleService._defaultState;
+    private _state = {};
 
     constructor() { }
 
     public set(model) {
-        console.log('EditableStyleService.set ', model);
         this._state = Object.assign(
             this._state,
             model

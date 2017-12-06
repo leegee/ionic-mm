@@ -16,7 +16,7 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
   public text: string = '';
-  public fontSize: number = 2;
+  private fontSize: number = 2;
   protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
@@ -59,6 +59,7 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
   sizeText(e?: KeyboardEvent) {
     let noModifierKey = !e || !e.ctrlKey;
     if (!this.running && noModifierKey) {
+      console.log('Sizing text');
       this.running = true;
       let caret = this.elTextInput.selectionStart;
 
@@ -87,6 +88,7 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     do {
       hasHorizontalScrollbar = this.elTextInput.scrollWidth > this.elTextInput.offsetWidth;
       hasVerticalScrollbar = this.elTextInput.scrollHeight > this.elTextInput.offsetHeight;
+      console.log(this.elTextInput.scrollHeight ," ", this.elTextInput.offsetHeight);
       if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
         this.fontSize += CustomTextComponent.FONT_SCALE_BY;
         this.elTextInput.style.fontSize = this.fontSize + 'vh';
