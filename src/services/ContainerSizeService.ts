@@ -31,7 +31,7 @@ export class ContainerSizeService {
         }.call({});
     }
 
-    public containerSizeFromImg(img: HTMLImageElement) {
+    public size(img: HTMLImageElement) {
         let renderedImg = ContainerSizeService.getRenderedSize(
             img.width,
             img.height,
@@ -46,8 +46,8 @@ export class ContainerSizeService {
         // );
 
         return Number(renderedImg.width) ? {
-            width: renderedImg.width + 'px',
-            height: renderedImg.height + 'px',
+            width: renderedImg.width,
+            height: renderedImg.height,
             widthNumber: renderedImg.width,
             heightNumber: renderedImg.height
         } : {

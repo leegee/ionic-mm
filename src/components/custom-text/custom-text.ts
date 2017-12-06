@@ -110,18 +110,6 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     return this.text;
   }
 
-  getX() {
-    return "1"; // this.x;
-  }
-
-  getY() {
-    return "1"; // this.y;
-  }
-
-  getClr() {
-    return 'white'; // this.clr;
-  }
-
   getStyledElement() {
     return this.el;
   }

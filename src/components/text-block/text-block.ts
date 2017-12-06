@@ -1,16 +1,12 @@
 import { Component, ElementRef, Input } from '@angular/core';
-import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 import { TextBlockInterface } from '../text-block-interface';
 
 @Component({
   selector: 'text-block',
   templateUrl: 'text-block.html'
 })
-export class TextBlockComponent implements TextBlockInterface, AfterViewChecked {
+export class TextBlockComponent implements TextBlockInterface {
   @Input('text') text: string;
-  @Input('clr') clr: string;
-  @Input('x') x: any;
-  @Input('y') y: any;
 
   private el: HTMLElement;
   private elRef: ElementRef;
@@ -21,32 +17,16 @@ export class TextBlockComponent implements TextBlockInterface, AfterViewChecked 
     this.elRef = elRef;
   }
 
-  ngAfterViewChecked() {
-    this._setPosition();
-  }
-
   getText() {
     return this.text;
   }
 
-  getX() {
-    return this.x;
-  }
-
-  getY() {
-    return this.y;
-  }
-
-  getClr() {
-    return this.clr;
-  }
-
   getStyledElement() {
-    return this.el;
+    return this.elRef.nativeElement; // .querySelector('.display');
   }
 
   getStyledParentElement() {
-    return document.createElement('div');
+    return this.elRef.nativeElement.querySelector('.text-block-container');
   }
 
   onVisible() {
@@ -56,14 +36,6 @@ export class TextBlockComponent implements TextBlockInterface, AfterViewChecked 
       el.select();
       el.focus();
     }, 1);
-  }
-
-  private _setPosition() {
-    this.el = this.el || this.elRef.nativeElement.querySelector('.text-block-container');
-    // Eventually move into style.top etc
-    this.el.style.left = this.x;
-    this.el.style.top = this.y;
-    this.el.style.color = this.clr;
   }
 
 }

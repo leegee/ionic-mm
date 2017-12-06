@@ -52,12 +52,12 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
   }
 
   setSizes() {
-    let sizes = this.containerSizeService.containerSizeFromImg(this.img);
+    let sizes = this.containerSizeService.size(this.img);
     if (sizes.width !== null) {
-      this.width = sizes.widthNumber;
-      this.height = sizes.heightNumber;
-      this.container.style.width = sizes.width;
-      this.container.style.height = sizes.height;
+      this.width = sizes.width;
+      this.height = sizes.height;
+      this.container.style.width = sizes.width + 'px';
+      this.container.style.height = sizes.height + 'px';
     }
   }
 
