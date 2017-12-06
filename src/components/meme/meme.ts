@@ -2,8 +2,6 @@ import { NavController } from 'ionic-angular';
 import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked, QueryList, ViewChildren } from '@angular/core';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
-import { TextBlockComponent } from '../text-block/text-block';
-import { CustomTextComponent } from '../custom-text/custom-text';
 import { TextBlockInterface } from '../text-block-interface';
 
 export abstract class Meme implements AfterViewChecked {
