@@ -1,4 +1,3 @@
-import { Md5 } from 'ts-md5/dist/md5';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
 import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
@@ -18,7 +17,7 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
   public placeholder: string = "Type here";
   public text: string = '';
   public fontSize: number = 2;
-  protected el: HTMLInputElement;
+  protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
   private oldTextValue: string;
@@ -42,8 +41,8 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
   }
 
   ngAfterViewChecked() {
-    if (!this.el) {
-      this.el = this.elRef.nativeElement.querySelector('textarea');
+    if (!this.elTextInput) {
+      this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
     }
   }
 
@@ -61,24 +60,23 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     let noModifierKey = !e || !e.ctrlKey;
     if (!this.running && noModifierKey) {
       this.running = true;
-      let caret = this.el.selectionStart;
+      let caret = this.elTextInput.selectionStart;
 
-      let caretAtEnd = caret == this.el.innerHTML.length;
+      let caretAtEnd = caret == this.elTextInput.innerHTML.length;
 
       this.oldTextValue = this.text;
       this.flow(this.oldTextValue);
 
       if (caretAtEnd) {
-        caret = this.el.innerHTML.length;
+        caret = this.elTextInput.innerHTML.length;
       }
 
-      this.el.focus();
-      this.el.setSelectionRange(caret, caret);
-      this.el.focus();
+      this.elTextInput.focus();
+      this.elTextInput.setSelectionRange(caret, caret);
+      this.elTextInput.focus();
       this.running = false;
     }
   }
-
 
   /* Fit text to bouds */
   flow(text: string) {
@@ -87,21 +85,21 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
 
     // While text fits  bounding box, expand font size
     do {
-      hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
-      hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
+      hasHorizontalScrollbar = this.elTextInput.scrollWidth > this.elTextInput.offsetWidth;
+      hasVerticalScrollbar = this.elTextInput.scrollHeight > this.elTextInput.offsetHeight;
       if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
         this.fontSize += CustomTextComponent.FONT_SCALE_BY;
-        this.el.style.fontSize = this.fontSize + 'vh';
+        this.elTextInput.style.fontSize = this.fontSize + 'vh';
       }
     } while (!hasHorizontalScrollbar && !hasVerticalScrollbar);
 
     // While text does not fit bounding box, contract  font size
     do {
-      hasHorizontalScrollbar = this.el.scrollWidth > this.el.offsetWidth;
-      hasVerticalScrollbar = this.el.scrollHeight > this.el.offsetHeight;
+      hasHorizontalScrollbar = this.elTextInput.scrollWidth > this.elTextInput.offsetWidth;
+      hasVerticalScrollbar = this.elTextInput.scrollHeight > this.elTextInput.offsetHeight;
       if (hasHorizontalScrollbar || hasVerticalScrollbar) {
         this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
-        this.el.style.fontSize = this.fontSize + 'vh';
+        this.elTextInput.style.fontSize = this.fontSize + 'vh';
       }
     } while (hasHorizontalScrollbar || hasVerticalScrollbar);
   }
@@ -110,12 +108,36 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
     return this.text;
   }
 
-  getStyledElement() {
-    return this.el;
-  }
+  /*
+    The computed style for this.elTextInput does not reflect its actual position on the screen.
+    Nor can CSSStyleDeclarations be cast to objecrts
+  */
+  getStyles() {
+    function toObj(styles){
+      let rv = {};
+      for (let rule in styles) {
+        rv[rule] = styles[rule];
+      }
+      return rv;
+    }
 
-  getStyledParentElement() {
-    return this.elRef.nativeElement;
+    let elWithFont = toObj(document.defaultView.getComputedStyle(
+      this.elTextInput
+    ));
+    let elWithPos = toObj(document.defaultView.getComputedStyle(
+      this.elRef.nativeElement
+    ));
+    let fontStyles = Object.keys(elWithFont)
+      .filter(ruleName => {
+        return ruleName.match(/^font/)
+      })
+      .reduce((styles, ruleName) => {
+        styles[ruleName] = elWithFont[ruleName];
+        return styles;
+      },
+      {}
+      );
+    return Object.assign(elWithPos, fontStyles);
   }
 
 }

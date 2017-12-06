@@ -44,17 +44,8 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   private _getStyles = (textBlock: TextBlockInterface) => {
-    let textBlockStyle = Object.assign.apply(Object, [
-      {},
-      document.defaultView.getComputedStyle(this.container),
-      document.defaultView.getComputedStyle(textBlock.getStyledParentElement()),
-      document.defaultView.getComputedStyle(textBlock.getStyledElement()),
-    ]);
-
-    // console.log('parent', textBlock.getStyledParentElement());
-    // console.log('child', textBlock.getStyledElement());
-
-    let rv = Object.keys(textBlockStyle)
+    let textBlockStyle = textBlock.getStyles();
+    return Object.keys(textBlockStyle)
       .filter(ruleName => Meme.textStyleRules.some(
         wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
       )
@@ -63,7 +54,6 @@ export abstract class Meme implements AfterViewChecked {
         return styles;
       }, {}
       );
-    return rv;
   };
 
   private _scaleImgSide(cssValue: string, side: string) {
@@ -76,11 +66,12 @@ export abstract class Meme implements AfterViewChecked {
       console.error('Now only expecting px');
       debugger;
     }
-    console.log( '--------------', side,':', this.containerSize[side],' v ', this.shareImg[side], ' = ', previewLiteral, 'v', rv);
+    console.log(side,':', this.containerSize[side],' v ', this.shareImg[side], ' = ', cssValue, previewLiteral, 'v', rv);
     return rv;
   }
 
   private _scaleFont(cssValue: string) {
+    console.info('FONT ', cssValue);
     return this._scaleImgSide(cssValue, 'width') + 'px';
   }
 
@@ -100,6 +91,7 @@ export abstract class Meme implements AfterViewChecked {
     ctx.drawImage(this.shareImg, 0, 0);
 
     this.textBlocks.forEach((textBlock) => {
+      console.log(textBlock.getText());
       let blockStyles: { [key: string]: string } = this._getStyles(textBlock);
       ctx.font = [
         blockStyles.fontWeight || '',

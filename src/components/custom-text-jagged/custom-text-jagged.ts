@@ -27,8 +27,8 @@ export class CustomTextJaggedComponent extends CustomTextComponent {
     );
     el.innerHTML = chrs;
     let rv = 0;
-    if (this.el) { // For TS
-      this.el.parentElement.appendChild(el);
+    if (this.elTextInput) {
+      this.elTextInput.parentElement.appendChild(el);
       rv = el.getBoundingClientRect().width;
       el.outerHTML = '';
     }

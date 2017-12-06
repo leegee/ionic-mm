@@ -21,12 +21,11 @@ export class TextBlockComponent implements TextBlockInterface {
     return this.text;
   }
 
-  getStyledElement() {
-    return this.elRef.nativeElement; // .querySelector('.display');
-  }
-
-  getStyledParentElement() {
-    return this.elRef.nativeElement.querySelector('.text-block-container');
+  getStyles() {
+    return document.defaultView.getComputedStyle(
+      this.elRef.nativeElement
+      // return this.elRef.nativeElement.querySelector('.text-block-container');
+    ) as {};
   }
 
   onVisible() {
