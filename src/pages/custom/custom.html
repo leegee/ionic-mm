@@ -21,7 +21,7 @@
     <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
     <div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'>
       <!-- for dev: cover whole image -->
-      <custom-text></custom-text>
+      <custom-text #textinput></custom-text>
     </div>
   </div>
 
