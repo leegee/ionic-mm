@@ -1,32 +1,12 @@
-<!-- <ion-list radio-group (ionChange)="updateRadio($event)" [(ngModel)]="textWrap">
-  <ion-list-header>Word Wrap</ion-list-header>
-
-  <ion-item>
-    <ion-label>Go</ion-label>
-    <ion-radio checked="true" value="go"></ion-radio>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>Go 2</ion-label>
-    <ion-radio checked="false" value="go2"></ion-radio>
-  </ion-item>
-
-  <button ion-item (click)="close()">Learn Ionic</button>
-</ion-list>
--->
-
 <ion-list>
-  <ion-list-header>Wrapping</ion-list-header>
   <ion-item>
     <ion-label>Word wrap</ion-label>
     <ion-toggle color='secondary' [(ngModel)]="selections['word-wrap']" (ionChange)='onChange()'></ion-toggle>
   </ion-item>
-
   <ion-item>
     <ion-label>Overflow wrap</ion-label>
     <ion-toggle color='secondary' [(ngModel)]="selections['overflow-wrap']" (ionChange)='onChange()'></ion-toggle>
   </ion-item>
-
   <ion-item>
     <ion-label>Whitespace wrap</ion-label>
     <ion-toggle color='secondary' [(ngModel)]="selections['white-space']" (ionChange)='onChange()'></ion-toggle>
@@ -34,20 +14,39 @@
 </ion-list>
 
 <ion-list radio-group [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
-  <ion-list-header>Alignment</ion-list-header>
   <ion-item>
-    <ion-label>Left</ion-label>
+    <ion-label>Align left</ion-label>
     <ion-radio value="left"></ion-radio>
   </ion-item>
-
   <ion-item>
-    <ion-label>Center</ion-label>
+    <ion-label>Align center</ion-label>
     <ion-radio value="center"></ion-radio>
   </ion-item>
-
   <ion-item>
-    <ion-label>Right</ion-label>
+    <ion-label>Align  right</ion-label>
     <ion-radio value="right"></ion-radio>
   </ion-item>
+</ion-list>
 
+<ion-list radio-group [(ngModel)]="selections['font-family']" (ionChange)='onChange()'>
+  <ion-item>
+    <ion-label>Roboto</ion-label>
+    <ion-radio value="Roboto"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Anton</ion-label>
+    <ion-radio value="AntonRegular"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Marker</ion-label>
+    <ion-radio value="'Comic Sans',PermanentMarkerRegular"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Georgia</ion-label>
+    <ion-radio value="Georgia"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Times</ion-label>
+    <ion-radio value="'Times New Roman',Times,serif"></ion-radio>
+  </ion-item>
 </ion-list>
