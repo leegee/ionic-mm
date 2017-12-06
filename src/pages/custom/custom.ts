@@ -44,11 +44,11 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
 
   ngDoCheck() {
     if (this.img) {
-      this.setSizes();
+      this._setSizes();
     }
   }
 
-  setSizes() {
+  private _setSizes() {
     let sizes = this.containerSizeService.size(this.img);
     if (sizes.width !== null) {
       this.width = sizes.width;
@@ -58,7 +58,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     }
   }
 
-  androidPickImage() {
+  private _androidPickImage() {
     this.imagePicker.getPictures({
       maximumImagesCount: 1
     }).then((results) => {
@@ -85,10 +85,10 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
           this.imageUrl = resizedFilePath;
         }).catch(e => {
           console.error(e);
-          this.showError('Error resizing image: ' + e.toString());
+          this._showError('Error resizing image: ' + e.toString());
         });
     }, (err) => {
-      this.showError('Error while selecting image.');
+      this._showError('Error while selecting image.');
     });
   }
 
@@ -96,10 +96,10 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     if (!this.isWeb) {
       if (!this.imagePicker.hasReadPermission()) {
         this.imagePicker.requestReadPermission().then(() => {
-          this.androidPickImage();
+          this._androidPickImage();
         })
       } else {
-        this.androidPickImage();
+        this._androidPickImage();
       }
     }
   }
@@ -119,7 +119,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     // code enough that the image render  -- apparently and undocumented async --
     // has completed by the time the view-updated lifecycle hook is called.
     // However, best to do the job properly:
-    this.setSizes();
+    this._setSizes();
   }
 
   presentPopover(event) {
@@ -129,7 +129,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     });
   }
 
-  private showError(text) {
+  private _showError(text) {
     this.toastCtrl.create({
       message: text,
       duration: 20000,
