@@ -9,6 +9,8 @@ export class StylePopoverPage {
     public selections = {};
     private state = {};
     public static initialState = {
+        '-webkit-text-stroke-': '0',
+        '-webkit-text-stroke-color': 'white',
         'text-align': 'center',
         'word-wrap': 'break-word',
         'overflow-wrap': 'break-word',
@@ -39,6 +41,7 @@ export class StylePopoverPage {
     }
 
     public onChange() {
+        console.log('reflow');
         this.memeStyleService.set( this.selections2state() );
     }
 
