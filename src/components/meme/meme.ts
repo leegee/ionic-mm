@@ -62,11 +62,11 @@ export abstract class Meme implements AfterViewChecked {
   };
 
   private _scaleImgSide(cssValue: string, side: string) {
-    let rv;
+    let rv, previewLiteral, type;
     if (cssValue === 'auto'){
       rv = 0; // this.shareImg[side];
     } else {
-      let [, previewLiteral, type] = cssValue.match(/^([.\d]+)\s*([%\w]+)?/);
+      [, previewLiteral, type] = cssValue.match(/^([.\d]+)\s*([%\w]+)?/);
       if (type === 'px') {
         rv = Number(previewLiteral) * (this.shareImg[side] / this.containerSize[side]);
       } else {
