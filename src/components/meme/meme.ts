@@ -26,7 +26,7 @@ export abstract class Meme implements AfterViewChecked {
     protected elRef: ElementRef,
     protected containerSizeService: ContainerSizeService
   ) {
-    this.isWeb = ! new Platform().is('android');
+    this.isWeb = !new Platform().is('android');
   }
 
   ngAfterViewChecked() {
@@ -63,7 +63,7 @@ export abstract class Meme implements AfterViewChecked {
 
   private _scaleImgSide(cssValue: string, side: string) {
     let rv, previewLiteral, type;
-    if (cssValue === 'auto'){
+    if (cssValue === 'auto') {
       rv = 0; // this.shareImg[side];
     } else {
       [, previewLiteral, type] = cssValue.match(/^([.\d]+)\s*([%\w]+)?/);
@@ -119,6 +119,19 @@ export abstract class Meme implements AfterViewChecked {
         this._scaleImgSide(blockStyles.left, 'width'),
         this._scaleImgSide(blockStyles.top, 'height')
       );
+
+      if (blockStyles['-webkit-text-stroke-color']
+        && blockStyles['-webkit-text-stroke-width']
+        && Number(blockStyles['-webkit-text-stroke-width']) > 0
+      ) {
+        ctx.lineWidth = Number(blockStyles['-webkit-text-stroke-width']);
+        ctx.strokeStyle = blockStyles['-webkit-text-stroke-color'];
+        ctx.strokeText(
+          textBlock.getText(),
+          this._scaleImgSide(blockStyles.left, 'width'),
+          this._scaleImgSide(blockStyles.top, 'height')
+        );
+      }
     });
 
     let imgExport = new Image(this.width, this.height);
