@@ -63,15 +63,18 @@ export abstract class Meme implements AfterViewChecked {
 
   private _scaleImgSide(cssValue: string, side: string) {
     let rv;
-    let [, previewLiteral, type] = cssValue.match(/^([.\d]+)\s*([%\w]+)?/);
-    if (type === 'px') {
-      rv = Number(previewLiteral) * (this.shareImg[side] / this.containerSize[side]);
+    if (cssValue === 'auto'){
+      rv = 0; // this.shareImg[side];
     } else {
-      // if (type === '%') rv = Number(previewLiteral) * (this.img[side] / 100);
-      console.error('Now only expecting px');
-      debugger;
+      let [, previewLiteral, type] = cssValue.match(/^([.\d]+)\s*([%\w]+)?/);
+      if (type === 'px') {
+        rv = Number(previewLiteral) * (this.shareImg[side] / this.containerSize[side]);
+      } else {
+        console.error('Now only expecting px');
+        debugger;
+      }
     }
-    console.log(side, ':', this.containerSize[side], ' v ', this.shareImg[side], ' = ', cssValue, previewLiteral, 'v', rv);
+    console.log(side, ':', this.containerSize[side], ' v ', this.shareImg[side], ' = ', cssValue, previewLiteral, 'v (rv)', rv);
     return rv;
   }
 
@@ -81,6 +84,7 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   private _createShareImg() {
+    console.log('Share ', this.textBlocks);
     this.shareImg = new Image(
       this.img.naturalWidth, this.img.naturalHeight
     );
