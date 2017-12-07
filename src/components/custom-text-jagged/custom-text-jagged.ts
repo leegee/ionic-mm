@@ -23,7 +23,6 @@ export class CustomTextJaggedComponent extends CustomTextComponent {
     el.setAttribute('class', 'text');
     el.setAttribute('style',
       'fontSize:' + this.config.fontSize + 'vh;' + 'position: "absolute";left: 0;top: 0'
-      // TODO lineheight
     );
     el.innerHTML = chrs;
     let rv = 0;
