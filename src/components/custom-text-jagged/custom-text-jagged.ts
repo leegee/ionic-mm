@@ -1,11 +1,13 @@
+import { TextRenderer } from './../text-renderer';
 import { Component } from '@angular/core';
 import { CustomTextComponent } from '../custom-text/custom-text';
+import { TextBlockInterface } from '../text-block-interface';
 
 @Component({
   selector: 'custom-text-jagged',
   templateUrl: 'custom-text-jagged.html'
 })
-export class CustomTextJaggedComponent {
+export class CustomTextJaggedComponent extends TextRenderer implements TextBlockInterface {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
 
