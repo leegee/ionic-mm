@@ -1,3 +1,4 @@
+import { TextRenderer } from './../text-renderer';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
 import { Component, ElementRef, AfterViewChecked } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
@@ -10,7 +11,7 @@ import { TextBlockInterface } from '../text-block-interface';
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent implements TextBlockInterface, AfterViewChecked, OnDestroy {
+export class CustomTextComponent extends TextRenderer implements TextBlockInterface, AfterViewChecked, OnDestroy {
   private static FONT_SCALE_BY: number = 0.05;
   private static DEBOUNCE_DELAY_MS = 333;
   public userSettingsSubscription: Subscription;
@@ -20,13 +21,13 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
   protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
-  private oldTextValue: string;
 
   constructor(
     private MemeStyleService: MemeStyleService,
     protected elRef: ElementRef,
     private domSanitizer: DomSanitizer
   ) {
+    super();
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
         this.style = Object.assign(this.style, changed);
@@ -65,8 +66,7 @@ export class CustomTextComponent implements TextBlockInterface, AfterViewChecked
 
       let caretAtEnd = caret == this.elTextInput.innerHTML.length;
 
-      this.oldTextValue = this.text;
-      this.flow(this.oldTextValue);
+      this.flow(this.text);
 
       if (caretAtEnd) {
         caret = this.elTextInput.innerHTML.length;

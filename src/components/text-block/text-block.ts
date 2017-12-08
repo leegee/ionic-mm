@@ -1,3 +1,4 @@
+import { TextRenderer } from './../text-renderer';
 import { Component, ElementRef, Input } from '@angular/core';
 import { TextBlockInterface } from '../text-block-interface';
 
@@ -5,7 +6,7 @@ import { TextBlockInterface } from '../text-block-interface';
   selector: 'text-block',
   templateUrl: 'text-block.html'
 })
-export class TextBlockComponent implements TextBlockInterface {
+export class TextBlockComponent extends TextRenderer implements TextBlockInterface  {
   @Input('text') text: string;
 
   private el: HTMLElement;
@@ -14,6 +15,7 @@ export class TextBlockComponent implements TextBlockInterface {
   public placeholder: string = "Your text";
 
   constructor(elRef: ElementRef) {
+    super();
     this.elRef = elRef;
   }
 

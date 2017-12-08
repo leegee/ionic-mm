@@ -72,6 +72,7 @@ export class StylePopoverPage {
                 newState[rule] = this.selections[rule];
             }
         }
+        console.log('state:', newState);
         return newState;
     }
 }

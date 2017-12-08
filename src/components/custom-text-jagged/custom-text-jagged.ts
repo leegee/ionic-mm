@@ -5,7 +5,7 @@ import { CustomTextComponent } from '../custom-text/custom-text';
   selector: 'custom-text-jagged',
   templateUrl: 'custom-text-jagged.html'
 })
-export class CustomTextJaggedComponent extends CustomTextComponent {
+export class CustomTextJaggedComponent {
 
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
 

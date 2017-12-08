@@ -6,8 +6,8 @@ export class Shareable {
 
     static share(imgb64) {
         Shareable.socialSharing.share(
-            'Memeology Message',
-            'Memeology Subject',
+            'Meme',
+            'Memeology',
             imgb64
         );
     }
