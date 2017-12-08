@@ -70,6 +70,46 @@ export class TextRenderer {
         return this._scale(cssValue, 'height');
     }
 
+    private _getStyles = () => {
+        let textBlockStyle = this.getStyles();
+        let styles: { [key: string]: string } = Object.keys(textBlockStyle)
+            .filter(ruleName => TextRenderer.textStyleRules.some(
+                wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
+            )
+            ).reduce((styles, ruleName) => {
+                styles[ruleName] = textBlockStyle[ruleName];
+                return styles;
+            }, {}
+            );
+
+        // Centered text
+        if (styles.width === 'auto') {
+            styles.width = this.displayed.width.toString();
+            styles.height = this.displayed.height.toString();
+        }
+
+        return styles;
+    };
+
+    // The computed value of 'line-height' varies by user-agent :(
+    private _getScaledLineHeight(scaledFontSize): number {
+        let el = document.createElement('div');
+        let styleAttr = 'position: "absolute";left: 0;top: 0; '
+            + 'font-size:' + this.computedStyles.fontSize + ';'
+            + 'line-height: ' + this.computedStyles.lineHeight;
+
+        el.setAttribute('style', styleAttr);
+        el.innerHTML = 'jgyl/t"(';
+        this.nativeElement.appendChild(el);
+        let cssValue = el.getBoundingClientRect().height;
+        el.outerHTML = '';
+
+        console.log('preliminary line-height', cssValue);
+        let rv = this._scaleFont(cssValue + 'px');
+        console.log('rv line-height', rv);
+        return rv;
+    }
+
     public render(args: renderArgs) {
         this.ctx = args.ctx;
         this.nativeElement = args.nativeElement;
@@ -131,45 +171,6 @@ export class TextRenderer {
         });
     }
 
-    // The computed value of 'line-height' varies by user-agent :(
-    private _getScaledLineHeight(scaledFontSize): number {
-        let el = document.createElement('div');
-        let styleAttr = 'position: "absolute";left: 0;top: 0; '
-            + 'font-size:' + this.computedStyles.fontSize + ';'
-            + 'line-height: ' + this.computedStyles.lineHeight;
-
-        el.setAttribute('style', styleAttr);
-        el.innerHTML = 'jgyl/t"(';
-        this.nativeElement.appendChild(el);
-        let cssValue = el.getBoundingClientRect().height;
-        el.outerHTML = '';
-
-        console.log('preliminary line-height', cssValue);
-        let rv = this._scaleFont(cssValue + 'px');
-        console.log('rv line-height', rv);
-        return rv;
-    }
-
-    private _getStyles = () => {
-        let textBlockStyle = this.getStyles();
-        let styles: { [key: string]: string } = Object.keys(textBlockStyle)
-            .filter(ruleName => TextRenderer.textStyleRules.some(
-                wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
-            )
-            ).reduce((styles, ruleName) => {
-                styles[ruleName] = textBlockStyle[ruleName];
-                return styles;
-            }, {}
-            );
-
-        // Centered text
-        if (styles.width === 'auto') {
-            styles.width = this.displayed.width.toString();
-            styles.height = this.displayed.height.toString();
-        }
-
-        return styles;
-    };
 }
 
 
