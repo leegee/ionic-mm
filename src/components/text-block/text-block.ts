@@ -19,11 +19,11 @@ export class TextBlockComponent extends TextRenderer implements TextBlockInterfa
     this.elRef = elRef;
   }
 
-  getText() {
+  getText() : string {
     return this.text;
   }
 
-  getStyles() {
+  getStyles() : {} {
     return document.defaultView.getComputedStyle(
       this.elRef.nativeElement
       // return this.elRef.nativeElement.querySelector('.text-block-container');

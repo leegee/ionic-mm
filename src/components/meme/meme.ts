@@ -93,7 +93,14 @@ export abstract class Meme implements AfterViewChecked {
     ctx.drawImage(this.shareImg, 0, 0);
 
     this.textBlocks.forEach((textBlock) => {
-      textBlock.render(this.elRef.nativeElement, ctx, this.shareImg.width, this.shareImg.height);
+      textBlock.render({
+        nativeElement: this.elRef.nativeElement,
+        ctx: ctx,
+        width: this.shareImg.width,
+        height: this.shareImg.height,
+        displayedWidth: this.containerSize.width,
+        displayedHeight: this.containerSize.height
+      });
     });
 
     let imgExport = new Image(this.width, this.height);
@@ -109,8 +116,3 @@ export abstract class Meme implements AfterViewChecked {
   }
 }
 
-
-  // ctx.shadowColor = “red” // string Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
-  // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
-  // ctx.shadowOffsetY = 0; // integer Vertical distance of the shadow, in relation to the text.
-  // ctx.shadowBlur = 10; // integer
