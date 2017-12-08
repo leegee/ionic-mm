@@ -17,12 +17,12 @@ export class HomePage {
     public navCtrl: NavController
   ) {
     this.blankMemes = [
+      BatmanPage,
       DogePage,
       ExpandingConsciousness,
       SuccPage,
       WonkaPage,
       PepePage,
-      BatmanPage,
     ];
 
   }

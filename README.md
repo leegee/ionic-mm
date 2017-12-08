@@ -6,8 +6,8 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 To Do
 -----
 
-- `custom-text` in various positions with various sizes.
-- export `custom`
+- Still sometimes see scrollbars (Batman)
+- Canvas text wrap (strategy)
 
 Build
 -----
