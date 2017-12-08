@@ -8,8 +8,9 @@ import { TextBlockInterface } from '../text-block-interface';
   templateUrl: 'custom-text-jagged.html'
 })
 export class CustomTextJaggedComponent extends TextRenderer implements TextBlockInterface {
-
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
+  protected elTextInput: HTMLInputElement;
+  public text: string = '';
 
   private widthOfASpace: number;
 
