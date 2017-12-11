@@ -32,6 +32,8 @@ export class TextRenderer {
     private x: number;
     private y: number;
     private initalx: number;
+    private nComputedStylesWidthScaled: number;
+    private stroke: boolean = false;
 
     protected computedStyles: { [key: string]: string };
     protected canvas = {
@@ -141,14 +143,13 @@ export class TextRenderer {
         this.ctx.textBaseline = 'top';
         this.ctx.fillStyle = this.computedStyles.color;
 
-        let stroke = false;
         if (this.computedStyles['-webkit-text-stroke-color']
             && this.computedStyles['-webkit-text-stroke-width']
             && Number(this.computedStyles['-webkit-text-stroke-width']) > 0
         ) {
             this.ctx.lineWidth = Number(this.computedStyles['-webkit-text-stroke-width']);
             this.ctx.strokeStyle = this.computedStyles['-webkit-text-stroke-color'];
-            stroke = true;
+            this.stroke = true;
         }
 
         this._setScaledLineHeight(fontSize);
@@ -161,57 +162,65 @@ export class TextRenderer {
 
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
         let nComputedStylesWidth = Number(strComputedStylesWidth);
+        this.nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
 
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {
-            let renderLine = '';
-            let nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
-
-            if (nComputedStylesWidth === 0) {
-                console.log('Zero-wdith text');
-                renderLine = inputLine;
-            }
-
-            else {
-                let inputChars = inputLine.split('');
-                let letter, renderLineWidth;
-                while (letter = inputChars.shift()) {
-                    renderLine += letter;
-                    renderLineWidth = this.ctx.measureText(renderLine).width;
-                    if (renderLineWidth >= nComputedStylesWidthScaled
-                        && inputChars.length
-                    ) {
-                        console.log(' Fits: %d vs %d', this.ctx.measureText(renderLine).width, nComputedStylesWidth);
-                        break;
-                    }
-                }
-                renderLine = renderLine.replace(/\s$/, '');
-
-                let [, lastWord] = renderLine.match(/(\S+)$/);
-                renderLine = renderLine.replace(/(\S+)$/, '');
-                console.log('Last word cut', lastWord);
-                lastWord.split('').forEach(lastWordChar => {
-                    inputChars.unshift(lastWordChar);
-                });
-            }
-
-            renderLine = renderLine.replace(/\s$/, '');
-
-            // Centre?
-            if (this.computedStyles.textAlign !== 'left' && this.computedStyles.textAlign !== 'right') {
-                this.x = this.initalx + (nComputedStylesWidthScaled / 2) - (this.ctx.measureText(inputLine).width / 2);
-            }
-
-            console.log('RENDER LINE [%s] at %s, %s', renderLine, this.x, this.y);
-            this.ctx.fillText(renderLine, this.x, this.y);
-            if (stroke) {
-                this.ctx.strokeText(renderLine, this.x, this.y);
-            }
-
-            this.y += this.lineHeight;
-            renderLine = '';
+            this.processLine(inputLine);
         });
     }
 
+    processLine(inputLine: string) {
+        let renderText = '';
+        if (this.nComputedStylesWidthScaled === 0) {
+            console.log('Zero-wdith text');
+            renderText = inputLine;
+        }
+
+        else {
+            let inputChars = inputLine.split('');
+            let letter, renderLineWidth;
+            while (letter = inputChars.shift()) {
+                renderText += letter;
+                renderLineWidth = this.ctx.measureText(renderText).width;
+                if (renderLineWidth >= this.nComputedStylesWidthScaled
+                    && inputChars.length
+                ) {
+                    console.log(' Fits: %d vs %d', this.ctx.measureText(renderText).width, this.nComputedStylesWidthScaled);
+                    renderText = renderText.replace(/\s$/, '');
+                    let [, lastWord] = renderText.match(/(\S+)$/);
+                    renderText = renderText.replace(/(\S+)$/, '');
+                    console.log('Last word cut [%s]', lastWord);
+                    console.log('- leaves render text [%s]', renderText);
+                    lastWord.split('').forEach(lastWordChar => {
+                        inputChars.unshift(lastWordChar);
+                        console.log('-- add [%s] to todo-stack, making [%s]', lastWordChar, inputChars);
+                    });
+                    this.renderLine(renderText);
+                    renderText = '';
+                }
+            }
+        }
+
+        this.renderLine(renderText);
+        renderText = '';
+    }
+
+    renderLine(renderText: string) {
+        renderText = renderText.replace(/\s$/, '');
+
+        // Centre?
+        if (this.computedStyles.textAlign !== 'left' && this.computedStyles.textAlign !== 'right') {
+            this.x = this.initalx + (this.nComputedStylesWidthScaled / 2) - (this.ctx.measureText(renderText).width / 2);
+        }
+
+        console.log('RENDER LINE [%s] at %s, %s', renderText, this.x, this.y);
+        this.ctx.fillText(renderText, this.x, this.y);
+        if (this.stroke) {
+            this.ctx.strokeText(renderText, this.x, this.y);
+        }
+
+        this.y += this.lineHeight;
+    }
 }
 
 
