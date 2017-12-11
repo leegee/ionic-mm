@@ -164,10 +164,10 @@ export class TextRenderer {
 
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {
             let renderLine = '';
-            console.log('renderLine [%s]', renderLine);
             let nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
 
             if (nComputedStylesWidth === 0) {
+                console.log('Zero-wdith text');
                 renderLine = inputLine;
             }
 
@@ -187,6 +187,8 @@ export class TextRenderer {
                 renderLine = renderLine.replace(/\s$/, '');
 
                 let [, lastWord] = renderLine.match(/(\S+)$/);
+                renderLine = renderLine.replace(/(\S+)$/, '');
+                console.log('Last word cut', lastWord);
                 lastWord.split('').forEach(lastWordChar => {
                     inputChars.unshift(lastWordChar);
                 });
@@ -194,7 +196,7 @@ export class TextRenderer {
 
             renderLine = renderLine.replace(/\s$/, '');
 
-            // Centre
+            // Centre?
             if (this.computedStyles.textAlign !== 'left' && this.computedStyles.textAlign !== 'right') {
                 this.x = this.initalx + (nComputedStylesWidthScaled / 2) - (this.ctx.measureText(inputLine).width / 2);
             }
