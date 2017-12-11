@@ -97,18 +97,17 @@ export class TextRenderer {
     // The computed value of 'line-height' varies by user-agent :(
     private _setScaledLineHeight(scaledFontSize): void {
         let el = document.createElement('div');
-        let styleAttr = 'position: "absolute";left: 0;top: 0; '
+        let styleAttr = 'z-index: 999; display:inline-block; position: "absolute";left: 0;top: 0; width:auto;height:auto; background:blue;'
             + 'font-size:' + this.computedStyles.fontSize + ';'
             + 'line-height: ' + this.computedStyles.lineHeight;
 
         el.setAttribute('style', styleAttr);
-        el.innerHTML = 'jgyl/t"(';
+        el.innerHTML = "&nbsp;<br/>";
         this.nativeElement.appendChild(el);
         let cssValue = el.getBoundingClientRect().height;
-        el.outerHTML = '';
-
         this.lineHeight = this._scaleFont(cssValue + 'px');
-        console.log('Set line-height to ', this.lineHeight);
+        console.log('Set line-height to [%s] from [%s]', this.lineHeight, styleAttr);
+        el.outerHTML = '';
     }
 
     public render(args: TextRendererOptions) {
