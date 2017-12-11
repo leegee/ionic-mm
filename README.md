@@ -7,12 +7,16 @@ To Do
 -----
 
 - Still sometimes see scrollbars (Batman)
-- Canvas text wrap (strategy)
+- Move `pages/memes` into a single `page` with a serialisable structure in updatable localStorage
+- Allow `pages/custom` to save into the above.
 
 Build
 -----
 
     ionic serve
+
+And/or:
+
     ionic cordova run android --livereload
 
 Bibliography
