@@ -19,7 +19,8 @@
 
   <div id='editable-image' [hidden]="!imageUrl">
     <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
-    <div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'>
+    <!-- <div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'> -->
+      <div id="meme-text-container">
       <!-- for dev: cover whole image -->
       <custom-text #textinput></custom-text>
     </div>
