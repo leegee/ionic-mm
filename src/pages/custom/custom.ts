@@ -1,5 +1,5 @@
 import { StylePopoverPage } from './style-popover';
-import { PopoverController } from 'ionic-angular';
+import { PopoverController, AlertController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
@@ -22,6 +22,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
   public resizeHeight: number = 800;
 
   constructor(
+    protected alertCtrl: AlertController,
     public popoverCtrl: PopoverController,
     public navCtrl: NavController,
     private file: File,
@@ -32,7 +33,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
     protected containerSizeService: ContainerSizeService,
     protected elRef: ElementRef
   ) {
-    super(navCtrl, elRef, containerSizeService);
+    super(alertCtrl, navCtrl, elRef, containerSizeService);
   }
 
   ngAfterViewInit() {

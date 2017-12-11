@@ -20,15 +20,14 @@ export abstract class Meme implements AfterViewChecked {
   private containerSize: { [key: string]: number };
   protected isWeb: boolean;
   private platform: Platform;
-  protected alertCtrl: AlertController;
 
   public constructor(
+    protected alertCtrl: AlertController,
     public navCtrl: NavController,
     protected elRef: ElementRef,
     protected containerSizeService: ContainerSizeService
   ) {
     this.isWeb = !new Platform().is('android');
-    // this.alertCtrl = new AlertController;
   }
 
   ngAfterViewChecked() {
@@ -42,31 +41,29 @@ export abstract class Meme implements AfterViewChecked {
     this.container.style.height = height + 'px';
   }
 
-  ionViewCanLeave(): boolean {
-    let alert = this.alertCtrl.create({
-      title: 'Are you sure?',
-      message: 'If you leave now, your meme will be lost.',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
+  ionViewCanLeave() {
+    return new Promise((resolve: Function, reject: Function) => {
+      let alert = this.alertCtrl.create({
+        title: 'Are you sure?',
+        message: 'If you leave now, your meme will be lost.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              reject();
+            }
+          },
+          {
+            text: 'Leave',
+            handler: () => {
+              resolve();
+            }
           }
-        },
-        {
-          text: 'Leave',
-          handler: () => {
-            console.log('Leave clicked');
-            alert.dismiss().then(() => {
-              this.navCtrl.pop();
-            });
-          }
-        }
-      ]
+        ]
+      });
+      alert.present();
     });
-    alert.present();
-    return false;
   }
 
   share(goBack: boolean = true) {

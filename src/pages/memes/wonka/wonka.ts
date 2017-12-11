@@ -1,6 +1,6 @@
 import { ContainerSizeService } from './../../../services/ContainerSizeService';
 import { Component, ElementRef } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { Meme } from '../../../components/meme/meme';
 
 @IonicPage()
@@ -17,10 +17,11 @@ export class WonkaPage extends Meme {
   height: number = 545;
 
   constructor(
+    protected alertCtrl: AlertController,
     public  navCtrl: NavController,
     public elRef: ElementRef,
     public containerSizeService: ContainerSizeService
   ) {
-    super(navCtrl, elRef, containerSizeService);
+    super(alertCtrl, navCtrl, elRef, containerSizeService);
   }
 }
