@@ -113,6 +113,11 @@ export class TextRenderer {
     }
 
     public render(args: TextRendererOptions) {
+        let allText: string = this.getText();
+        if (allText.match(/^\s*$/)) {
+            console.warn('Nothing to render');
+            return;
+        }
         this.ctx = args.ctx;
         this.nativeElement = args.nativeElement;
         this.canvas = {
@@ -133,7 +138,6 @@ export class TextRenderer {
             fontSize + 'px',
             this.computedStyles.fontFamily || ''
         ].join(' ');
-
         this.ctx.textBaseline = 'top';
         this.ctx.fillStyle = this.computedStyles.color;
 
@@ -158,7 +162,7 @@ export class TextRenderer {
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
         let nComputedStylesWidth = Number(strComputedStylesWidth);
 
-        this.getText().split(/[\n\r\f]/g).forEach((inputLine) => {
+        allText.split(/[\n\r\f]/g).forEach((inputLine) => {
             let renderLine = '';
             console.log('renderLine [%s]', renderLine);
             let nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
