@@ -188,7 +188,7 @@ export class TextRenderer {
                     renderText = renderText.replace(/(\S+)$/, '');
                     console.log('Last word cut [%s]', lastWord);
                     console.log('- leaves render text [%s]', renderText);
-                    lastWord.split('').forEach(lastWordChar => {
+                    lastWord.split('').reverse().forEach(lastWordChar => {
                         inputChars.unshift(lastWordChar);
                         console.log('-- add [%s] to todo-stack, making [%s]', lastWordChar, inputChars);
                     });
