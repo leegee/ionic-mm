@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
 import { TextBlockInterface } from "./text-block-interface";
 
-interface renderArgs {
+export interface TextRendererOptions {
     nativeElement: HTMLElement;
     ctx: CanvasRenderingContext2D;
     width: number;
@@ -48,7 +48,7 @@ export class TextRenderer {
     }
 
     private _scale(cssValue: string, side: string): number {
-        console.log('_scale ', cssValue, side);
+        // console.log('_scale ', cssValue, side);
         let rv, value, units;
         if (cssValue.match(/^(auto|normal)$/)) {
             rv = 0; // this.shareImg[side]; Change the keyword value before we get here?
@@ -62,7 +62,7 @@ export class TextRenderer {
                 debugger;
             }
         }
-        console.log('RV ', rv);
+        // console.log('RV ', rv);
         return rv;
     }
 
@@ -104,13 +104,12 @@ export class TextRenderer {
         let cssValue = el.getBoundingClientRect().height;
         el.outerHTML = '';
 
-        console.log('preliminary line-height', cssValue);
         let rv = this._scaleFont(cssValue + 'px');
-        console.log('rv line-height', rv);
+        console.log('Set line-height to ', rv);
         return rv;
     }
 
-    public render(args: renderArgs) {
+    public render(args: TextRendererOptions) {
         this.ctx = args.ctx;
         this.nativeElement = args.nativeElement;
         this.canvas = {
@@ -153,21 +152,50 @@ export class TextRenderer {
 
         console.log('textAlign: ', this.computedStyles.textAlign);
 
-        this.getText().split(/[\n\r\f]/g).forEach((text) => {
-            if (this.computedStyles.textAlign !== 'left'
-                && this.computedStyles.textAlign !== 'right'
-            ) {
-                console.log('textAlign x pre: ', x);
-                x = initalx + (this._scale(this.computedStyles.width, 'width') / 2) - (this.ctx.measureText(text).width / 2);
-                console.log('textAlign x post: ', x);
+        let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
+        let nComputedStylesWidth = Number(strComputedStylesWidth);
+
+        this.getText().split(/[\n\r\f]/g).forEach((inputLine) => {
+
+            let renderLine = '';
+            console.log('renderLine [%s]', renderLine);
+            let nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
+            let inputChars = inputLine.split('');
+            let letter, renderLineWidth;
+
+            while (letter = inputChars.shift()) {
+                renderLine += letter;
+                renderLineWidth = this.ctx.measureText(renderLine).width;
+                if (renderLineWidth >= nComputedStylesWidthScaled
+                    && inputChars.length
+                ) {
+                    console.log(' Fits: %d vs %d', this.ctx.measureText(renderLine).width, nComputedStylesWidth);
+                    break;
+                }
             }
 
-            console.info('[%s] at %s, %s', text, x, y);
-            this.ctx.fillText(text, x, y);
-            if (stroke) {
-                this.ctx.strokeText(text, x, y);
+            renderLine = renderLine.replace(/\s$/, '');
+
+            let [, lastWord] = renderLine.match(/(\S+)$/);
+            lastWord.split('').forEach(lastWordChar => {
+                inputChars.unshift(lastWordChar);
+            });
+
+            renderLine = renderLine.replace(/\s$/, '');
+
+            // Centre
+            if (this.computedStyles.textAlign !== 'left' && this.computedStyles.textAlign !== 'right') {
+                x = initalx + (nComputedStylesWidthScaled / 2) - (this.ctx.measureText(inputLine).width / 2);
             }
+
+            console.log('RENDER LINE [%s] at %s, %s', renderLine, x, y);
+            this.ctx.fillText(renderLine, x, y);
+            if (stroke) {
+                this.ctx.strokeText(renderLine, x, y);
+            }
+
             y += lineHeight;
+            renderLine = '';
         });
     }
 

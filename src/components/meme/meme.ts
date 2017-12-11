@@ -1,3 +1,4 @@
+import { TextRendererOptions } from './../text-renderer';
 import { NavController, AlertController, Platform } from 'ionic-angular';
 import { Shareable } from './../shareable';
 import { ElementRef, AfterViewChecked, QueryList, ViewChildren } from '@angular/core';
@@ -100,7 +101,7 @@ export abstract class Meme implements AfterViewChecked {
         height: this.shareImg.height,
         displayedWidth: this.containerSize.width,
         displayedHeight: this.containerSize.height
-      });
+      } as TextRendererOptions);
     });
 
     let imgExport = new Image(this.width, this.height);
