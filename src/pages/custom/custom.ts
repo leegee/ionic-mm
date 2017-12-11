@@ -84,6 +84,7 @@ export class CustomPage extends Meme implements AfterViewInit, DoCheck {
         })
         .then((resizedFilePath) => {
           this.imageUrl = resizedFilePath;
+          this.isDirty = true;
         }).catch(e => {
           console.error(e);
           this._showError('Error resizing image: ' + e.toString());

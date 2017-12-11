@@ -17,6 +17,7 @@ export abstract class Meme implements AfterViewChecked {
   public imageUrl: string;
   public width: number;
   public height: number;
+  protected isDirty: boolean = false;
   private containerSize: { [key: string]: number };
   protected isWeb: boolean;
   private platform: Platform;
@@ -42,28 +43,30 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   ionViewCanLeave() {
-    return new Promise((resolve: Function, reject: Function) => {
-      let alert = this.alertCtrl.create({
-        title: 'Are you sure?',
-        message: 'If you leave now, your meme will be lost.',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              reject();
+    if (this.isDirty) {
+      return new Promise((resolve: Function, reject: Function) => {
+        let alert = this.alertCtrl.create({
+          title: 'Are you sure?',
+          message: 'If you leave now, your meme will be lost.',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                reject();
+              }
+            },
+            {
+              text: 'Leave',
+              handler: () => {
+                resolve();
+              }
             }
-          },
-          {
-            text: 'Leave',
-            handler: () => {
-              resolve();
-            }
-          }
-        ]
+          ]
+        });
+        alert.present();
       });
-      alert.present();
-    });
+    }
   }
 
   share(goBack: boolean = true) {

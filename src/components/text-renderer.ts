@@ -28,6 +28,10 @@ export class TextRenderer {
     private static reFontSize = /^([.\d]+)\s*([%\w]+)?/;
     private ctx: CanvasRenderingContext2D;
     private nativeElement: HTMLElement;
+    private lineHeight: number;
+    private x: number;
+    private y: number;
+    private initalx: number;
 
     protected computedStyles: { [key: string]: string };
     protected canvas = {
@@ -92,7 +96,7 @@ export class TextRenderer {
     };
 
     // The computed value of 'line-height' varies by user-agent :(
-    private _getScaledLineHeight(scaledFontSize): number {
+    private _setScaledLineHeight(scaledFontSize): void {
         let el = document.createElement('div');
         let styleAttr = 'position: "absolute";left: 0;top: 0; '
             + 'font-size:' + this.computedStyles.fontSize + ';'
@@ -104,9 +108,8 @@ export class TextRenderer {
         let cssValue = el.getBoundingClientRect().height;
         el.outerHTML = '';
 
-        let rv = this._scaleFont(cssValue + 'px');
-        console.log('Set line-height to ', rv);
-        return rv;
+        this.lineHeight = this._scaleFont(cssValue + 'px');
+        console.log('Set line-height to ', this.lineHeight);
     }
 
     public render(args: TextRendererOptions) {
@@ -144,11 +147,11 @@ export class TextRenderer {
             stroke = true;
         }
 
-        let lineHeight = this._getScaledLineHeight(fontSize);
+        this._setScaledLineHeight(fontSize);
 
-        let x = this._scale(this.computedStyles.left, 'width');
-        let y = this._scale(this.computedStyles.top, 'height');
-        let initalx = x;
+        this.x = this._scale(this.computedStyles.left, 'width');
+        this.y = this._scale(this.computedStyles.top, 'height');
+        this.initalx = this.x;
 
         console.log('textAlign: ', this.computedStyles.textAlign);
 
@@ -156,45 +159,49 @@ export class TextRenderer {
         let nComputedStylesWidth = Number(strComputedStylesWidth);
 
         this.getText().split(/[\n\r\f]/g).forEach((inputLine) => {
-
             let renderLine = '';
             console.log('renderLine [%s]', renderLine);
             let nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
-            let inputChars = inputLine.split('');
-            let letter, renderLineWidth;
 
-            while (letter = inputChars.shift()) {
-                renderLine += letter;
-                renderLineWidth = this.ctx.measureText(renderLine).width;
-                if (renderLineWidth >= nComputedStylesWidthScaled
-                    && inputChars.length
-                ) {
-                    console.log(' Fits: %d vs %d', this.ctx.measureText(renderLine).width, nComputedStylesWidth);
-                    break;
-                }
+            if (nComputedStylesWidth === 0) {
+                renderLine = inputLine;
             }
 
-            renderLine = renderLine.replace(/\s$/, '');
+            else {
+                let inputChars = inputLine.split('');
+                let letter, renderLineWidth;
+                while (letter = inputChars.shift()) {
+                    renderLine += letter;
+                    renderLineWidth = this.ctx.measureText(renderLine).width;
+                    if (renderLineWidth >= nComputedStylesWidthScaled
+                        && inputChars.length
+                    ) {
+                        console.log(' Fits: %d vs %d', this.ctx.measureText(renderLine).width, nComputedStylesWidth);
+                        break;
+                    }
+                }
+                renderLine = renderLine.replace(/\s$/, '');
 
-            let [, lastWord] = renderLine.match(/(\S+)$/);
-            lastWord.split('').forEach(lastWordChar => {
-                inputChars.unshift(lastWordChar);
-            });
+                let [, lastWord] = renderLine.match(/(\S+)$/);
+                lastWord.split('').forEach(lastWordChar => {
+                    inputChars.unshift(lastWordChar);
+                });
+            }
 
             renderLine = renderLine.replace(/\s$/, '');
 
             // Centre
             if (this.computedStyles.textAlign !== 'left' && this.computedStyles.textAlign !== 'right') {
-                x = initalx + (nComputedStylesWidthScaled / 2) - (this.ctx.measureText(inputLine).width / 2);
+                this.x = this.initalx + (nComputedStylesWidthScaled / 2) - (this.ctx.measureText(inputLine).width / 2);
             }
 
-            console.log('RENDER LINE [%s] at %s, %s', renderLine, x, y);
-            this.ctx.fillText(renderLine, x, y);
+            console.log('RENDER LINE [%s] at %s, %s', renderLine, this.x, this.y);
+            this.ctx.fillText(renderLine, this.x, this.y);
             if (stroke) {
-                this.ctx.strokeText(renderLine, x, y);
+                this.ctx.strokeText(renderLine, this.x, this.y);
             }
 
-            y += lineHeight;
+            this.y += this.lineHeight;
             renderLine = '';
         });
     }
