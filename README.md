@@ -21,13 +21,14 @@ And/or:
 
 Bibliography
 ------------
+
 - [Font conversion](https://medium.com/@leetheguy/adding-fonts-to-your-ionic-1-sass-app-dfbabf20dcaf)
 - [Testing](https://leifwells.github.io/2017/08/27/testing-in-ionic-configure-existing-projects-for-testing/)
 
 Developing on Android
 ---------------------
 
-(Ionic docs)(http://ionicframework.com/docs/v1/guide/installation.html) are a little out of date. Here is the missing info.
+(Ionic docs)(<http://ionicframework.com/docs/v1/guide/installation.html)> are a little out of date. Here is the missing info.
 
 Assuming Java, JDK, and Ant are installed with `ANT_HOME` set to the directory containing `bin/ant`, and `JAVA_HOME` is set.
 
@@ -46,6 +47,6 @@ Connect phone to PC via USB. Grant access rights and install Windows drivers for
 On PC, run `adb devices` and check the mobile is listed, if not visit SO.
 
 Finally, either launch the app by either:
+
 - In MS VSC, add `Cordova Tools` and add debug targets in `launch.json`
 - `ionic cordova run android --livereload`
-
