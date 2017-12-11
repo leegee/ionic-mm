@@ -5,7 +5,7 @@ import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Component, ElementRef } from '@angular/core';
-import { IonicPage, NavController, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../services/ContainerSizeService';
 import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Meme } from '../../components/meme/meme';

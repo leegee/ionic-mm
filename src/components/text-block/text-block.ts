@@ -9,7 +9,6 @@ import { TextBlockInterface } from '../text-block-interface';
 export class TextBlockComponent extends TextRenderer implements TextBlockInterface  {
   @Input('text') text: string;
 
-  private el: HTMLElement;
   private elRef: ElementRef;
   public editing: boolean = false;
   public placeholder: string = "Your text";

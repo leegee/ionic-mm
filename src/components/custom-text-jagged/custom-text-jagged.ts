@@ -1,6 +1,5 @@
 import { TextRenderer } from './../text-renderer';
 import { Component } from '@angular/core';
-import { CustomTextComponent } from '../custom-text/custom-text';
 import { TextBlockInterface } from '../text-block-interface';
 
 @Component({

@@ -13,7 +13,6 @@ import { TextBlockInterface } from '../text-block-interface';
 })
 export class CustomTextComponent extends TextRenderer implements TextBlockInterface, AfterViewChecked, OnDestroy {
   private static FONT_SCALE_BY: number = 0.05;
-  private static DEBOUNCE_DELAY_MS = 333;
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
   public text: string = '';

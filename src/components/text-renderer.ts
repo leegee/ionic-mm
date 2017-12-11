@@ -1,6 +1,3 @@
-import { ElementRef } from '@angular/core';
-import { TextBlockInterface } from "./text-block-interface";
-
 export interface TextRendererOptions {
     nativeElement: HTMLElement;
     ctx: CanvasRenderingContext2D;
@@ -161,7 +158,7 @@ export class TextRenderer {
         console.log('textAlign: ', this.computedStyles.textAlign);
 
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
-        let nComputedStylesWidth = Number(strComputedStylesWidth);
+        // let nComputedStylesWidth = Number(strComputedStylesWidth);
         this.nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
 
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {

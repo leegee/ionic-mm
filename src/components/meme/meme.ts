@@ -20,7 +20,6 @@ export abstract class Meme implements AfterViewChecked {
   protected isDirty: boolean = false;
   private containerSize: { [key: string]: number };
   protected isWeb: boolean;
-  private platform: Platform;
 
   public constructor(
     protected alertCtrl: AlertController,
@@ -73,7 +72,7 @@ export abstract class Meme implements AfterViewChecked {
     this._createShareImg();
     Shareable.share(this.shareImg);
     if (goBack) {
-      // this.navCtrl.pop();
+      this.navCtrl.pop();
     }
   }
 
