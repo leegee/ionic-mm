@@ -71,9 +71,9 @@ export abstract class Meme implements AfterViewChecked {
   share(goBack: boolean = true) {
     this._createShareImg();
     Shareable.share(this.shareImg);
-    if (goBack) {
-      this.navCtrl.pop();
-    }
+    // if (goBack) {
+    //   this.navCtrl.pop();
+    // }
   }
 
   private _createShareImg() {
