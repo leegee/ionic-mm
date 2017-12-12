@@ -1,6 +1,6 @@
 import { TextRenderer } from './../text-renderer';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
-import { Component, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -12,6 +12,9 @@ import { TextBlockInterface } from '../text-block-interface';
   templateUrl: 'custom-text.html'
 })
 export class CustomTextComponent extends TextRenderer implements TextBlockInterface, AfterViewChecked, OnDestroy {
+
+  @Input('style') styleInput;
+
   private static FONT_SCALE_BY: number = 0.05;
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
@@ -31,6 +34,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       (changed: { [key: string]: any }) => {
         this.style = Object.assign(this.style, changed);
         this.sizeText();
+        // merge
       }
     );
     this.style = StylePopoverPage.initialState;
@@ -43,6 +47,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   ngAfterViewChecked() {
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
+      console.log('*** ', this.styleInput);
     }
   }
 
@@ -51,6 +56,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     for (let rule in this.style) {
       styleAtrStr += rule + ':' + this.style[rule] + ';';
     }
+    console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
@@ -128,6 +134,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     let elWithPos = toObj(document.defaultView.getComputedStyle(
       this.elRef.nativeElement
     ));
+    console.log('el with pos = this.elRef.nativeElement =', this.elRef.nativeElement);
     let fontStyles = Object.keys(elWithFont)
       .filter(ruleName => {
         return ruleName.match(/^font/)

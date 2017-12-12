@@ -20,9 +20,9 @@
   <div id='editable-image' [hidden]="!imageUrl">
     <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
     <!-- <div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'> -->
-      <div id="meme-text-container">
+    <div id="meme-text-container">
       <!-- for dev: cover whole image -->
-      <custom-text #textinput></custom-text>
+      <custom-text #textinput  style='width:100%;height:50%; bottom:10%; background:pink'></custom-text>
     </div>
   </div>
 
