@@ -217,6 +217,13 @@ export class TextRenderer {
 
         this.y += this.lineHeight;
     }
+
+    hasScrollbars(el) {
+        return (el.scrollWidth > el.offsetWidth)
+            || (el.scrollWidth > el.clientWidth)
+            || (el.scrollHeight > el.offsetHeight)
+            || (el.scrollHeight > el.clientHeight);
+    };
 }
 
 

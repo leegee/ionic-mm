@@ -84,31 +84,30 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     }
   }
 
+  hasScrollbars() {
+    return (this.elTextInput.scrollWidth > this.elTextInput.offsetWidth)
+      || (this.elTextInput.scrollWidth > this.elTextInput.clientWidth)
+      || (this.elTextInput.scrollHeight > this.elTextInput.offsetHeight)
+      || (this.elTextInput.scrollHeight > this.elTextInput.clientHeight);
+  };
+
   /* Fit text to bouds */
   flow(text: string) {
-    let hasHorizontalScrollbar;
-    let hasVerticalScrollbar;
-
     // While text fits  bounding box, expand font size
     do {
-      hasHorizontalScrollbar = this.elTextInput.scrollWidth > this.elTextInput.offsetWidth;
-      hasVerticalScrollbar = this.elTextInput.scrollHeight > this.elTextInput.offsetHeight;
-      console.log(this.elTextInput.scrollHeight ," ", this.elTextInput.offsetHeight);
-      if (!hasHorizontalScrollbar && !hasVerticalScrollbar) {
+      if (!this.hasScrollbars()) {
         this.fontSize += CustomTextComponent.FONT_SCALE_BY;
         this.elTextInput.style.fontSize = this.fontSize + 'vh';
       }
-    } while (!hasHorizontalScrollbar && !hasVerticalScrollbar);
+    } while (!this.hasScrollbars());
 
     // While text does not fit bounding box, contract  font size
     do {
-      hasHorizontalScrollbar = this.elTextInput.scrollWidth > this.elTextInput.offsetWidth;
-      hasVerticalScrollbar = this.elTextInput.scrollHeight > this.elTextInput.offsetHeight;
-      if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+      if (this.hasScrollbars()) {
         this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
         this.elTextInput.style.fontSize = this.fontSize + 'vh';
       }
-    } while (hasHorizontalScrollbar || hasVerticalScrollbar);
+    } while (this.hasScrollbars());
   }
 
   getText() {
@@ -120,7 +119,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     Nor can CSSStyleDeclarations be cast to objecrts
   */
   getStyles() {
-    function toObj(styles){
+    function toObj(styles) {
       let rv = {};
       for (let rule in styles) {
         rv[rule] = styles[rule];
