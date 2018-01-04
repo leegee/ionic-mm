@@ -19,6 +19,7 @@ import { ContainerSizeService } from '../services/ContainerSizeService';
 import { MemeStyleService } from '../services/MemeStyleService';
 
 import { BatmanPage } from '../pages/memes/batman/batman';
+import { OrangePage } from '../pages/memes/orange/orange';
 import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
 import { WonkaPage } from '../pages/memes/wonka/wonka';
@@ -50,7 +51,8 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     SuccPage,
     PepePage,
     ExpandingConsciousness,
-    BatmanPage
+    BatmanPage,
+    OrangePage
   ],
   entryComponents: [
     SplashPage,
@@ -63,7 +65,8 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     SuccPage,
     PepePage,
     ExpandingConsciousness,
-    BatmanPage
+    BatmanPage,
+    OrangePage
   ],
   providers: [
     ContainerSizeService,

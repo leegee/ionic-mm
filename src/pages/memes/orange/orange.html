@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Orange Lad</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="share()">
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
+  <div id="meme-text-container" tappable>
+    <text-block #textinput text="Orange Lad" style='position:absolute; bottom:2em; width:100%;'></text-block>
+  </div>
+</ion-content>
