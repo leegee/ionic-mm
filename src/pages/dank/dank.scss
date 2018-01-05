@@ -1,0 +1,40 @@
+page-dank {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    .meme-thumbnail,
+    .label-md,
+    .item-md {
+      margin: 0;
+      -webkit-margin: 0;
+      padding: 0;
+    }
+    .meme-thumbnail {
+      width: 100%;
+      font-weight: bolder;
+      height: 10em;
+      img {
+        position: relative;
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+        width: 100%;
+        z-index: 50;
+      }
+      figcaption {
+        position: relative;
+        bottom: 3em;
+        text-align: center;
+        z-index: 100;
+        color: white;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.4em;
+      }
+    }
+    // @media (min-width: 800px) {
+    //   .meme-thumbnail {
+    //     width: 50%;
+    //    display: inline-block;
+    //   }
+    // }
+  }

@@ -6,9 +6,9 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 To Do
 -----
 
-- Still sometimessee scrollbars (Batman)
-- Take sizing of `custom-text` component from markup
+- Fonts via mobile differ to CSS/SASS
 - Different custom memes with different text layouts
+- Take sizing of `custom-text` component from markup
 - Move `pages/memes` into a single `page` with a serialisable structure in updatable localStorage
 - Allow `pages/custom` to save into the above.
 

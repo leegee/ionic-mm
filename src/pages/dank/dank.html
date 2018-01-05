@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar color="dark">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Memeology</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content no-padding>
+  <div *ngIf="!selectedMeme">
+    <ion-list no-lines no-padding>
+        <!-- [navPush]="meme"
+        [navParams]="i" -->
+      <ion-item *ngFor="let meme of memes"
+        no-padding
+        (click)="itemTapped($event, meme)"
+      >
+        <figure class='meme-thumbnail'>
+          <img src="{{meme.thumbnailUrl}}">
+          <figcaption>{{meme.title}}</figcaption>
+        </figure>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="selectedMeme" padding>
+    You chose <b>{{selectedMeme.title}}</b>
+  </div>
+
+</ion-content>

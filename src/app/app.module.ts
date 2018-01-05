@@ -5,6 +5,7 @@ import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Keyboard } from '@ionic-native/keyboard';
 import { TextBlockComponent } from './../components/text-block/text-block';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -74,6 +75,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     StatusBar,
     SplashScreen,
     SocialSharing,
+    Keyboard,
     ImagePicker,
     ImageResizer,
     File,

@@ -1,3 +1,4 @@
+import { Keyboard } from '@ionic-native/keyboard';
 import { TextRenderer } from './../text-renderer';
 import { Component, ElementRef, Input } from '@angular/core';
 import { TextBlockInterface } from '../text-block-interface';
@@ -6,36 +7,46 @@ import { TextBlockInterface } from '../text-block-interface';
   selector: 'text-block',
   templateUrl: 'text-block.html'
 })
-export class TextBlockComponent extends TextRenderer implements TextBlockInterface  {
+export class TextBlockComponent extends TextRenderer implements TextBlockInterface {
   @Input('text') text: string;
 
   private elRef: ElementRef;
-  public editing: boolean = false;
-  public placeholder: string = "Your text";
+  public editing = false;
+  public placeholder: string = "Enter your text here";
 
-  constructor(elRef: ElementRef) {
+  constructor(
+    private keyboard: Keyboard,
+    elRef: ElementRef
+  ) {
     super();
     this.elRef = elRef;
   }
 
-  getText() : string {
+  getText(): string {
     return this.text;
   }
 
-  getStyles() : {} {
+  getStyles(): {} {
     return document.defaultView.getComputedStyle(
       this.elRef.nativeElement
       // return this.elRef.nativeElement.querySelector('.text-block-container');
     ) as {};
   }
 
-  onVisible() {
+  onStartEditing() {
     this.editing = true;
     setTimeout(() => {
       var el = this.elRef.nativeElement.querySelector('input');
       el.select();
       el.focus();
+      this.keyboard.show();
+      console.log('onTextVisible');
     }, 1);
   }
 
+  onBlur() {
+    this.editing = false;
+    this.keyboard.close();
+    console.log('onBlur');
+  }
 }

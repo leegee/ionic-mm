@@ -1,6 +1,6 @@
 <div class='text-block-container'>
   <div class="screen-overlay" *ngIf="editing"></div>
-  <ion-input class='input' *ngIf="editing" placeholder="{{placeholder}}" [(ngModel)]="text" (ionBlur)="editing=false"></ion-input>
-  <div class='display' *ngIf="!editing" (click)="onVisible()">{{text}}</div>
+  <ion-input class='input' *ngIf="editing" placeholder="{{placeholder}}" [(ngModel)]="text" (ionBlur)="onBlur()"></ion-input>
+  <div class='display' *ngIf="!editing" (click)="onStartEditing()">{{text}}</div>
 </div>
 
