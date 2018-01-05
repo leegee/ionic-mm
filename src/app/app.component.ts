@@ -1,6 +1,7 @@
 // import { SplashPage } from './../pages/splash/splash';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ModalController } from 'ionic-angular';
+import { Nav, Platform } from 'ionic-angular';
+// import { ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
