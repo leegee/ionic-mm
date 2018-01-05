@@ -6,11 +6,16 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button  color="dark" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <ion-item-group no-lines>
+      <button color="dark" menuClose ion-item *ngFor="let p of libraryPages" (click)="openPage(p)">
         {{p.title}}
       </button>
-    </ion-list>
+
+      <ion-list-header color="dark"> Custom Memes </ion-list-header>
+      <button color="dark" menuClose ion-item *ngFor="let p of customPages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+    </ion-item-group>
   </ion-content>
 
 </ion-menu>

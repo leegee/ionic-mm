@@ -1,4 +1,4 @@
-import { SplashPage } from './../pages/splash/splash';
+// import { SplashPage } from './../pages/splash/splash';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,21 +14,22 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
-  pages: Array<{ title: string, component: any }>;
+  libraryPages: Array<{ title: string, component: any }>;
+  customPages: Array<{ title: string, component: any }>;
 
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen,
-    public modalCtrl: ModalController
+    public splashScreen: SplashScreen
+    // public modalCtrl: ModalController
   ) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Dank Memes', component: HomePage },
-      { title: 'Create a Meme', component: CustomWholePage }
+    this.libraryPages = [
+      { title: 'Dank Memes', component: HomePage }
+    ];
+    this.customPages = [
+      { title: 'Text covers page', component: CustomWholePage }
     ];
 
   }
@@ -36,15 +37,14 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      // this.splashScreen.hide();
-      let splash = this.modalCtrl.create(SplashPage);
+      this.splashScreen.hide();
 
       var scale = 'scale(1)';
       document.body.style.webkitTransform = scale;
       document.body.style.transform = scale;
-      splash.present();
+      // let splash = this.modalCtrl.create(SplashPage);
+      // splash.present();
     });
   }
 
