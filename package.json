@@ -3,8 +3,11 @@
   "version": "0.0.1",
   "author": "Lee Goddard",
   "description": "Makes meming easy.",
-  "homepage": "http://leegoddard.net/memeology",
+  "homepage": "https://github.com/leegee/ionic-mm.git",
   "private": true,
+  "repository": {
+    "https://github.com/leegee/ionic-mm.git"
+  },
   "scripts": {
     "mobile": "ionic cordova run android --livereload",
     "clean": "ionic-app-scripts clean",

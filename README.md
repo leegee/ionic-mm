@@ -3,10 +3,16 @@ Memeology
 
 My first mobile app, first Ionic app, first Cordova experience, and first Angular 4 project.
 
+
+Bugs
+----
+
+ - Fonts via mobile differ to CSS/SASS
+ - Orang: center/outline differ in TextRender
+
 To Do
 -----
 
-- Fonts via mobile differ to CSS/SASS
 - Different custom memes with different text layouts
 - Take sizing of `custom-text` component from markup
 - Move `pages/memes` into a single `page` with a serialisable structure in updatable localStorage
