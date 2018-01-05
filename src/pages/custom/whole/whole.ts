@@ -52,8 +52,8 @@ export class CustomWholePage extends Meme implements AfterViewInit, DoCheck {
   private _setSizes() {
     let sizes = this.containerSizeService.size(this.img);
     if (sizes.width !== null) {
-      this.width = sizes.width;
-      this.height = sizes.height;
+      this.width = Math.floor(sizes.width);
+      this.height = Math.floor(sizes.height);
       this.container.style.width = sizes.width + 'px';
       this.container.style.height = sizes.height + 'px';
     }
