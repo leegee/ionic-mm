@@ -13,7 +13,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { SplashPage } from '../pages/splash/splash';
 import { HomePage } from '../pages/home/home';
-import { CustomPage } from '../pages/custom/custom';
+import { CustomWholePage } from '../pages/custom/whole/whole';
 import { CustomTextComponent } from '../components/custom-text/custom-text';
 import { ContainerSizeService } from '../services/ContainerSizeService';
 import { MemeStyleService } from '../services/MemeStyleService';
@@ -45,7 +45,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     CustomTextJaggedComponent,
     StylePopoverPage,
     HomePage,
-    CustomPage,
+    CustomWholePage,
     DogePage,
     WonkaPage,
     SuccPage,
@@ -58,7 +58,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     SplashPage,
     MyApp,
     HomePage,
-    CustomPage,
+    CustomWholePage,
     StylePopoverPage,
     DogePage,
     WonkaPage,

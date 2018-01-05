@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { CustomPage } from '../pages/custom/custom';
+import { CustomWholePage } from '../pages/custom/whole/whole';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +28,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Dank Memes', component: HomePage },
-      { title: 'Create a Meme', component: CustomPage }
+      { title: 'Create a Meme', component: CustomWholePage }
     ];
 
   }
