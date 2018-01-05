@@ -69,8 +69,10 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   share(goBack: boolean = true) {
-    this._createShareImg();
-    Shareable.share(this.shareImg);
+    console.log('Enter Meme.share');
+    let b64img = this._createShareImg();
+    console.log('Meme.share will call Shareable.share....', this.shareImg);
+    Shareable.share(b64img);
     // if (goBack) {
     //   this.navCtrl.pop();
     // }
@@ -112,6 +114,8 @@ export abstract class Meme implements AfterViewChecked {
 
     var imgB64 = canvas.toDataURL();
     canvas.outerHTML = '';
+
+    console.log('Done Meme._createShareImg', imgB64);
     return imgB64;
   }
 }
