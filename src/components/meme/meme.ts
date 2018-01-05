@@ -13,7 +13,6 @@ export abstract class Meme implements AfterViewChecked {
 
   protected container: HTMLElement;
   protected img: HTMLImageElement;
-  private shareImg: HTMLImageElement;
   public imageUrl: string;
   public width: number;
   public height: number;
@@ -69,37 +68,34 @@ export abstract class Meme implements AfterViewChecked {
   }
 
   share(goBack: boolean = true) {
-    console.log('Enter Meme.share');
-    let b64img = this._createShareImg();
-    console.log('Meme.share will call Shareable.share....', this.shareImg);
+    let b64img = this._createB64ShareableImage();
     Shareable.share(b64img);
     // if (goBack) {
     //   this.navCtrl.pop();
     // }
   }
 
-  private _createShareImg() {
-    console.log('Share ', this.textBlocks);
-    this.shareImg = new Image(
+  private _createB64ShareableImage() {
+    let shareImg = new Image(
       this.img.naturalWidth, this.img.naturalHeight
     );
-    this.shareImg.src = this.img.src;
+    shareImg.src = this.img.src;
 
     let canvas = document.createElement("canvas");
     canvas.id = "screenshot-canvas";
     document.body.appendChild(canvas);
 
     let ctx = canvas.getContext("2d");
-    ctx.canvas.width = this.shareImg.width;
-    ctx.canvas.height = this.shareImg.height;
-    ctx.drawImage(this.shareImg, 0, 0);
+    ctx.canvas.width = shareImg.width;
+    ctx.canvas.height = shareImg.height;
+    ctx.drawImage(shareImg, 0, 0);
 
     this.textBlocks.forEach((textBlock) => {
       textBlock.render({
         nativeElement: this.elRef.nativeElement,
         ctx: ctx,
-        width: this.shareImg.width,
-        height: this.shareImg.height,
+        width: shareImg.width,
+        height: shareImg.height,
         displayedWidth: this.containerSize.width,
         displayedHeight: this.containerSize.height
       } as TextRendererOptions);
@@ -115,7 +111,6 @@ export abstract class Meme implements AfterViewChecked {
     var imgB64 = canvas.toDataURL();
     canvas.outerHTML = '';
 
-    console.log('Done Meme._createShareImg', imgB64);
     return imgB64;
   }
 }
