@@ -3,7 +3,7 @@
     <name>Memeology</name>
     <description>Easily meme, anywhere</description>
     <author email="lee@leegoddard.net" href="http://leegoddard.net">Lee Goddard</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.45:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

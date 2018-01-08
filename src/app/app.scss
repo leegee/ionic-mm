@@ -54,22 +54,22 @@ img.meme-img {
 
 @font-face {
   font-family: 'AntonRegular';
-  src: url('/assets/fonts/Anton/AntonRegular.eot');
-  src: url('/assets/fonts/Anton/AntonRegular.eot') format('embedded-opentype'),
-       url('/assets/fonts/Anton/AntonRegular.woff2') format('woff2'),
-       url('/assets/fonts/Anton/AntonRegular.woff') format('woff'),
-       url('/assets/fonts/Anton/AntonRegular.ttf') format('truetype'),
-       url('/assets/fonts/Anton/AntonRegular.svg#AntonRegular') format('svg');
+  src: url('/assets/Anton/AntonRegular.eot');
+  src: url('/assets/Anton/AntonRegular.eot') format('embedded-opentype'),
+       url('/assets/Anton/AntonRegular.woff2') format('woff2'),
+       url('/assets/Anton/AntonRegular.woff') format('woff'),
+       url('/assets/Anton/AntonRegular.ttf') format('truetype'),
+       url('/assets/Anton/AntonRegular.svg#AntonRegular') format('svg');
 }
 
 @font-face {
   font-family: 'PermanentMarkerRegular';
-  src: url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.eot');
-  src: url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.eot') format('embedded-opentype'),
-       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.woff2') format('woff2'),
-       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.woff') format('woff'),
-       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.ttf') format('truetype'),
-       url('/assets/fonts/PermanentMarker/PermanentMarkerRegular.svg#PermanentMarkerRegular') format('svg');
+  src: url('/assets/PermanentMarker/PermanentMarkerRegular.eot');
+  src: url('/assets/PermanentMarker/PermanentMarkerRegular.eot') format('embedded-opentype'),
+       url('/assets/PermanentMarker/PermanentMarkerRegular.woff2') format('woff2'),
+       url('/assets/PermanentMarker/PermanentMarkerRegular.woff') format('woff'),
+       url('/assets/PermanentMarker/PermanentMarkerRegular.ttf') format('truetype'),
+       url('/assets/PermanentMarker/PermanentMarkerRegular.svg#PermanentMarkerRegular') format('svg');
 }
 
 .toolbar-background,
