@@ -5,9 +5,9 @@
   "description": "Makes meming easy.",
   "homepage": "https://github.com/leegee/ionic-mm.git",
   "private": true,
-  "repository": {
+  "repository": [
     "https://github.com/leegee/ionic-mm.git"
-  },
+  ],
   "scripts": {
     "mobile": "ionic cordova run android --livereload",
     "clean": "ionic-app-scripts clean",
