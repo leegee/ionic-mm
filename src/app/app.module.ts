@@ -25,6 +25,7 @@ import { OrangePage } from '../pages/memes/orange/orange';
 import { DogePage } from '../pages/memes/doge/doge';
 import { SuccPage } from '../pages/memes/succ/succ';
 import { WonkaPage } from '../pages/memes/wonka/wonka';
+import { MostInterestingManPage } from './../pages/memes/most-interesting-man/most-interesting-man';
 import { ExpandingConsciousness } from '../pages/memes/expanding-consciousness/expanding-consciousness';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -51,6 +52,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     CustomTopBottomPage,
     DogePage,
     WonkaPage,
+    MostInterestingManPage,
     SuccPage,
     PepePage,
     ExpandingConsciousness,
@@ -66,6 +68,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     StylePopoverPage,
     DogePage,
     WonkaPage,
+    MostInterestingManPage,
     SuccPage,
     PepePage,
     ExpandingConsciousness,

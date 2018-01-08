@@ -40,13 +40,13 @@ export class TextBlockComponent extends TextRenderer implements TextBlockInterfa
       el.select();
       el.focus();
       this.keyboard.show();
-      console.log('onTextVisible');
+      // console.log('onTextVisible');
     }, 1);
   }
 
   onBlur() {
     this.editing = false;
     this.keyboard.close();
-    console.log('onBlur');
+    // console.log('onBlur');
   }
 }

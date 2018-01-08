@@ -1,6 +1,6 @@
 import { TextRenderer } from './../text-renderer';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
-import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked, Input, OnInit } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -11,19 +11,20 @@ import { TextBlockInterface } from '../text-block-interface';
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent extends TextRenderer implements TextBlockInterface, AfterViewChecked, OnDestroy {
+export class CustomTextComponent extends TextRenderer implements TextBlockInterface, OnInit, AfterViewChecked, OnDestroy {
 
   @Input('style') styleInput;
+  @Input('text') text = '';
 
   private static FONT_SCALE_BY: number = 0.05;
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
-  public text: string = '';
   private fontSize: number = 2;
   protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
   protected container: HTMLElement;
+  doneInit = false;
 
   constructor(
     private MemeStyleService: MemeStyleService,
@@ -41,6 +42,10 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     this.style = StylePopoverPage.initialState;
   }
 
+  ngOnInit() {
+    // this.text = this.textInput;
+  }
+
   ngOnDestroy() {
     this.userSettingsSubscription.unsubscribe();
   }
@@ -49,6 +54,10 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
       console.log('*** ', this.styleInput);
+      if (!this.doneInit) {
+        this.sizeText();
+        this.doneInit = true;
+      }
     }
   }
 
@@ -101,9 +110,10 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   hasScrollbars() {
-    return (this.elTextInput.scrollWidth > this.elTextInput.offsetWidth)
+    console.log(this.elTextInput.scrollHeight, this.elTextInput.offsetHeight, this.elTextInput.clientHeight );
+    return (this.elTextInput.scrollWidth >= this.elTextInput.offsetWidth)
       || (this.elTextInput.scrollWidth > this.elTextInput.clientWidth)
-      || (this.elTextInput.scrollHeight > this.elTextInput.offsetHeight)
+      || (this.elTextInput.scrollHeight >= this.elTextInput.offsetHeight)
       || (this.elTextInput.scrollHeight > this.elTextInput.clientHeight);
   };
 

@@ -1,3 +1,4 @@
+import { MostInterestingManPage } from './../memes/most-interesting-man/most-interesting-man';
 import { OrangePage } from './../memes/orange/orange';
 import { ExpandingConsciousness } from './../memes/expanding-consciousness/expanding-consciousness';
 import { BatmanPage } from './../memes/batman/batman';
@@ -24,7 +25,8 @@ export class HomePage {
       SuccPage,
       WonkaPage,
       PepePage,
-      OrangePage
+      OrangePage,
+      MostInterestingManPage
     ];
 
   }

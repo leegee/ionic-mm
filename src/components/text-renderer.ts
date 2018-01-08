@@ -11,6 +11,7 @@ export class TextRenderer {
     private static textStyleRules = [
         'textAlign',
         'width',
+        'background',
         'color',
         'fontSize',
         'fontFamily',
@@ -22,6 +23,11 @@ export class TextRenderer {
         'bottom',
         'right'
     ];
+    // ctx.shadowColor = “red” // string Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
+  // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
+  // ctx.shadowOffsetY = 0; // integer Vertical distance of the shadow, in relation to the text.
+  // ctx.shadowBlur = 10; // integer
+
     private static reFontSize = /^([.\d]+)\s*([%\w]+)?/;
     private ctx: CanvasRenderingContext2D;
     private nativeElement: HTMLElement;
@@ -127,7 +133,7 @@ export class TextRenderer {
             height: args.displayedHeight
         };
 
-        console.log('RENDER', args);
+        // console.log('RENDER', args);
 
         this.computedStyles = this._getStyles();
         let fontSize = this._scaleFont(this.computedStyles.fontSize);
@@ -181,15 +187,15 @@ export class TextRenderer {
                 if (renderLineWidth >= this.nComputedStylesWidthScaled
                     && inputChars.length
                 ) {
-                    console.log(' Fits: %d vs %d', this.ctx.measureText(renderText).width, this.nComputedStylesWidthScaled);
+                    // console.log(' Fits: %d vs %d', this.ctx.measureText(renderText).width, this.nComputedStylesWidthScaled);
                     renderText = renderText.replace(/\s$/, '');
                     let [, lastWord] = renderText.match(/(\S+)$/);
                     renderText = renderText.replace(/(\S+)$/, '');
-                    console.log('Last word cut [%s]', lastWord);
-                    console.log('- leaves render text [%s]', renderText);
+                    // console.log('Last word cut [%s]', lastWord);
+                    // console.log('- leaves render text [%s]', renderText);
                     lastWord.split('').reverse().forEach(lastWordChar => {
                         inputChars.unshift(lastWordChar);
-                        console.log('-- add [%s] to todo-stack, making [%s]', lastWordChar, inputChars);
+                        // console.log('-- add [%s] to todo-stack, making [%s]', lastWordChar, inputChars);
                     });
                     this.renderLine(renderText);
                     renderText = '';
@@ -229,7 +235,3 @@ export class TextRenderer {
 
 
 
-  // ctx.shadowColor = “red” // string Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
-  // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
-  // ctx.shadowOffsetY = 0; // integer Vertical distance of the shadow, in relation to the text.
-  // ctx.shadowBlur = 10; // integer

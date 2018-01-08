@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="share()">
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
+  <div id="meme-text-container" tappable>
+    <custom-text #textinput text="I don't often ..." style='position: absolute; left:5%;top:5%; width: 90%; height: 10%'>I don't often ....</custom-text>
+    <custom-text #textinput text="But when I do ..." style='position: absolute; left:5%; bottom:5%; width: 90%; height: 10%'>But when I do ....</custom-text>
+  </div>
+</ion-content>
