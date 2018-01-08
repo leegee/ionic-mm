@@ -84,10 +84,6 @@ ion-content {
   color: map-get($colors,light) !important;
 }
 
-page-home ion-content .item-inner {
-  padding-right:0 !important;
-}
-
 .scroll-content {
   overflow: auto;
 }

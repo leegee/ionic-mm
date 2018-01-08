@@ -2,6 +2,9 @@ page-home {
   padding: 0;
   margin: 0;
   width: 100%;
+  ion-content .item-inner {
+    padding-right: 0 !important;
+  }
   .meme-thumbnail,
   .label-md,
   .item-md {
@@ -30,8 +33,7 @@ page-home {
       background: rgba(0, 0, 0, 0.3);
       padding: 0.4em;
     }
-  }
-  // @media (min-width: 800px) {
+  } // @media (min-width: 800px) {
   //   .meme-thumbnail {
   //     width: 50%;
   //    display: inline-block;
