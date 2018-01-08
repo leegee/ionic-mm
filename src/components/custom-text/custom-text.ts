@@ -16,6 +16,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   @Input('style') styleInput;
   @Input('text') text = '';
 
+  private static RESIZE_HANDLE_PX = 20;
   private static FONT_SCALE_BY: number = 0.025;
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
@@ -23,8 +24,8 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
-  private x: number;
-  private y: number;
+  private clientX: number;
+  private clientY: number;
   protected container: HTMLElement;
   private doneInit = false;
   private stylesFromElementMarkup = {
@@ -139,24 +140,25 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return this.text;
   }
 
+  private _stylesToObj(styles): { [key: string]: string } {
+    let rv = {};
+    for (let rule in styles) {
+      rv[rule] = styles[rule];
+    }
+    return rv;
+  }
+
   /*
     The computed style for this.elTextInput does not reflect its actual position on the screen.
     Nor can CSSStyleDeclarations be cast to objecrts
   */
   getStyles() {
-    function toObj(styles) {
-      let rv = {};
-      for (let rule in styles) {
-        rv[rule] = styles[rule];
-      }
-      return rv;
-    }
 
-    let elWithFont = toObj(document.defaultView.getComputedStyle(
+    let elWithFont = this._stylesToObj(document.defaultView.getComputedStyle(
       this.elTextInput
     ));
 
-    let elWithPos = toObj(document.defaultView.getComputedStyle(
+    let elWithPos = this._stylesToObj(document.defaultView.getComputedStyle(
       this.elRef.nativeElement
     ));
 
@@ -176,17 +178,26 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   onTouchStart(e) {
-    this.x = e.touches[0].clientX;
-    this.y = e.touches[0].clientY;
+    this.clientX = e.touches[0].clientX;
+    this.clientY = e.touches[0].clientY;
   }
 
   onTouchMove(e) {
-    this.elRef.nativeElement.style.left = parseInt(this.elRef.nativeElement.style.left) +
-      (e.touches[0].clientX - this.x) + 'px';
-    this.elRef.nativeElement.style.top = parseInt(this.elRef.nativeElement.style.top) +
-      (e.touches[0].clientY - this.y) + 'px';
-    this.x = e.touches[0].clientX;
-    this.y = e.touches[0].clientY;
-    console.log(e)
+    let left = parseInt(this.elRef.nativeElement.style.left);
+    let top = parseInt(this.elRef.nativeElement.style.top);
+    let elWithPos: { [key: string]: string } = this._stylesToObj(document.defaultView.getComputedStyle(
+      this.elRef.nativeElement
+    ))
+
+    // Touch is  on the textarea resize handle:
+    if (Math.abs(this.clientX - left) > parseInt(elWithPos.width) - CustomTextComponent.RESIZE_HANDLE_PX) {
+      console.log(e);
+    } else {
+      console.log('ok');
+      this.elRef.nativeElement.style.left = left + (e.touches[0].clientX - this.clientX) + 'px';
+      this.elRef.nativeElement.style.top = top + (e.touches[0].clientY - this.clientY) + 'px';
+      this.clientX = e.touches[0].clientX;
+      this.clientY = e.touches[0].clientY;
+    }
   }
 }
