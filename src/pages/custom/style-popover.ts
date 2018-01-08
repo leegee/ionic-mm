@@ -9,7 +9,7 @@ export class StylePopoverPage {
     public selections = {};
     private state = {};
     public static initialState = {
-        '-webkit-text-stroke-': '0',
+        '-webkit-text-stroke-width': '0',
         '-webkit-text-stroke-color': 'white',
         'text-align': 'center',
         'word-wrap': 'break-word',

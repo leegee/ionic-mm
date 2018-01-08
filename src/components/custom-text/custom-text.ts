@@ -23,6 +23,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
+  protected container: HTMLElement;
 
   constructor(
     private MemeStyleService: MemeStyleService,
@@ -53,9 +54,25 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
   getStyleAttr() {
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
-    for (let rule in this.style) {
-      styleAtrStr += rule + ':' + this.style[rule] + ';';
+
+    // this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
+    // if (this.container) {
+    //   console.log('???', this.container.style);
+
+    //   for (let rule of this.styleInput.split(/;+/)) {
+    //     let [, prop] = rule.match(/^\s*([^:]+)/);
+    //     console.log('--------', prop, rule);
+    //     if (!this.style.hasOwnProperty(prop)) {
+    //       styleAtrStr += rule + ';';
+    //     }
+    //   }
+    //   debugger;
+    // }
+
+    for (let prop in this.style) {
+      styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
+
     console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
@@ -65,7 +82,6 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   sizeText(e?: KeyboardEvent) {
     let noModifierKey = !e || !e.ctrlKey;
     if (!this.running && noModifierKey) {
-      console.log('Sizing text');
       this.running = true;
       let caret = this.elTextInput.selectionStart;
 
@@ -130,10 +146,13 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     let elWithFont = toObj(document.defaultView.getComputedStyle(
       this.elTextInput
     ));
+
     let elWithPos = toObj(document.defaultView.getComputedStyle(
       this.elRef.nativeElement
     ));
+
     console.log('el with pos = this.elRef.nativeElement =', this.elRef.nativeElement);
+
     let fontStyles = Object.keys(elWithFont)
       .filter(ruleName => {
         return ruleName.match(/^font/)

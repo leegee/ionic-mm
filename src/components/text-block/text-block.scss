@@ -1,6 +1,9 @@
 text-block {
 
   .text-block-container {
+    width: auto;
+    height: auto;
+    display: block;
     position: absolute;
     z-index: 50;
     .input,

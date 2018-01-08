@@ -27,6 +27,10 @@ And/or:
 
     ionic cordova run android --livereload
 
+Or half-way between the two:
+
+    ionic cordova run browser
+
 Bibliography
 ------------
 

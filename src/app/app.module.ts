@@ -15,6 +15,7 @@ import { MyApp } from './app.component';
 import { SplashPage } from '../pages/splash/splash';
 import { HomePage } from '../pages/home/home';
 import { CustomWholePage } from '../pages/custom/whole/whole';
+import { CustomTopBottomPage } from '../pages/custom/top-bottom/top-bottom';
 import { CustomTextComponent } from '../components/custom-text/custom-text';
 import { ContainerSizeService } from '../services/ContainerSizeService';
 import { MemeStyleService } from '../services/MemeStyleService';
@@ -47,6 +48,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     StylePopoverPage,
     HomePage,
     CustomWholePage,
+    CustomTopBottomPage,
     DogePage,
     WonkaPage,
     SuccPage,
@@ -60,6 +62,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     MyApp,
     HomePage,
     CustomWholePage,
+    CustomTopBottomPage,
     StylePopoverPage,
     DogePage,
     WonkaPage,

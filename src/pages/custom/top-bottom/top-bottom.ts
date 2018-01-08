@@ -8,18 +8,15 @@ import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../../services/ContainerSizeService';
 import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Meme } from '../../../components/meme/meme';
 import { CustomMeme } from '../../../components/meme/custom-meme';
 
 @IonicPage()
 @Component({
-  selector: 'page-custom-whole',
-  templateUrl: 'whole.html'
+  selector: 'page-custom-top-bottom',
+  templateUrl: 'top-bottom.html'
 })
-export class CustomWholePage extends CustomMeme implements AfterViewInit, DoCheck {
-
-  public imageUrl: string;
-  public resizeWidth: number = 800;
-  public resizeHeight: number = 800;
+export class CustomTopBottomPage extends CustomMeme implements AfterViewInit, DoCheck {
 
   constructor(
     protected alertCtrl: AlertController,

@@ -1,12 +1,11 @@
-// import { SplashPage } from './../pages/splash/splash';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-// import { ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { CustomWholePage } from '../pages/custom/whole/whole';
+import { CustomTopBottomPage } from './../pages/custom/top-bottom/top-bottom';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,7 +21,6 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
-    // public modalCtrl: ModalController
   ) {
     this.initializeApp();
 
@@ -30,7 +28,8 @@ export class MyApp {
       { title: 'Dank Memes', component: HomePage }
     ];
     this.customPages = [
-      { title: 'Text covers page', component: CustomWholePage }
+      { title: 'Text covers page', component: CustomWholePage },
+      { title: 'Top and bottom', component: CustomTopBottomPage }
     ];
 
   }
@@ -44,8 +43,6 @@ export class MyApp {
       var scale = 'scale(1)';
       document.body.style.webkitTransform = scale;
       document.body.style.transform = scale;
-      // let splash = this.modalCtrl.create(SplashPage);
-      // splash.present();
     });
   }
 

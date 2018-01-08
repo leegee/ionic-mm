@@ -17,7 +17,7 @@ export abstract class Meme implements AfterViewChecked {
   public width: number;
   public height: number;
   protected isDirty: boolean = false;
-  private containerSize: { [key: string]: number };
+  protected containerSize: { [key: string]: number };
   protected isWeb: boolean;
 
   public constructor(
