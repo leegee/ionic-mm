@@ -24,9 +24,9 @@ export class TextRenderer {
         'right'
     ];
     // ctx.shadowColor = “red” // string Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
-  // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
-  // ctx.shadowOffsetY = 0; // integer Vertical distance of the shadow, in relation to the text.
-  // ctx.shadowBlur = 10; // integer
+    // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
+    // ctx.shadowOffsetY = 0; // integer Vertical distance of the shadow, in relation to the text.
+    // ctx.shadowBlur = 10; // integer
 
     private static reFontSize = /^([.\d]+)\s*([%\w]+)?/;
     private ctx: CanvasRenderingContext2D;
@@ -224,11 +224,16 @@ export class TextRenderer {
         this.y += this.lineHeight;
     }
 
-    hasScrollbars(el) {
-        return (el.scrollWidth > el.offsetWidth)
+    hasScrollbars(el: HTMLElement): boolean {
+        el.style['::-webkit-scrollbar'] = 'display: block;'
+
+        let rv = (el.scrollWidth > el.offsetWidth)
             || (el.scrollWidth > el.clientWidth)
             || (el.scrollHeight > el.offsetHeight)
             || (el.scrollHeight > el.clientHeight);
+
+        el.style['::-webkit-scrollbar'] = 'display: none;'
+        return rv;
     };
 }
 

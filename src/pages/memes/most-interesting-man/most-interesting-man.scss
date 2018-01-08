@@ -4,8 +4,12 @@ page-most-interesting-man {
     font-family: AntonRegular;
     font-size: 7vh;
     color: white;
-    background-color: rgba(0, 0, 0, 0.4); //
     -webkit-text-stroke: 2pt rgba(0, 0, 0, 0.4); //
     text-shadow: -1pt -1pt 0 black, 1pt -1pt 0 black, -1pt 1pt 0 black, 1pt 1pt 0 black;
+    textarea {
+      background-color: rgba(0, 0, 0, 0.4); //
+    }
   }
 }
+
+// #meme-text-container > custom-text:nth-child(2) > textarea

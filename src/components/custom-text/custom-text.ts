@@ -13,7 +13,7 @@ import { TextBlockInterface } from '../text-block-interface';
 })
 export class CustomTextComponent extends TextRenderer implements TextBlockInterface, AfterViewChecked, OnDestroy {
 
-  @Input('style') styleInput;
+  @Input('style') styleInput = '';
   @Input('text') text = '';
 
   private static RESIZE_HANDLE_PX = 20;
@@ -73,9 +73,11 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
     // replace this with getComputedStyles
     for (let rule of this.styleInput.split(/;+/)) {
-      let [, prop] = rule.match(/^\s*([^:\s]+)/);
-      if (this.stylesFromElementMarkup.hasOwnProperty(prop) && (!this.style || !this.style.hasOwnProperty(prop))) {
-        styleAtrStr += rule + ';';
+      if (rule.length) {
+        let [, prop] = rule.match(/^\s*([^:\s]+)/);
+        if (this.stylesFromElementMarkup.hasOwnProperty(prop) && (!this.style || !this.style.hasOwnProperty(prop))) {
+          styleAtrStr += rule + ';';
+        }
       }
     }
 
@@ -110,30 +112,23 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     }
   }
 
-  hasScrollbars() {
-    return (this.elTextInput.scrollWidth >= this.elTextInput.offsetWidth)
-      || (this.elTextInput.scrollWidth > this.elTextInput.clientWidth)
-      || (this.elTextInput.scrollHeight >= this.elTextInput.offsetHeight)
-      || (this.elTextInput.scrollHeight > this.elTextInput.clientHeight);
-  };
-
   /* Fit text to bouds */
   flow(text: string) {
     // While text fits  bounding box, expand font size
     do {
-      if (!this.hasScrollbars()) {
+      if (!this.hasScrollbars(this.elTextInput)) {
         this.fontSize += CustomTextComponent.FONT_SCALE_BY;
         this.elTextInput.style.fontSize = this.fontSize + 'vh';
       }
-    } while (!this.hasScrollbars());
+    } while (!this.hasScrollbars(this.elTextInput));
 
     // While text does not fit bounding box, contract  font size
-    // do {
-    //   if (this.hasScrollbars()) {
-    //     this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
-    //     this.elTextInput.style.fontSize = this.fontSize + 'vh';
-    //   }
-    // } while (this.hasScrollbars());
+    do {
+      if (this.hasScrollbars(this.elTextInput)) {
+        this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
+        this.elTextInput.style.fontSize = this.fontSize + 'vh';
+      }
+    } while (this.hasScrollbars(this.elTextInput));
   }
 
   getText() {
