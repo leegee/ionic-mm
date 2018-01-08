@@ -5,6 +5,8 @@
   placeholder='{{placeholder}}'
   [style]='getStyleAttr()'
   (input)='sizeText($event)'
+  (touchstart)='onTouchStart($event)'
+  (touchmove)='onTouchMove($event)'
 ></textarea>
 
   <!-- (focus)='onFocus($event)'

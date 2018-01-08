@@ -13,8 +13,8 @@ Bugs
 To Do
 -----
 
+- Set the style-popover initial state for Custom-Text
 - Different custom memes with different text layouts
-- Take sizing of `custom-text` component from markup
 - Move `pages/memes` into a single `page` with a serialisable structure in updatable localStorage
 - Allow `pages/custom` to save into the above.
 

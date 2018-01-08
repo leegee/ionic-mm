@@ -1,6 +1,6 @@
 import { TextRenderer } from './../text-renderer';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
-import { Component, ElementRef, AfterViewChecked, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
 import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -11,20 +11,30 @@ import { TextBlockInterface } from '../text-block-interface';
   selector: 'custom-text',
   templateUrl: 'custom-text.html'
 })
-export class CustomTextComponent extends TextRenderer implements TextBlockInterface, OnInit, AfterViewChecked, OnDestroy {
+export class CustomTextComponent extends TextRenderer implements TextBlockInterface, AfterViewChecked, OnDestroy {
 
   @Input('style') styleInput;
   @Input('text') text = '';
 
-  private static FONT_SCALE_BY: number = 0.05;
+  private static FONT_SCALE_BY: number = 0.025;
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
   private fontSize: number = 2;
   protected elTextInput: HTMLInputElement;
   private running: boolean;
   private style: {};
+  private x: number;
+  private y: number;
   protected container: HTMLElement;
-  doneInit = false;
+  private doneInit = false;
+  private stylesFromElementMarkup = {
+    'color': true,
+    'background': true,
+    'backgroundColor': true,
+    '-webkit-text-stroke': true,
+    '-webkit-text-stroke-width': true,
+    '-webkit-text-stroke-colour': true
+  };
 
   constructor(
     private MemeStyleService: MemeStyleService,
@@ -36,14 +46,10 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       (changed: { [key: string]: any }) => {
         this.style = Object.assign(this.style, changed);
         this.sizeText();
-        // merge
       }
     );
-    this.style = StylePopoverPage.initialState;
-  }
-
-  ngOnInit() {
-    // this.text = this.textInput;
+    // this.style = StylePopoverPage.initialState;
+    // TODO - set the style-popover initial state here!
   }
 
   ngOnDestroy() {
@@ -53,7 +59,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   ngAfterViewChecked() {
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
-      console.log('*** ', this.styleInput);
+      // console.log('*** ', this.styleInput);
       if (!this.doneInit) {
         this.sizeText();
         this.doneInit = true;
@@ -64,25 +70,19 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   getStyleAttr() {
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
 
-    // this.container = this.elRef.nativeElement.querySelector('#meme-text-container');
-    // if (this.container) {
-    //   console.log('???', this.container.style);
-
-    //   for (let rule of this.styleInput.split(/;+/)) {
-    //     let [, prop] = rule.match(/^\s*([^:]+)/);
-    //     console.log('--------', prop, rule);
-    //     if (!this.style.hasOwnProperty(prop)) {
-    //       styleAtrStr += rule + ';';
-    //     }
-    //   }
-    //   debugger;
-    // }
+    // replace this with getComputedStyles
+    for (let rule of this.styleInput.split(/;+/)) {
+      let [, prop] = rule.match(/^\s*([^:\s]+)/);
+      if (this.stylesFromElementMarkup.hasOwnProperty(prop) && (!this.style || !this.style.hasOwnProperty(prop))) {
+        styleAtrStr += rule + ';';
+      }
+    }
 
     for (let prop in this.style) {
       styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
 
-    console.log('style on text input=', styleAtrStr);
+    // console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
@@ -110,7 +110,6 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   hasScrollbars() {
-    console.log(this.elTextInput.scrollHeight, this.elTextInput.offsetHeight, this.elTextInput.clientHeight );
     return (this.elTextInput.scrollWidth >= this.elTextInput.offsetWidth)
       || (this.elTextInput.scrollWidth > this.elTextInput.clientWidth)
       || (this.elTextInput.scrollHeight >= this.elTextInput.offsetHeight)
@@ -128,12 +127,12 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     } while (!this.hasScrollbars());
 
     // While text does not fit bounding box, contract  font size
-    do {
-      if (this.hasScrollbars()) {
-        this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
-        this.elTextInput.style.fontSize = this.fontSize + 'vh';
-      }
-    } while (this.hasScrollbars());
+    // do {
+    //   if (this.hasScrollbars()) {
+    //     this.fontSize -= CustomTextComponent.FONT_SCALE_BY;
+    //     this.elTextInput.style.fontSize = this.fontSize + 'vh';
+    //   }
+    // } while (this.hasScrollbars());
   }
 
   getText() {
@@ -176,4 +175,18 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return Object.assign(elWithPos, fontStyles);
   }
 
+  onTouchStart(e) {
+    this.x = e.touches[0].clientX;
+    this.y = e.touches[0].clientY;
+  }
+
+  onTouchMove(e) {
+    this.elRef.nativeElement.style.left = parseInt(this.elRef.nativeElement.style.left) +
+      (e.touches[0].clientX - this.x) + 'px';
+    this.elRef.nativeElement.style.top = parseInt(this.elRef.nativeElement.style.top) +
+      (e.touches[0].clientY - this.y) + 'px';
+    this.x = e.touches[0].clientX;
+    this.y = e.touches[0].clientY;
+    console.log(e)
+  }
 }

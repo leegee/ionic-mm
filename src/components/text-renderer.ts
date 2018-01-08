@@ -112,7 +112,7 @@ export class TextRenderer {
         this.nativeElement.appendChild(el);
         let cssValue = el.getBoundingClientRect().height;
         this.lineHeight = this._scaleFont(cssValue + 'px');
-        console.log('Set line-height to [%s] from [%s]', this.lineHeight, styleAttr);
+        // console.log('Set line-height to [%s] from [%s]', this.lineHeight, styleAttr);
         el.outerHTML = '';
     }
 
