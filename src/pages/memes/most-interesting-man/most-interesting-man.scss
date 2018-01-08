@@ -1,19 +1,11 @@
 page-most-interesting-man {
   #meme-text-container {
-    color: white;
     line-height: 1.2;
     font-family: AntonRegular;
     font-size: 7vh;
-  }
-  .text-block,
-  .text-block .display {
-    display: block;
-    width: 100%;
-    text-align: center;
     color: white;
-    background: rgba(0, 0, 0, 0.2);
-    -webkit-text-stroke: 1pt black;
+    background-color: rgba(0, 0, 0, 0.4); //
+    -webkit-text-stroke: 2pt rgba(0, 0, 0, 0.4); //
     text-shadow: -1pt -1pt 0 black, 1pt -1pt 0 black, -1pt 1pt 0 black, 1pt 1pt 0 black;
-    padding: 0.4vh 0;
   }
 }

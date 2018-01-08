@@ -60,7 +60,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   ngAfterViewChecked() {
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
-      // console.log('*** ', this.styleInput);
+      console.log('*** ', this.styleInput);
       if (!this.doneInit) {
         this.sizeText();
         this.doneInit = true;
@@ -83,7 +83,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
 
-    // console.log('style on text input=', styleAtrStr);
+    console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
