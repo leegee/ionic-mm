@@ -148,28 +148,31 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     Nor can CSSStyleDeclarations be cast to objecrts
   */
   getStyles() {
-
-    let elWithFont = this._stylesToObj(document.defaultView.getComputedStyle(
+    let elStylesWithFont = this._stylesToObj(document.defaultView.getComputedStyle(
       this.elTextInput
     ));
 
-    let elWithPos = this._stylesToObj(document.defaultView.getComputedStyle(
+    let elStylesWithPos = this._stylesToObj(document.defaultView.getComputedStyle(
       this.elRef.nativeElement
     ));
 
-    console.log('el with pos = this.elRef.nativeElement =', this.elRef.nativeElement);
+    // Canvas rules only:
+    if (! elStylesWithFont.textAlign.match(/(left|right|center)/)) {
+      elStylesWithFont.textAlign = 'left';
+    }
 
-    let fontStyles = Object.keys(elWithFont)
+    let fontStyles = Object.keys(elStylesWithFont)
       .filter(ruleName => {
-        return ruleName.match(/^font/)
+        return ruleName.match(/^(text-align|line|font)/)
       })
       .reduce((styles, ruleName) => {
-        styles[ruleName] = elWithFont[ruleName];
+        styles[ruleName] = elStylesWithFont[ruleName];
         return styles;
       },
       {}
       );
-    return Object.assign(elWithPos, fontStyles);
+
+    return Object.assign(elStylesWithPos, fontStyles);
   }
 
   onTouchStart(e) {

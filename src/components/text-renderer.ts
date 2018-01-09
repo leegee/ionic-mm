@@ -91,10 +91,17 @@ export class TextRenderer {
             }, {}
             );
 
-        // Centered text
         if (styles.width === 'auto') {
             styles.width = this.displayed.width.toString();
+        }
+        if (styles.height === 'auto') {
             styles.height = this.displayed.height.toString();
+        }
+
+        // Extrapolate from short-hand colour:
+        if (styles['-webkit-text-stroke']) {
+            [, styles['-webkit-text-stroke-width'], styles['-webkit-text-stroke-color']] =
+                styles['-webkit-text-stroke'].match(/^-webkit-text-stroke\s*:\s*(\S+)\s+(\S+)/);
         }
 
         return styles;

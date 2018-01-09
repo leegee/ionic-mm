@@ -82,7 +82,7 @@ export abstract class Meme implements AfterViewChecked {
     shareImg.src = this.img.src;
 
     let canvas = document.createElement("canvas");
-    canvas.id = "screenshot-canvas";
+    canvas.id = "share-canvas";
     document.body.appendChild(canvas);
 
     let ctx = canvas.getContext("2d");
