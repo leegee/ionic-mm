@@ -91,6 +91,11 @@ export class TextRenderer {
             }, {}
             );
 
+        // Canvas rules only:
+        if (!styles.textAlign.match(/(left|right|center)/)) {
+            styles.textAlign = 'left';
+        }
+
         if (styles.width === 'auto') {
             styles.width = this.displayed.width.toString();
         }

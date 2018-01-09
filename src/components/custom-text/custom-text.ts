@@ -156,11 +156,6 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       this.elRef.nativeElement
     ));
 
-    // Canvas rules only:
-    if (! elStylesWithFont.textAlign.match(/(left|right|center)/)) {
-      elStylesWithFont.textAlign = 'left';
-    }
-
     let fontStyles = Object.keys(elStylesWithFont)
       .filter(ruleName => {
         return ruleName.match(/^(text-align|line|font)/)
