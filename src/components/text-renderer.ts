@@ -223,7 +223,7 @@ export class TextRenderer {
         renderText = renderText.replace(/\s$/, '');
 
         // Centre?
-        if (this.computedStyles.textAlign !== 'left' && this.computedStyles.textAlign !== 'right') {
+        if (this.computedStyles.textAlign === 'center') {
             this.x = this.initalx + (this.nComputedStylesWidthScaled / 2) - (this.ctx.measureText(renderText).width / 2);
         }
 
