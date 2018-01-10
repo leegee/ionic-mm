@@ -213,4 +213,8 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     this.clientX = e.touches[0].clientX;
     this.clientY = e.touches[0].clientY;
   }
+
+  onMenuHandleClick(){
+    console.log('click')
+  }
 }

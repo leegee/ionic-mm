@@ -1,4 +1,19 @@
 custom-text {
+  #menu-handle {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: -5pt;
+    right: 1px;
+    font-size: 10pt;
+    z-index:999;
+    border-radius: 10pt;
+    border:1pt solid white;
+    padding: 1pt;
+    color: white;
+    -webkit-text-stroke: 0;
+    background: black;
+  }
   textarea {
     resize: both;
     z-index: 900;
