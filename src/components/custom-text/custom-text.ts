@@ -184,13 +184,14 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
     // Touch is  on the textarea resize handle:
     if (Math.abs(this.clientX - left) > parseInt(elWithPos.width) - CustomTextComponent.RESIZE_HANDLE_PX) {
-      console.log(e);
+      // Resize the text area, as default behaviour is 'lost' somehow, even without touch event capture
+      this.elRef.nativeElement.style.height = Math.abs( (e.touches[0].clientY - parseInt(elWithPos.height)) - top ) + 'px';
     } else {
       console.log('ok');
       this.elRef.nativeElement.style.left = left + (e.touches[0].clientX - this.clientX) + 'px';
       this.elRef.nativeElement.style.top = top + (e.touches[0].clientY - this.clientY) + 'px';
-      this.clientX = e.touches[0].clientX;
-      this.clientY = e.touches[0].clientY;
     }
-  }
+    this.clientX = e.touches[0].clientX;
+    this.clientY = e.touches[0].clientY;
+}
 }

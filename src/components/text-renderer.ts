@@ -10,6 +10,9 @@ export interface TextRendererOptions {
 export class TextRenderer {
     private static textStyleRules = [
         'textAlign',
+        '-webkit-text-stroke',
+        '-webkit-text-stroke-width',
+        '-webkit-text-stroke-color',
         'width',
         'background',
         'color',
@@ -81,15 +84,13 @@ export class TextRenderer {
 
     private _getStyles = () => {
         let textBlockStyle = this.getStyles();
-        let styles: { [key: string]: string } = Object.keys(textBlockStyle)
-            .filter(ruleName => TextRenderer.textStyleRules.some(
-                wanted => ruleName === wanted && textBlockStyle[ruleName] !== ''
-            )
-            ).reduce((styles, ruleName) => {
+        let styles : { [key: string]: string } = {};
+
+        TextRenderer.textStyleRules.forEach(ruleName => {
+            if (textBlockStyle.hasOwnProperty(ruleName) && textBlockStyle[ruleName] !== '') {
                 styles[ruleName] = textBlockStyle[ruleName];
-                return styles;
-            }, {}
-            );
+            }
+        });
 
         // Canvas rules only:
         if (!styles.textAlign.match(/(left|right|center)/)) {
@@ -159,9 +160,12 @@ export class TextRenderer {
 
         if (this.computedStyles['-webkit-text-stroke-color']
             && this.computedStyles['-webkit-text-stroke-width']
-            && Number(this.computedStyles['-webkit-text-stroke-width']) > 0
+            && parseFloat(this.computedStyles['-webkit-text-stroke-width']) > 0
         ) {
-            this.ctx.lineWidth = Number(this.computedStyles['-webkit-text-stroke-width']);
+            this.ctx.lineWidth = parseFloat(this.computedStyles['-webkit-text-stroke-width']);
+            if (this.ctx.lineWidth < 2) {
+                this.ctx.lineWidth = 2;
+            }
             this.ctx.strokeStyle = this.computedStyles['-webkit-text-stroke-color'];
             this.stroke = true;
         }
