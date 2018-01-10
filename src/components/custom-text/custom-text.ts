@@ -140,7 +140,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return this.text;
   }
 
-  private _stylesForElement(element:HTMLElement): { [key: string]: string } {
+  private _stylesForElement(element: HTMLElement): { [key: string]: string } {
     let styles = document.defaultView.getComputedStyle(element);
     let rv = {};
     for (let rule in styles) {
@@ -154,9 +154,9 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     Nor can CSSStyleDeclarations be cast to objecrts
   */
   getStyles() {
-    let elStylesWithFont = this._stylesForElement( this.elTextInput );
+    let elStylesWithFont = this._stylesForElement(this.elTextInput);
 
-    let elStylesWithPos = this._stylesForElement( this.elRef.nativeElement );
+    let elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
 
     let fontStyles = Object.keys(elStylesWithFont)
       .filter(ruleName => {
@@ -186,18 +186,18 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     if (e.touches[0].timeStamp - this.lastTouchTimeStamp < CustomTextComponent.TOUCH_DELAY_MS) {
       return;
     }
-
     this.lastTouchTimeStamp = e.touches[0].timeStamp;
-    let elStyles: { [key: string]: any } = this._stylesForElement( this.elRef.nativeElement );
-    ['left', 'top', 'width', 'height'].forEach( member => {
-      elStyles[member] = parseFloat( elStyles[member ]);
+
+    let elStyles: { [key: string]: any } = this._stylesForElement(this.elRef.nativeElement);
+    ['left', 'top', 'width', 'height'].forEach(member => {
+      elStyles[member] = parseFloat(elStyles[member]);
     })
 
-    // Touch is around the textarea resize handle:
+    // Touch is around the textarea resize handle, bottom right:
+    // Resize the text area, as default behaviour is 'lost' somehow, even without touch event capture
     if (Math.abs(this.clientX - elStyles.left) > elStyles.width - CustomTextComponent.RESIZE_HANDLE_PX &&
       Math.abs(this.clientY - elStyles.top) > elStyles.height - CustomTextComponent.RESIZE_HANDLE_PX
     ) {
-      // Resize the text area, as default behaviour is 'lost' somehow, even without touch event capture
       this.elRef.nativeElement.style.width = Math.abs(e.touches[0].clientX - elStyles.left) + 'px';
       this.elRef.nativeElement.style.height = Math.abs(e.touches[0].clientY - elStyles.top) + 'px';
     }
