@@ -22,6 +22,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   public placeholder: string = "Type here";
   private fontSize: number = 2;
   protected elTextInput: HTMLInputElement;
+  private touching = false;
   private running: boolean;
   private style: {};
   private clientX: number;
@@ -85,30 +86,32 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
 
-    console.log('style on text input=', styleAtrStr);
+    // console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
   onFocus(e) { }
 
   sizeText(e?: KeyboardEvent) {
-    let noModifierKey = !e || !e.ctrlKey;
-    if (!this.running && noModifierKey) {
-      this.running = true;
-      let caret = this.elTextInput.selectionStart;
+    if (!this.touching) {
+      let noModifierKey = !e || !e.ctrlKey;
+      if (!this.running && noModifierKey) {
+        this.running = true;
+        let caret = this.elTextInput.selectionStart;
 
-      let caretAtEnd = caret == this.elTextInput.innerHTML.length;
+        let caretAtEnd = caret == this.elTextInput.innerHTML.length;
 
-      this.flow(this.text);
+        this.flow(this.text);
 
-      if (caretAtEnd) {
-        caret = this.elTextInput.innerHTML.length;
+        if (caretAtEnd) {
+          caret = this.elTextInput.innerHTML.length;
+        }
+
+        this.elTextInput.focus();
+        this.elTextInput.setSelectionRange(caret, caret);
+        this.elTextInput.focus();
+        this.running = false;
       }
-
-      this.elTextInput.focus();
-      this.elTextInput.setSelectionRange(caret, caret);
-      this.elTextInput.focus();
-      this.running = false;
     }
   }
 
@@ -171,8 +174,13 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   onTouchStart(e) {
+    this.touching = true;
     this.clientX = e.touches[0].clientX;
     this.clientY = e.touches[0].clientY;
+  }
+
+  onTouchEnd() {
+    this.touching = false;
   }
 
   onTouchMove(e) {
@@ -196,6 +204,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       this.elRef.nativeElement.style.left = left + (e.touches[0].clientX - this.clientX) + 'px';
       this.elRef.nativeElement.style.top = top + (e.touches[0].clientY - this.clientY) + 'px';
     }
+
     this.clientX = e.touches[0].clientX;
     this.clientY = e.touches[0].clientY;
   }
