@@ -180,6 +180,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
   onTouchEnd() {
     this.touching = false;
+    this.sizeText();
   }
 
   onTouchMove(e) {
@@ -200,6 +201,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     ) {
       this.elRef.nativeElement.style.width = Math.abs(e.touches[0].clientX - elStyles.left) + 'px';
       this.elRef.nativeElement.style.height = Math.abs(e.touches[0].clientY - elStyles.top) + 'px';
+      this.sizeText();
     }
 
     // Otherise, move the text box
