@@ -60,11 +60,11 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   ngAfterViewChecked() {
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
-      console.log('*** ', this.styleInput);
-      if (!this.doneInit) {
-        this.sizeText();
-        this.doneInit = true;
-      }
+      // if (!this.doneInit) {
+      // TODO How to determine if view is visable?
+      // this.sizeText();
+      // this.doneInit = true;
+      // }
     }
   }
 
@@ -182,16 +182,21 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       this.elRef.nativeElement
     ))
 
-    // Touch is  on the textarea resize handle:
-    if (Math.abs(this.clientX - left) > parseInt(elWithPos.width) - CustomTextComponent.RESIZE_HANDLE_PX) {
+    // Touch is around the textarea resize handle:
+    if (Math.abs(this.clientX - left) > parseInt(elWithPos.width) - CustomTextComponent.RESIZE_HANDLE_PX ||
+      Math.abs(this.clientY - top) > parseInt(elWithPos.height) - CustomTextComponent.RESIZE_HANDLE_PX
+    ) {
       // Resize the text area, as default behaviour is 'lost' somehow, even without touch event capture
-      this.elRef.nativeElement.style.height = Math.abs( (e.touches[0].clientY - parseInt(elWithPos.height)) - top ) + 'px';
-    } else {
-      console.log('ok');
+      this.elRef.nativeElement.style.width = Math.abs((e.touches[0].clientX - parseInt(elWithPos.width)) - left) + 'px';
+      this.elRef.nativeElement.style.height = Math.abs((e.touches[0].clientY - parseInt(elWithPos.height)) - top) + 'px';
+    }
+
+    // Otherise, move the text box
+    else {
       this.elRef.nativeElement.style.left = left + (e.touches[0].clientX - this.clientX) + 'px';
       this.elRef.nativeElement.style.top = top + (e.touches[0].clientY - this.clientY) + 'px';
     }
     this.clientX = e.touches[0].clientX;
     this.clientY = e.touches[0].clientY;
-}
+  }
 }

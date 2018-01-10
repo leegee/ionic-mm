@@ -12,7 +12,8 @@
 <ion-content padding>
   <img id='meme-img' class="meme-img" [width]="width" [height]="height" [src]="imageUrl">
   <div id="meme-text-container" tappable>
-    <text-block #textinput text="Something will go here"style='position: absolute; left:1%;top:0%'></text-block>
-    <text-block #textinput text="Something else will go here" style='position: absolute; left:1%;top:76%'></text-block>
+    <text-block #textinput text="Something will go here"style='position: absolute; left:1%;top:1%'></text-block>
+    <!-- <custom-text #textinput text="Something else will go here" style='position: absolute; left:1%;top:76%'></custom-text> -->
+    <custom-text text='Something here...'  #textinput style='position: absolute; width:100%; left: 1%; height:25%; bottom:1%;'>Something else here....</custom-text>
   </div>
 </ion-content>
