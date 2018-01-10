@@ -18,6 +18,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
   private static RESIZE_HANDLE_PX = 20;
   private static FONT_SCALE_BY: number = 0.025;
+  private static TOUCH_DELAY_MS = 300;
   public userSettingsSubscription: Subscription;
   public placeholder: string = "Type here";
   private fontSize: number = 2;
@@ -29,6 +30,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   private clientY: number;
   protected container: HTMLElement;
   private doneInit = false;
+  private lastTouchTimeStamp = 0;
   private stylesFromElementMarkup = {
     'color': true,
     'background': true,
@@ -184,6 +186,11 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   onTouchMove(e) {
+    if (e.touches[0].timeStamp - this.lastTouchTimeStamp < CustomTextComponent.TOUCH_DELAY_MS) {
+      return;
+    }
+
+    this.lastTouchTimeStamp = e.touches[0].timeStamp;
     let left = parseInt(this.elRef.nativeElement.style.left);
     let top = parseInt(this.elRef.nativeElement.style.top);
     let elWithPos: { [key: string]: string } = this._stylesToObj(document.defaultView.getComputedStyle(
@@ -195,8 +202,8 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       Math.abs(this.clientY - top) > parseInt(elWithPos.height) - CustomTextComponent.RESIZE_HANDLE_PX
     ) {
       // Resize the text area, as default behaviour is 'lost' somehow, even without touch event capture
-      this.elRef.nativeElement.style.width = Math.abs((e.touches[0].clientX - parseInt(elWithPos.width)) - left) + 'px';
-      this.elRef.nativeElement.style.height = Math.abs((e.touches[0].clientY - parseInt(elWithPos.height)) - top) + 'px';
+      this.elRef.nativeElement.style.width = Math.abs(e.touches[0].clientX - left) + 'px';
+      this.elRef.nativeElement.style.height = Math.abs(e.touches[0].clientY - top) + 'px';
     }
 
     // Otherise, move the text box
