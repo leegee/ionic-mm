@@ -20,21 +20,6 @@
     <ion-segment-button value="right"> Right </ion-segment-button>
   </ion-segment>
 
-  <!-- <ion-list radio-group [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
-    <ion-item>
-      <ion-label>Align left</ion-label>
-      <ion-radio value="left"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Align center</ion-label>
-      <ion-radio value="center"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Align right</ion-label>
-      <ion-radio value="right"></ion-radio>
-    </ion-item>
-  </ion-list> -->
-
   <ion-item>
     <ion-label>Typeface</ion-label>
     <ion-select [(ngModel)]="selections['font-family']" (ionChange)='onChange()'>
@@ -46,25 +31,6 @@
       <ion-option value="Georgia,serif" style="font-family:Georgia,serif">Georgia</ion-option>
     </ion-select>
   </ion-item>
-
-  <!-- </ion-item>
-    <ion-item>
-      <ion-label style='font-family:"Comic Sans",PermanentMarkerRegular'>Marker</ion-label>
-      <ion-radio value="'Comic Sans',PermanentMarkerRegular" (ionSelect)='closeAndReflow()'></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label style='font-family:Courier New,Courier'>Courier</ion-label>
-      <ion-radio value="'Courier New',Courier" (ionSelect)='closeAndReflow()'></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label style='font-family:Georgia'>Georgia</ion-label>
-      <ion-radio value="Georgia" (ionSelect)='closeAndReflow()'></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label style='font-family:Times'>Times</ion-label>
-      <ion-radio value="'Times New Roman',Times,serif" (ionSelect)='closeAndReflow()'></ion-radio>
-    </ion-item> -->
-
 
   <ion-segment [(ngModel)]="selections['font-weight']" (ionChange)='onChange()'>
     <ion-segment-button value="100">Light </ion-segment-button>
