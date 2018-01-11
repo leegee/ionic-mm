@@ -14,7 +14,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-segment color="secondary" [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
+  <ion-segment [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
     <ion-segment-button value="left"> Left </ion-segment-button>
     <ion-segment-button value="center"> Center </ion-segment-button>
     <ion-segment-button value="right"> Right </ion-segment-button>
@@ -65,27 +65,22 @@
       <ion-radio value="'Times New Roman',Times,serif" (ionSelect)='closeAndReflow()'></ion-radio>
     </ion-item> -->
 
-  <ion-list radio-group [(ngModel)]="selections['color']" (ionChange)='onChange()'>
-    <ion-item>
-      <ion-label>Black text</ion-label>
-      <ion-radio value="black"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>White text</ion-label>
-      <ion-radio value="white"></ion-radio>
-    </ion-item>
-  </ion-list>
 
-  <ion-list radio-group [(ngModel)]="selections['-webkit-text-stroke-color']" (ionChange)='onChange()'>
-    <ion-item>
-      <ion-label>Black outline</ion-label>
-      <ion-radio value="black"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>White outline</ion-label>
-      <ion-radio value="white"></ion-radio>
-    </ion-item>
-  </ion-list>
+  <ion-segment [(ngModel)]="selections['font-weight']" (ionChange)='onChange()'>
+    <ion-segment-button value="100">Light </ion-segment-button>
+    <ion-segment-button value="normal">Normal</ion-segment-button>
+    <ion-segment-button value="bold">Bold</ion-segment-button>
+  </ion-segment>
+
+  <ion-segment [(ngModel)]="selections['color']" (ionChange)='onChange()'>
+    <ion-segment-button value="black"> Black text </ion-segment-button>
+    <ion-segment-button value="white"> White text</ion-segment-button>
+  </ion-segment>
+
+  <ion-segment [(ngModel)]="selections['-webkit-text-stroke-color']" (ionChange)='onChange()'>
+    <ion-segment-button value="black"> Black outline </ion-segment-button>
+    <ion-segment-button value="white"> White outline</ion-segment-button>
+  </ion-segment>
 
   <ion-list>
     <ion-item>

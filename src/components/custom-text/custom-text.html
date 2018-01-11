@@ -1,4 +1,8 @@
-<div id='menu-handle' (click)='onMenuHandleClick($event)'>?</div>
+<div id='menu-handle' (click)='onMenuHandleClick($event)'>
+  <ion-icon name='options'></ion-icon>
+</div>
+<!-- <ion-icon id='menu-handle' name='options' (click)='onMenuHandleClick($event)'></ion-icon> -->
+
 <textarea
   #textinput
   class='meme-text-container'
@@ -10,4 +14,3 @@
   (touchmove)='onTouchMove($event)'
   (touchend)='onTouchEnd()'
 ></textarea>
-

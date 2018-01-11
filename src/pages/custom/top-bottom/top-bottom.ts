@@ -1,4 +1,4 @@
-import { PopoverController, AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
@@ -18,7 +18,6 @@ export class CustomTopBottomPage extends CustomMeme implements AfterViewInit, Do
 
   constructor(
     protected alertCtrl: AlertController,
-    public popoverCtrl: PopoverController,
     public navCtrl: NavController,
     protected file: File,
     protected filePath: FilePath,
@@ -28,7 +27,6 @@ export class CustomTopBottomPage extends CustomMeme implements AfterViewInit, Do
     protected containerSizeService: ContainerSizeService,
     protected elRef: ElementRef
   ) {
-    super(alertCtrl, popoverCtrl, navCtrl, file, filePath, toastCtrl, imagePicker, imageResizer, containerSizeService, elRef);
+    super(alertCtrl, navCtrl, file, filePath, toastCtrl, imagePicker, imageResizer, containerSizeService, elRef);
   }
-
 }

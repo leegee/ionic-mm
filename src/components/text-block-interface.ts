@@ -8,5 +8,4 @@ export abstract class TextBlockInterface {
         // displayedHeight: number
     abstract getText(): string;
     abstract getStyles(): {};
-    abstract sizeText(): void;
 }

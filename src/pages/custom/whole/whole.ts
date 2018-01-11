@@ -1,7 +1,6 @@
-import { StylePopoverPage } from '../style-popover';
-import { PopoverController, AlertController } from 'ionic-angular';
-import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
-import { File, FileEntry } from '@ionic-native/file';
+import { AlertController } from 'ionic-angular';
+import { ImageResizer } from '@ionic-native/image-resizer';
+import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Component, ElementRef } from '@angular/core';
@@ -23,7 +22,6 @@ export class CustomWholePage extends CustomMeme implements AfterViewInit, DoChec
 
   constructor(
     protected alertCtrl: AlertController,
-    public popoverCtrl: PopoverController,
     public navCtrl: NavController,
     protected file: File,
     protected filePath: FilePath,
@@ -33,7 +31,6 @@ export class CustomWholePage extends CustomMeme implements AfterViewInit, DoChec
     protected containerSizeService: ContainerSizeService,
     protected elRef: ElementRef
   ) {
-    super(alertCtrl, popoverCtrl, navCtrl, file, filePath, toastCtrl, imagePicker, imageResizer, containerSizeService, elRef);
+    super(alertCtrl, navCtrl, file, filePath, toastCtrl, imagePicker, imageResizer, containerSizeService, elRef);
   }
-
 }
