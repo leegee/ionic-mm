@@ -7,7 +7,7 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
-- Render to image loses text-align
+- Inconsisent styles before/after popover
 - Fonts via mobile differ to CSS/SASS
 
 To Do

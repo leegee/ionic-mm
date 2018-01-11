@@ -122,7 +122,7 @@ export class TextRenderer {
             + 'line-height: ' + this.computedStyles.lineHeight;
 
         el.setAttribute('style', styleAttr);
-        el.innerHTML = "&nbsp;<br/>";
+        el.innerHTML = "&nbsp;";
         this.nativeElement.appendChild(el);
         let cssValue = el.getBoundingClientRect().height;
         this.lineHeight = this._scaleFont(cssValue + 'px');

@@ -101,7 +101,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
     let fontStyles = Object.keys(elStylesWithFont)
       .filter(ruleName => {
-        return ruleName.match(/^(text-align|line|font)/)
+        return ruleName.match(/^(textAlign|line|font)/)
       })
       .reduce((styles, ruleName) => {
         styles[ruleName] = elStylesWithFont[ruleName];
