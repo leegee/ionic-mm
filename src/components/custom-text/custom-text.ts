@@ -58,12 +58,14 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   ngAfterViewChecked() {
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
-      // if (!this.doneInit) {
-      // TODO How to determine if view is visable?
-      // this.sizeText();
-      // this.doneInit = true;
-      // }
+      if (this.isVisible()) {
+        this.sizeText();
+      }
     }
+  }
+
+  isVisible() {
+    return this.elRef.nativeElement.offsetParent !== null;
   }
 
   getStyleAttr() {
