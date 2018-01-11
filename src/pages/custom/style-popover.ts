@@ -6,44 +6,50 @@ import { ViewController, NavParams } from 'ionic-angular';
     templateUrl: 'style-popover.html'
 })
 export class StylePopoverPage {
-    public static statePossibleKeys = [
-        '-webkit-text-stroke-width',
-        '-webkit-text-stroke-color',
-        'text-align',
-        'word-wrap',
-        'overflow-wrap',
-        'white-space'
-    ];
-    public selections = {};
-    private state = {};
+    protected static stateDefaults = {
+        '-webkit-text-stroke-color': 'white',
+        '-webkit-text-stroke-width': '0',
+        'font-family': 'Helvetica',
+        'overflow-wrap': 'break-word',
+        'text-align': 'center',
+        'white-space': 'noraml', // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+        'word-wrap': 'break-word',
+    };
+    protected selections = {};
+    protected state: { [key: string]: any } = {};
 
     constructor(
         public viewCtrl: ViewController,
         private memeStyleService: MemeStyleService,
         public navParams: NavParams
     ) {
-        // TODO Make options:
-        this.state = {
-            '-webkit-text-stroke-width': '0',
-            '-webkit-text-stroke-color': 'white',
-            'text-align': 'center',
-            'word-wrap': 'break-word',
-            'overflow-wrap': 'break-word',
-            'white-space': 'noraml' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
-        };
+        Object.keys(StylePopoverPage.stateDefaults).forEach(styleRuleName => {
+            let camelised = this.camelise(styleRuleName);
+            this.state[styleRuleName] = navParams.data.state[camelised] || StylePopoverPage.stateDefaults[styleRuleName];
+        });
         this.initialiseSelectionsState();
-        // Notify of initial state:
         this.onChange();
     };
 
-    public close(submit:boolean) {
+    private camelise(subject) {
+        subject = subject.replace(/^-/, '');
+        subject = subject.replace(/^([A-Z])|\-(\w)/g, function (match, p1, p2, offset) {
+            if (p2) {
+                return p2.toUpperCase();
+            }
+            return p1.toLowerCase();
+        });
+        return subject;
+    }
+
+    public close() {
         console.log('close');
-        this.viewCtrl.dismiss(submit? this.state : null );
+        this.viewCtrl.dismiss();
     }
 
     public closeAndReflow() {
         console.log('close and reflow');
-        this.viewCtrl.dismiss(this.state);
+        this.viewCtrl.dismiss();
         setTimeout(
             () => this.onChange()
         );

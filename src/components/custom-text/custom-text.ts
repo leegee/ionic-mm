@@ -89,6 +89,29 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
+  /*
+    The computed style for this.elTextInput does not reflect its actual position on the screen.
+    Nor can CSSStyleDeclarations be cast to objecrts
+  */
+  getStyles() {
+    let elStylesWithFont = this._stylesForElement(this.elTextInput);
+
+    let elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
+
+    let fontStyles = Object.keys(elStylesWithFont)
+      .filter(ruleName => {
+        return ruleName.match(/^(text-align|line|font)/)
+      })
+      .reduce((styles, ruleName) => {
+        styles[ruleName] = elStylesWithFont[ruleName];
+        return styles;
+      },
+      {}
+      );
+
+    return Object.assign(elStylesWithPos, fontStyles);
+  }
+
   onFocus(e) { }
 
   sizeText(e?: KeyboardEvent) {
@@ -146,29 +169,6 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return rv;
   }
 
-  /*
-    The computed style for this.elTextInput does not reflect its actual position on the screen.
-    Nor can CSSStyleDeclarations be cast to objecrts
-  */
-  getStyles() {
-    let elStylesWithFont = this._stylesForElement(this.elTextInput);
-
-    let elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
-
-    let fontStyles = Object.keys(elStylesWithFont)
-      .filter(ruleName => {
-        return ruleName.match(/^(text-align|line|font)/)
-      })
-      .reduce((styles, ruleName) => {
-        styles[ruleName] = elStylesWithFont[ruleName];
-        return styles;
-      },
-      {}
-      );
-
-    return Object.assign(elStylesWithPos, fontStyles);
-  }
-
   onTouchStart(e) {
     this.touching = true;
     this.clientX = e.touches[0].clientX;
@@ -216,7 +216,9 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   presentPopover(event) {
-    let popover = this.popoverCtrl.create(StylePopoverPage, {});
+    let popover = this.popoverCtrl.create(StylePopoverPage, {
+      state: this.getStyles()
+    });
 
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
@@ -226,12 +228,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       }
     );
 
-    popover.onDidDismiss(styles => {
-      console.log(styles);
-      if (styles !== null) {
-        this.style = styles;
-        this.sizeText();
-      }
+    popover.onDidDismiss(() => {
       this.userSettingsSubscription.unsubscribe();
     });
 
