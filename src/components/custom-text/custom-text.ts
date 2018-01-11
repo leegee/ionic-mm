@@ -30,7 +30,6 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   private clientX: number;
   private clientY: number;
   protected container: HTMLElement;
-  private doneInit = false;
   private lastTouchTimeStamp = 0;
   private stylesFromElementMarkup = {
     'color': true,

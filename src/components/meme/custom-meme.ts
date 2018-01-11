@@ -1,4 +1,4 @@
-import { PopoverController, AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
