@@ -7,14 +7,15 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
- - Fonts via mobile differ to CSS/SASS
- - Orang: center/outline differ in TextRender
+- Render to image loses text-align
+- Fonts via mobile differ to CSS/SASS
 
 To Do
 -----
 
-- Set the style-popover initial state for Custom-Text
-- Different custom memes with different text layouts
+Future
+------
+
 - Move `pages/memes` into a single `page` with a serialisable structure in updatable localStorage
 - Allow `pages/custom` to save into the above.
 

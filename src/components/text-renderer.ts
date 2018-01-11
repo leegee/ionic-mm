@@ -94,6 +94,7 @@ export class TextRenderer {
 
         // Canvas rules only:
         if (!styles.textAlign.match(/(left|right|center)/)) {
+            console.log('styles.textAlign was ', styles.textAlign);
             styles.textAlign = 'left';
         }
 
@@ -149,6 +150,7 @@ export class TextRenderer {
         // console.log('RENDER', args);
 
         this.computedStyles = this._getStyles();
+
         let fontSize = this._scaleFont(this.computedStyles.fontSize);
         this.ctx.font = [
             this.computedStyles.fontWeight || '',

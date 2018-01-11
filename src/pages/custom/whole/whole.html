@@ -8,9 +8,6 @@
       <button ion-button icon-only (click)="share(false)">
         <ion-icon name="share"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -19,10 +16,8 @@
 
   <div id='editable-image' [hidden]="!imageUrl">
     <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
-    <!-- <div id="meme-text-container" style.width='{{width}}' style.height='{{height}}'> -->
     <div id="meme-text-container">
-      <!-- for dev: cover whole image -->
-      <custom-text #textinput  style='width:100%;height:50%; bottom:10%; background:pink'></custom-text>
+      <custom-text #textinput style='width:100%; height:100%; top:0'></custom-text>
     </div>
   </div>
 
