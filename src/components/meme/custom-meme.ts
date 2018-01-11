@@ -1,4 +1,3 @@
-import { StylePopoverPage } from '../../pages/custom/style-popover';
 import { PopoverController, AlertController } from 'ionic-angular';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { File, FileEntry } from '@ionic-native/file';
@@ -31,7 +30,6 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
 
     constructor(
         protected alertCtrl: AlertController,
-        public popoverCtrl: PopoverController,
         public navCtrl: NavController,
         protected file: File,
         protected filePath: FilePath,
@@ -130,13 +128,6 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
         // has completed by the time the view-updated lifecycle hook is called.
         // However, best to do the job properly:
         this._setSizes();
-    }
-
-    presentPopover(event) {
-        let popover = this.popoverCtrl.create(StylePopoverPage, {});
-        popover.present({
-            ev: event
-        });
     }
 
     private _showError(text) {

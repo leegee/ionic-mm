@@ -1,3 +1,4 @@
+import { PopoverController } from 'ionic-angular';
 import { TextRenderer } from './../text-renderer';
 import { StylePopoverPage } from './../../pages/custom/style-popover';
 import { Component, ElementRef, AfterViewChecked, Input } from '@angular/core';
@@ -25,7 +26,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected elTextInput: HTMLInputElement;
   private touching = false;
   private running: boolean;
-  private style: {};
+  private style = {};
   private clientX: number;
   private clientY: number;
   protected container: HTMLElement;
@@ -43,21 +44,16 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   constructor(
     private MemeStyleService: MemeStyleService,
     protected elRef: ElementRef,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    public popoverCtrl: PopoverController
   ) {
     super();
-    this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
-      (changed: { [key: string]: any }) => {
-        this.style = Object.assign(this.style, changed);
-        this.sizeText();
-      }
-    );
     // this.style = StylePopoverPage.initialState;
     // TODO - set the style-popover initial state here!
   }
 
   ngOnDestroy() {
-    this.userSettingsSubscription.unsubscribe();
+    // this.userSettingsSubscription.unsubscribe();
   }
 
   ngAfterViewChecked() {
@@ -74,7 +70,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   getStyleAttr() {
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
 
-    // replace this with getComputedStyles
+    //  replace this with getComputedStyles
     for (let rule of this.styleInput.split(/;+/)) {
       if (rule.length) {
         let [, prop] = rule.match(/^\s*([^:\s]+)/);
@@ -84,6 +80,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       }
     }
 
+    // User styles
     for (let prop in this.style) {
       styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
@@ -214,7 +211,32 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     this.clientY = e.touches[0].clientY;
   }
 
-  onMenuHandleClick(){
-    console.log('click')
+  onMenuHandleClick(e) {
+    this.presentPopover(e);
+  }
+
+  presentPopover(event) {
+    let popover = this.popoverCtrl.create(StylePopoverPage, {});
+
+    this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
+      (changed: { [key: string]: any }) => {
+        console.log('Style Changd', changed);
+        this.style = Object.assign(this.style, changed);
+        this.sizeText();
+      }
+    );
+
+    popover.onDidDismiss(styles => {
+      console.log(styles);
+      if (styles !== null) {
+        this.style = styles;
+        this.sizeText();
+      }
+      this.userSettingsSubscription.unsubscribe();
+    });
+
+    popover.present({
+      ev: event
+    });
   }
 }

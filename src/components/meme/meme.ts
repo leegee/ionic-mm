@@ -38,6 +38,9 @@ export abstract class Meme implements AfterViewChecked {
     this.containerSize = { width, height };
     this.container.style.width = width + 'px';
     this.container.style.height = height + 'px';
+    // this.textBlocks.forEach(textblock => {
+    //   textblock.sizeText();
+    // });
   }
 
   ionViewCanLeave() {

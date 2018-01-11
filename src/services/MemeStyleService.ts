@@ -4,8 +4,6 @@ import { Subject } from 'rxjs/Subject';
 /*
  * Handle the state of user-chosen styles.
  *
- * A singleton for the whole meme, covering all text blocks.
- *
  * RX Subscriptions: https://angular.io/guide/component-interaction#!#bidirectional-service
  */
 

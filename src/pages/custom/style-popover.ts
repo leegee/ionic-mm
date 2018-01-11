@@ -6,34 +6,44 @@ import { ViewController, NavParams } from 'ionic-angular';
     templateUrl: 'style-popover.html'
 })
 export class StylePopoverPage {
+    public static statePossibleKeys = [
+        '-webkit-text-stroke-width',
+        '-webkit-text-stroke-color',
+        'text-align',
+        'word-wrap',
+        'overflow-wrap',
+        'white-space'
+    ];
     public selections = {};
     private state = {};
-    public static initialState = {
-        '-webkit-text-stroke-width': '0',
-        '-webkit-text-stroke-color': 'white',
-        'text-align': 'center',
-        'word-wrap': 'break-word',
-        'overflow-wrap': 'break-word',
-        'white-space': 'noraml' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
-    };
 
     constructor(
         public viewCtrl: ViewController,
-        public navParams: NavParams,
         private memeStyleService: MemeStyleService,
+        public navParams: NavParams
     ) {
-        this.state = StylePopoverPage.initialState;
+        // TODO Make options:
+        this.state = {
+            '-webkit-text-stroke-width': '0',
+            '-webkit-text-stroke-color': 'white',
+            'text-align': 'center',
+            'word-wrap': 'break-word',
+            'overflow-wrap': 'break-word',
+            'white-space': 'noraml' // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+        };
         this.initialiseSelectionsState();
         // Notify of initial state:
         this.onChange();
     };
 
-    public close() {
-        this.viewCtrl.dismiss();
+    public close(submit:boolean) {
+        console.log('close');
+        this.viewCtrl.dismiss(submit? this.state : null );
     }
 
     public closeAndReflow() {
-        this.viewCtrl.dismiss();
+        console.log('close and reflow');
+        this.viewCtrl.dismiss(this.state);
         setTimeout(
             () => this.onChange()
         );
@@ -41,8 +51,7 @@ export class StylePopoverPage {
     }
 
     public onChange() {
-        console.log('reflow');
-        this.memeStyleService.set( this.selections2state() );
+        this.memeStyleService.set(this.selections2state());
     }
 
     private initialiseSelectionsState() {
@@ -72,7 +81,6 @@ export class StylePopoverPage {
                 newState[rule] = this.selections[rule];
             }
         }
-        console.log('state:', newState);
         return newState;
     }
 }
