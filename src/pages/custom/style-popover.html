@@ -21,12 +21,6 @@
   </ion-segment>
 
   <ion-item>
-    <button (click)='chooseColor("color")'>
-      Choose a text color
-    </button>
-  </ion-item>
-
-  <ion-item>
     <ion-label>Typeface</ion-label>
     <ion-select [(ngModel)]="selections['font-family']" (ionChange)='onChange()'>
       <ion-option value="Roboto" style='font-family:Roboto'>Roboto</ion-option>
@@ -44,10 +38,15 @@
     <ion-segment-button value="bold">Bold</ion-segment-button>
   </ion-segment>
 
-  <ion-segment [(ngModel)]="selections['color']" (ionChange)='onChange()'>
-    <ion-segment-button value="black"> Black text </ion-segment-button>
-    <ion-segment-button value="white"> White text</ion-segment-button>
-  </ion-segment>
+  <ion-item>
+      Foreground:
+      <input type='color' [(ngModel)]="selections['color']" (change)='onChange()'>
+  </ion-item>
+
+  <ion-item>
+      Background:
+      <input type='color' [(ngModel)]="selections['background-color']" (change)='onChange()'>
+  </ion-item>
 
   <ion-segment [(ngModel)]="selections['-webkit-text-stroke-color']" (ionChange)='onChange()'>
     <ion-segment-button value="black"> Black outline </ion-segment-button>

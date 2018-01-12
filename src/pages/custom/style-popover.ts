@@ -15,7 +15,8 @@ export class StylePopoverPage {
         'text-align': 'center',
         'white-space': 'noraml', // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
         'word-wrap': 'break-word',
-        'color': 'black'
+        'color': 'black',
+        'background-color': 'transparent'
     };
     protected selections = {};
     protected state: { [key: string]: any } = {};
