@@ -1,3 +1,4 @@
+import { ColorPickerPopoverComponent } from './../components/color-picker-popover/color-picker-popover';
 import { CustomBlankPage } from './../pages/custom/blank/blank';
 import { StylePopoverPage } from './../pages/custom/style-popover';
 import { ImageResizer } from '@ionic-native/image-resizer';
@@ -42,6 +43,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
   ],
   bootstrap: [IonicApp],
   declarations: [
+    ColorPickerPopoverComponent,
     SplashPage,
     MyApp,
     TextBlockComponent,
@@ -62,6 +64,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     OrangePage
   ],
   entryComponents: [
+    ColorPickerPopoverComponent,
     SplashPage,
     MyApp,
     HomePage,

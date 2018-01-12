@@ -55,4 +55,8 @@ export class TextBlockComponent extends TextRenderer implements TextBlockInterfa
   setPosition(){
     throw new Error('Not implemented');
   }
+
+  sizeText(){
+    throw new Error('Not implemented');
+  }
 }

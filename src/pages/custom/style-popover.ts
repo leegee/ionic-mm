@@ -1,6 +1,7 @@
 import { MemeStyleService } from './../../services/MemeStyleService';
 import { Component } from '@angular/core';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams, ModalController } from 'ionic-angular';
+import { ColorPickerPopoverComponent } from '../../components/color-picker-popover/color-picker-popover';
 
 @Component({
     templateUrl: 'style-popover.html'
@@ -14,6 +15,7 @@ export class StylePopoverPage {
         'text-align': 'center',
         'white-space': 'noraml', // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
         'word-wrap': 'break-word',
+        'color': 'black'
     };
     protected selections = {};
     protected state: { [key: string]: any } = {};
@@ -21,7 +23,8 @@ export class StylePopoverPage {
     constructor(
         public viewCtrl: ViewController,
         private memeStyleService: MemeStyleService,
-        public navParams: NavParams
+        public navParams: NavParams,
+        public modalCtrl: ModalController
     ) {
         Object.keys(StylePopoverPage.stateDefaults).forEach(styleRuleName => {
             let camelised = this.camelise(styleRuleName);
@@ -88,5 +91,20 @@ export class StylePopoverPage {
             }
         }
         return newState;
+    }
+
+    chooseColor(cssRule: string) {
+        console.log('choose to replace ', cssRule, this.state[cssRule]);
+        let modal = this.modalCtrl.create(ColorPickerPopoverComponent, {
+            color: this.state[cssRule]
+        });
+
+        modal.onDidDismiss((data) => {
+            console.log('closed colour picker, got ', data);
+            // this.userSettingsSubscription.unsubscribe();
+        });
+
+        modal.present();
+
     }
 }

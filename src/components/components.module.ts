@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 import { TextBlockComponent } from './text-block/text-block';
 import { Meme } from './meme/meme';
 import { CustomTextComponent } from './custom-text/custom-text';
+import { ColorPickerPopoverComponent } from './color-picker-popover/color-picker-popover';
 @NgModule({
 	declarations: [
 		TextBlockComponent,
 		CustomTextComponent,
-		CustomTextJaggedComponent
+		CustomTextJaggedComponent,
+    ColorPickerPopoverComponent
 	],
 	imports: [
 		CommonModule,
@@ -22,7 +24,8 @@ import { CustomTextComponent } from './custom-text/custom-text';
 	exports: [
 		TextBlockComponent,
 		CustomTextComponent,
-		CustomTextJaggedComponent
+		CustomTextJaggedComponent,
+    ColorPickerPopoverComponent
 	]
 })
 export class ComponentsModule { }

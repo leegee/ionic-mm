@@ -114,4 +114,8 @@ export class CustomTextJaggedComponent extends TextRenderer implements TextBlock
     throw new Error('Not implemented');
   }
 
+  sizeText() {
+    throw new Error('Not implemented');
+  }
+
 }
