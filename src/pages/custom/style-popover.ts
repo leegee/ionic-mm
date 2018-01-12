@@ -106,6 +106,10 @@ export class StylePopoverPage {
         });
 
         modal.present();
+    }
 
+    setTransparentBackground() {
+        this.selections['background-color'] = 'transparent';
+        this.onChange();
     }
 }

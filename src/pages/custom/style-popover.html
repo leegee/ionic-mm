@@ -46,6 +46,7 @@
   <ion-item>
       Background:
       <input type='color' [(ngModel)]="selections['background-color']" (change)='onChange()'>
+      <button style='padding:0.5em; border-radius:0.5em;' (click)='setTransparentBackground()'>Clear</button>
   </ion-item>
 
   <ion-segment [(ngModel)]="selections['-webkit-text-stroke-color']" (ionChange)='onChange()'>
