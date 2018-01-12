@@ -1,16 +1,7 @@
-<div id='menu-handle' (click)='onMenuHandleClick($event)'>
-  <ion-icon name='options'></ion-icon>
+<div style='getPositionStyle()' [hidden]='isHidden' style='display: relative; width:100%; height:100%'>
+  <div id='menu-handle' (click)='onMenuHandleClick($event)' [hidden]='isHidden'>
+    <ion-icon name='options'></ion-icon>
+  </div>
+  <textarea #textinput class='meme-text-container' [hidden]='isHidden' [(ngModel)]='text' placeholder='{{placeholder}}' [style]='getStyleAttr()'
+    (input)='sizeText($event)' (touchstart)='onTouchStart($event)' (touchmove)='onTouchMove($event)' (touchend)='onTouchEnd()'></textarea>
 </div>
-<!-- <ion-icon id='menu-handle' name='options' (click)='onMenuHandleClick($event)'></ion-icon> -->
-
-<textarea
-  #textinput
-  class='meme-text-container'
-  [(ngModel)]='text'
-  placeholder='{{placeholder}}'
-  [style]='getStyleAttr()'
-  (input)='sizeText($event)'
-  (touchstart)='onTouchStart($event)'
-  (touchmove)='onTouchMove($event)'
-  (touchend)='onTouchEnd()'
-></textarea>

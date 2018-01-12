@@ -1,3 +1,4 @@
+import { CustomBlankPage } from './../pages/custom/blank/blank';
 import { StylePopoverPage } from './../pages/custom/style-popover';
 import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
@@ -50,6 +51,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     HomePage,
     CustomWholePage,
     CustomTopBottomPage,
+    CustomBlankPage,
     DogePage,
     WonkaPage,
     MostInterestingManPage,
@@ -65,6 +67,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     HomePage,
     CustomWholePage,
     CustomTopBottomPage,
+    CustomBlankPage,
     StylePopoverPage,
     DogePage,
     WonkaPage,

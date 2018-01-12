@@ -9,6 +9,8 @@ import { TextBlockInterface } from '../text-block-interface';
 })
 export class TextBlockComponent extends TextRenderer implements TextBlockInterface {
   @Input('text') text: string;
+  @Input('id') id: string;
+  isHidden: false;
 
   private elRef: ElementRef;
   public editing = false;
@@ -48,5 +50,9 @@ export class TextBlockComponent extends TextRenderer implements TextBlockInterfa
     this.editing = false;
     this.keyboard.close();
     // console.log('onBlur');
+  }
+
+  setPosition(){
+    throw new Error('Not implemented');
   }
 }

@@ -7,11 +7,12 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
-- Inconsisent styles before/after popover
-- Fonts via mobile differ to CSS/SASS
+- Inconsisent stroke before/after popover
 
 To Do
 -----
+
+- Add/remove custom-text components: https://angular.io/guide/dynamic-component-loader
 
 Future
 ------

@@ -1,11 +1,8 @@
 export abstract class TextBlockInterface {
+    isHidden: boolean;
+    id: string;
     abstract render({});
-        // nativeElement:HTMLElement,
-        // ctx: CanvasRenderingContext2D,
-        // width: number,
-        // height: number
-        // disaplyedWidth: number
-        // displayedHeight: number
     abstract getText(): string;
     abstract getStyles(): {};
+    abstract setPosition(x:number, y:number): void;
 }

@@ -6,8 +6,7 @@ import { StylePopoverPage } from '../style-popover';
 
 @NgModule({
   declarations: [
-    CustomTextComponent,
-    StylePopoverPage
+    CustomTextComponent
   ],
   imports: [
     IonicPageModule.forChild(CustomTopBottomPage)

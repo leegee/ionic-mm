@@ -16,6 +16,8 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
   @Input('style') styleInput = '';
   @Input('text') text = '';
+  @Input('id') id: string;
+  @Input('isHidden') isHidden = false;
 
   private static RESIZE_HANDLE_PX = 20;
   private static FONT_SCALE_BY: number = 0.025;
@@ -26,7 +28,9 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected elTextInput: HTMLInputElement;
   private touching = false;
   private running: boolean;
-  private style = {};
+  private style: { [key: string]: string } = {};
+  private left: string = '';
+  private top: string = '';
   private clientX: number;
   private clientY: number;
   protected container: HTMLElement;
@@ -236,5 +240,16 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     popover.present({
       ev: event
     });
+  }
+
+  setPosition(x: number, y: number): void {
+    this.left = x + 'px';
+    this.top = y + 'px';
+  }
+
+  getPositionStyle(){
+    return this.domSanitizer.bypassSecurityTrustStyle(
+      this.left + ';' + this.top
+    );
   }
 }

@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { CustomWholePage } from '../pages/custom/whole/whole';
 import { CustomTopBottomPage } from './../pages/custom/top-bottom/top-bottom';
+import { CustomBlankPage } from '../pages/custom/blank/blank';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,7 +30,8 @@ export class MyApp {
     ];
     this.customPages = [
       { title: 'Text covers page', component: CustomWholePage },
-      { title: 'Top and bottom', component: CustomTopBottomPage }
+      { title: 'Top and bottom', component: CustomTopBottomPage },
+      { title: 'Add your own text', component: CustomBlankPage }
     ];
 
   }

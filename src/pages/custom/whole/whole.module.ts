@@ -1,14 +1,10 @@
-import { CustomTextComponent } from './../../../components/custom-text/custom-text';
+import { CustomWholePage } from './whole';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { CustomWholePage } from './whole';
-import { StylePopoverPage } from '../style-popover';
 
 @NgModule({
   declarations: [
-    CustomWholePage,
-    CustomTextComponent,
-    StylePopoverPage
+    CustomWholePage
   ],
   imports: [
     IonicPageModule.forChild(CustomWholePage)

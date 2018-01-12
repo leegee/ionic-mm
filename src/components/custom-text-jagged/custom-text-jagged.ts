@@ -1,5 +1,5 @@
 import { TextRenderer } from './../text-renderer';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TextBlockInterface } from '../text-block-interface';
 
 @Component({
@@ -7,9 +7,13 @@ import { TextBlockInterface } from '../text-block-interface';
   templateUrl: 'custom-text-jagged.html'
 })
 export class CustomTextJaggedComponent extends TextRenderer implements TextBlockInterface {
+
   private static reWordMaybeSpace = new RegExp(/(\S+)(\s+)?/g);
   protected elTextInput: HTMLInputElement;
-  public text: string = '';
+  isHidden: false;
+
+  @Input('text') text = '';
+  @Input('id') id: string;
 
   private widthOfASpace: number;
 
@@ -104,6 +108,10 @@ export class CustomTextJaggedComponent extends TextRenderer implements TextBlock
     }
 
     this.text = initialSpace + rv;
+  }
+
+  setPosition() {
+    throw new Error('Not implemented');
   }
 
 }
