@@ -99,22 +99,12 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     Nor can CSSStyleDeclarations be cast to objecrts
   */
   getStyles() {
-    let elStylesWithFont = this._stylesForElement(this.elTextInput);
-
-    let elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
-
-    let fontStyles = Object.keys(elStylesWithFont)
-      .filter(ruleName => {
-        return ruleName.match(/^(textAlign|line|font)/)
-      })
-      .reduce((styles, ruleName) => {
-        styles[ruleName] = elStylesWithFont[ruleName];
-        return styles;
-      },
-      {}
-      );
-
-    return Object.assign(elStylesWithPos, fontStyles);
+    const elStylesWithFont = this._stylesForElement(this.elTextInput);
+    const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
+    return Object.assign(elStylesWithFont, {
+      left: elStylesWithPos.left,
+      right: elStylesWithPos.right
+    });
   }
 
   onFocus(e) { }
@@ -227,7 +217,6 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
-        console.log('Style Changd', changed);
         this.style = Object.assign(this.style, changed);
         this.sizeText();
       }
@@ -247,7 +236,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     this.top = y + 'px';
   }
 
-  getPositionStyle(){
+  getPositionStyle() {
     return this.domSanitizer.bypassSecurityTrustStyle(
       'position:absolute; width:200px; height:100px; left: ' + this.left + ';' + 'top: ' + this.top + ';'
     );
