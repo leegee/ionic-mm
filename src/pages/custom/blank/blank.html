@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>New Meme {{width}} x {{height}}</ion-title>
+    <ion-buttons end [hidden]="!imageUrl">
+      <button ion-button icon-only (click)="share(true)">
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div id='editable-image' [hidden]="!imageUrl">
+    <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
+    <div id="meme-text-container" tappable (click)="onContainerClicked($event)">
+      <custom-text #textinput id='1' [hidden]='false' text='Your text' style='position: absolute; width:20%; height: 20%; left: 30px; top: 30px;'></custom-text>
+      <custom-text #textinput id='2' [hidden]='isHidden' text='Text 2' style='position: absolute; width:20%; height: 20%;'></custom-text>
+      <custom-text #textinput id='3' [hidden]='isHidden' text='Text 3' style='position: absolute; width:20%; height: 20%;'></custom-text>
+      <custom-text #textinput id='4' [hidden]='isHidden' text='Text 4' style='position: absolute; width:20%; height: 20%;'></custom-text>
+      <custom-text #textinput id='5' [hidden]='isHidden' text='Text 5' style='position: absolute; width:20%; height: 20%;'></custom-text>
+      <custom-text #textinput id='6' [hidden]='isHidden' text='Text 6' style='position: absolute; width:20%; height: 20%;'></custom-text>
+      <custom-text #textinput id='7' [hidden]='isHidden' text='Text 7' style='position: absolute; width:20%; height: 20%;'></custom-text>
+      <custom-text #textinput id='8' [hidden]='isHidden' text='Max text' style='position: absolute; width:20%; height: 20%;'></custom-text>
+
+    </div>
+  </div>
+
+  <div [hidden]="!isWeb" class='image-selector'>
+    <input id='meme-img' [hidden]='imageUrl' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
+  </div>
+
+</ion-content>

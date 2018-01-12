@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div [hidden]="!isWeb">
+  <div [hidden]="!isWeb" class='image-selector'>
     <input id='meme-img' [hidden]='imageUrl' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
   </div>
 

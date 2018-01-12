@@ -8,16 +8,16 @@ custom-text {
     width: auto;
     height: auto;
     position: absolute;
-    top: -5pt;
-    right: 1px;
+    top: -6pt;
+    right: -6px;
     font-size: 10pt;
     z-index: 999;
-    border-radius: 10pt;
+    border-radius: 2pt;
     border: 1pt solid white;
-    padding: 1pt;
+    padding: 2pt;
     color: white;
     -webkit-text-stroke: 0;
-    background: black;
+    background: rgba(0, 0, 0, 0.5);
   }
   textarea {
     resize: both;
