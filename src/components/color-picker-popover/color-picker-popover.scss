@@ -15,18 +15,21 @@
       z-index: 1000;
       width: auto;
       height: auto;
+      text-align: center;
       #picker {
+        position: relative;
         cursor: crosshair;
       }
       .cancel,
       .preview {
+        position: relative;
         border-radius: 1em;
         border: 1px solid grey;
         cursor: pointer;
         height: 2em;
+        margin-bottom: 1em;
         width: 50%;
-      }
-      .preview {
+        float: left;
       }
     }
   }

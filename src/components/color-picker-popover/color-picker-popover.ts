@@ -1,6 +1,7 @@
 import { NavParams } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Component } from '@angular/core';
+import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 /**
  * Generated class for the ColorPickerPopoverComponent component.
@@ -17,19 +18,20 @@ export class ColorPickerPopoverComponent {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   choosingColor: string;
-  originalColor: string;
+  originalStyle: SafeStyle;
 
   constructor(
     private domSanitizer: DomSanitizer,
     public navParams: NavParams
   ) {
-    this.originalColor = navParams.data.color;
+    this.originalStyle = this.domSanitizer.bypassSecurityTrustStyle(
+      'background-color: ' + navParams.data.color
+    );
   }
 
   ngOnInit() {
     this.canvas = document.getElementById('picker') as HTMLCanvasElement;;
     this.ctx = this.canvas.getContext('2d');
-    console.log(this.navParams.data.color)
     let image = new Image();
     image.onload = () => {
       this.ctx.drawImage(image, 0, 0, image.width, image.height);
@@ -38,10 +40,10 @@ export class ColorPickerPopoverComponent {
   }
 
   onClick(e) {
-    console.log(e.clientX, this.canvas.offsetLeft);
+    var rect = this.canvas.getBoundingClientRect();
     const imageData = this.ctx.getImageData(
-      Math.floor(e.pageX - this.canvas.offsetLeft),
-      Math.floor(e.pageY - this.canvas.offsetTop),
+      e.clientX - rect.left,
+      e.clientY - rect.top,
       1,
       1
     );

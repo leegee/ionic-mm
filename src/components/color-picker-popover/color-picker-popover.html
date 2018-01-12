@@ -2,10 +2,10 @@
   <div class="screen-overlay"></div>
   <div class="color-picker-container">
 
-      <div class="cancel" style="{{originalColor}}"></div>
-    <div class="preview" [style]="getStyleAttr()"></div>
+    <div class="cancel" [style]="originalStyle">Original</div>
+    <div class="preview" [style]="getStyleAttr()">New</div>
 
-      <canvas id="picker" var="1" width="300" height="300" (click)='onClick($event)'></canvas>
+    <canvas id="picker" var="1" width="300" height="300" (click)='onClick($event)'></canvas>
 
   </div>
 </div>
