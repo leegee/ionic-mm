@@ -243,13 +243,11 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   setPosition(x: number, y: number): void {
-    console.log('Set Position', x, y);
     this.left = x + 'px';
     this.top = y + 'px';
   }
 
   getPositionStyle(){
-    console.log('getPositionStyle', this.left,this.top)
     return this.domSanitizer.bypassSecurityTrustStyle(
       'position:absolute; width:200px; height:100px; left: ' + this.left + ';' + 'top: ' + this.top + ';'
     );
