@@ -190,11 +190,13 @@ export class TextRenderer {
             let height: number = this._scale(heightStr, 'height');
             this.ctx.beginPath();
             [this.ctx.fillStyle, this.ctx.globalAlpha] = this.convertColor(this.computedStyles.backgroundColor);
+            console.log('this.ctx.globalAlpha', this.ctx.globalAlpha, 'from', this.computedStyles.backgroundColor);
             this.ctx.fillRect(this.x, this.y, width, height);
             this.ctx.fill();
         }
 
         this.ctx.fillStyle = this.computedStyles.color;
+        this.ctx.globalAlpha = 1;
 
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {
             this.processLine(inputLine);
@@ -269,7 +271,8 @@ export class TextRenderer {
     };
 
     convertColor(rgba): [string, number] {
-        const [, r, g, b, a] = rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+),\s*(\d+)?\)$/);
+        console.log('convertColor', rgba);
+        const [, r, g, b, a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+),\s*([.\d]+)?\)$/);
         return [
             '#' + this.decimal2hex(r) + this.decimal2hex(g) + this.decimal2hex(b),
             (a ? Math.abs(Number(1 - a)) : 1)

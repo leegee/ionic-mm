@@ -79,20 +79,22 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     //  replace this with getComputedStyles
     for (let rule of this.styleInput.split(/\s*;+\s*/)) {
       if (rule.length) {
-        let [, name, value] = rule.match(/^\s*([^:\s]+)\s*:\s*(.+)$/);
+        let [, name, value] = rule.match(/^\s*([^:]+)\s*:\s*(.+)$/);
         if (this.stylesFromElementMarkup.hasOwnProperty(name) && (!this.style || !this.style.hasOwnProperty(name))) {
-          styleAtrStr += name + value + ';';
-          this.styleAttr[name] = rule;
+          styleAtrStr += name + ':' + value + ';';
+          this.styleAttr[name] = value;
+          console.log('set prop', name, 'to', value);
         }
       }
     }
 
     // User styles
     for (let prop in this.style) {
+      console.log('override ', prop, 'with ', this.style[prop]);
       styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
 
-    // console.log('style on text input=', styleAtrStr);
+    console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
@@ -102,13 +104,20 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   */
   getStyles() {
     const elStylesWithFont = this._stylesForElement(this.elTextInput);
+    console.log('elStylesWithFont', elStylesWithFont.color, elStylesWithFont.backgroundColor);
+    console.log('styleAttr', this.styleAttr.color, this.styleAttr.backgroundColor);
     const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
-    return Object.assign(elStylesWithFont, {
-      left: elStylesWithPos.left,
-      right: elStylesWithPos.right,
-      top: elStylesWithPos.top,
-      bottom: elStylesWithPos.bottom
-    });
+    const rv = Object.assign(elStylesWithFont, this.
+      styleAttr,
+      {
+        left: elStylesWithPos.left,
+        right: elStylesWithPos.right,
+        top: elStylesWithPos.top,
+        bottom: elStylesWithPos.bottom
+      }
+    );
+    console.info('**', rv.color, rv.backgroundColor);
+    return rv;
   }
 
   onFocus(e) { }
