@@ -17,6 +17,7 @@ export class TextRenderer {
         '-webkitTextStrokeWidth',
         '-webkitTextStrokeColor',
         'width',
+        'height',
         'backgroundColor',
         'color',
         'fontSize',
@@ -180,18 +181,20 @@ export class TextRenderer {
         this.y = this._scale(this.computedStyles.top, 'height');
         this.initalx = this.x;
 
-        console.log('RENDER..............', this.computedStyles.backgroundColor, this.x, this.y, args.width, args.height);
-        console.log(this.computedStyles);
-        this.ctx.beginPath();
-        [this.ctx.fillStyle, this.ctx.globalAlpha] = this.convertColor(this.computedStyles.backgroundColor);
-        console.log('set bg to ', this.convertColor(this.computedStyles.backgroundColor));
-        this.ctx.fillRect(this.x, this.y, args.width, args.height);
-        this.ctx.fill();
-
-        this.ctx.fillStyle = this.computedStyles.color;
-
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
         this.nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
+
+        {
+            let width = this.nComputedStylesWidthScaled;
+            let [, heightStr] = this.computedStyles.height.match(TextRenderer.reFontSize);
+            let height: number = this._scale(heightStr, 'height');
+            this.ctx.beginPath();
+            [this.ctx.fillStyle, this.ctx.globalAlpha] = this.convertColor(this.computedStyles.backgroundColor);
+            this.ctx.fillRect(this.x, this.y, width, height);
+            this.ctx.fill();
+        }
+
+        this.ctx.fillStyle = this.computedStyles.color;
 
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {
             this.processLine(inputLine);
