@@ -28,7 +28,8 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected elTextInput: HTMLInputElement;
   private touching = false;
   private running: boolean;
-  private style: { [key: string]: string } = {};
+  private style: { [key: string]: string } = {}; // Set to over-ride styles from DOM
+  private styleAttr: { [key: string]: string } = {}; // Styles from DOM via @Input styleInput
   private left: string = '';
   private top: string = '';
   private clientX: number;
@@ -76,11 +77,12 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
 
     //  replace this with getComputedStyles
-    for (let rule of this.styleInput.split(/;+/)) {
+    for (let rule of this.styleInput.split(/\s*;+\s*/)) {
       if (rule.length) {
-        let [, prop] = rule.match(/^\s*([^:\s]+)/);
-        if (this.stylesFromElementMarkup.hasOwnProperty(prop) && (!this.style || !this.style.hasOwnProperty(prop))) {
-          styleAtrStr += rule + ';';
+        let [, name, value] = rule.match(/^\s*([^:\s]+)\s*:\s*(.+)$/);
+        if (this.stylesFromElementMarkup.hasOwnProperty(name) && (!this.style || !this.style.hasOwnProperty(name))) {
+          styleAtrStr += name + value + ';';
+          this.styleAttr[name] = rule;
         }
       }
     }
@@ -239,8 +241,9 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   getPositionStyle() {
+    const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
     return this.domSanitizer.bypassSecurityTrustStyle(
-      'position:absolute; width:200px; height:100px; left: ' + this.left + ';' + 'top: ' + this.top + ';'
+      'position:absolute; width:' + elStylesWithPos.width + '; height:' + elStylesWithPos.height + '; left: ' + this.left + ';' + 'top: ' + this.top + ';'
     );
   }
 }

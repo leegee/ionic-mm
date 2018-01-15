@@ -7,7 +7,7 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
-- "But when I do..." pos
+- Render BG
 - Inconsisent stroke before/after popover
 
 To Do
