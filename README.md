@@ -7,12 +7,13 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
+- "But when I do..." pos
 - Inconsisent stroke before/after popover
 
 To Do
 -----
 
-- Add/remove custom-text components: https://angular.io/guide/dynamic-component-loader
+- remove custom-text components
 
 Future
 ------

@@ -103,7 +103,9 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
     return Object.assign(elStylesWithFont, {
       left: elStylesWithPos.left,
-      right: elStylesWithPos.right
+      right: elStylesWithPos.right,
+      top: elStylesWithPos.top,
+      bottom: elStylesWithPos.bottom
     });
   }
 

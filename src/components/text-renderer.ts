@@ -147,7 +147,7 @@ export class TextRenderer {
             height: args.displayedHeight
         };
 
-        // console.log('RENDER', args);
+        console.log('RENDER', args);
 
         this.computedStyles = this._getStyles();
 
