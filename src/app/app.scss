@@ -126,3 +126,16 @@ ion-content {
   font-style: italic;
   content: 'Use the button, or drag and drop a file here.'
 }
+
+
+.list-header {
+  margin-top: 1em;
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.list-header .label-md {
+  margin: 0;
+  font-size: 100%;
+  opacity: 0.5;
+}
