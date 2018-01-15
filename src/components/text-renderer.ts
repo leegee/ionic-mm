@@ -160,6 +160,8 @@ export class TextRenderer {
         this.ctx.textBaseline = 'top';
         this.ctx.fillStyle = this.computedStyles.color;
 
+        console.log('RENDER..............', this.computedStyles.width, this.computedStyles.height);
+
         if (this.computedStyles['-webkit-text-stroke-color']
             && this.computedStyles['-webkit-text-stroke-width']
             && parseFloat(this.computedStyles['-webkit-text-stroke-width']) > 0
@@ -177,8 +179,6 @@ export class TextRenderer {
         this.x = this._scale(this.computedStyles.left, 'width');
         this.y = this._scale(this.computedStyles.top, 'height');
         this.initalx = this.x;
-
-        console.log('textAlign: ', this.computedStyles.textAlign);
 
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
         // let nComputedStylesWidth = Number(strComputedStylesWidth);
