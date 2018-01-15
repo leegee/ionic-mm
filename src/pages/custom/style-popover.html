@@ -39,14 +39,26 @@
   </ion-segment>
 
   <ion-item>
-      Foreground:
-      <input type='color' [(ngModel)]="selections['color']" (change)='onChange()'>
+    Foreground:
+    <input type='color' [(ngModel)]="selections['color']" (change)='onChange()'>
+  </ion-item>
+  <ion-item>
+    <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['foreground-opacity']" (ionChange)='onChange()'>
+      <ion-label range-left>0</ion-label>
+      <ion-label range-right>1</ion-label>
+    </ion-range>
   </ion-item>
 
   <ion-item>
-      Background:
-      <input type='color' [(ngModel)]="selections['background-color']" (change)='onChange()'>
-      <button style='padding:0.5em; border-radius:0.5em;' (click)='setTransparentBackground()'>Clear</button>
+    Background:
+    <input type='color' [(ngModel)]="selections['background-color']" (change)='onChange()'>
+    <button style='padding:0.5em; border-radius:0.5em;' (click)='setTransparentBackground()'>Clear</button>
+  </ion-item>
+  <ion-item>
+    <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['background-opacity']" (ionChange)='onChange()'>
+      <ion-label range-left>0</ion-label>
+      <ion-label range-right>1</ion-label>
+    </ion-range>
   </ion-item>
 
   <ion-segment [(ngModel)]="selections['-webkit-text-stroke-color']" (ionChange)='onChange()'>

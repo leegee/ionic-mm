@@ -37,12 +37,12 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected container: HTMLElement;
   private lastTouchTimeStamp = 0;
   private stylesFromElementMarkup = {
-    'color': true,
-    'background': true,
-    'backgroundColor': true,
-    '-webkit-text-stroke': true,
-    '-webkit-text-stroke-width': true,
-    '-webkit-text-stroke-colour': true
+    // 'color': true,
+    // 'background': true,
+    // 'backgroundColor': true,
+    // '-webkit-text-stroke': true,
+    // '-webkit-text-stroke-width': true,
+    // '-webkit-text-stroke-colour': true
   };
 
   constructor(
@@ -83,18 +83,15 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
         if (this.stylesFromElementMarkup.hasOwnProperty(name) && (!this.style || !this.style.hasOwnProperty(name))) {
           styleAtrStr += name + ':' + value + ';';
           this.styleAttr[name] = value;
-          console.log('set prop', name, 'to', value);
         }
       }
     }
 
     // User styles
     for (let prop in this.style) {
-      console.log('override ', prop, 'with ', this.style[prop]);
       styleAtrStr += prop + ':' + this.style[prop] + ';';
     }
 
-    console.log('style on text input=', styleAtrStr);
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
   }
 
@@ -104,20 +101,16 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   */
   getStyles() {
     const elStylesWithFont = this._stylesForElement(this.elTextInput);
-    console.log('elStylesWithFont', elStylesWithFont.color, elStylesWithFont.backgroundColor);
-    console.log('styleAttr', this.styleAttr.color, this.styleAttr.backgroundColor);
     const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
-    const rv = Object.assign(elStylesWithFont, this.
-      styleAttr,
+    console.log('THis.style', this.style);
+    return Object.assign(
+      elStylesWithPos,
+      elStylesWithFont,
+      this.style, // From the popover
       {
-        left: elStylesWithPos.left,
-        right: elStylesWithPos.right,
-        top: elStylesWithPos.top,
-        bottom: elStylesWithPos.bottom
+        fontSize: elStylesWithFont.fontSize
       }
     );
-    console.info('**', rv.color, rv.backgroundColor);
-    return rv;
   }
 
   onFocus(e) { }
@@ -231,6 +224,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     this.userSettingsSubscription = this.MemeStyleService.changeAnnounced$.subscribe(
       (changed: { [key: string]: any }) => {
         this.style = Object.assign(this.style, changed);
+        console.log('SET SET FROM POPOVER: ', changed, this.style)
         this.sizeText();
       }
     );

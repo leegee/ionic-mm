@@ -9,26 +9,27 @@ export interface TextRendererOptions {
 
 export class TextRenderer {
     private static textStyleRules = [
-        'textAlign',
         '-webkit-text-stroke',
-        '-webkit-text-stroke-width',
         '-webkit-text-stroke-color',
+        '-webkit-text-stroke-width',
         '-webkitTextStroke',
-        '-webkitTextStrokeWidth',
         '-webkitTextStrokeColor',
-        'width',
-        'height',
+        '-webkitTextStrokeWidth',
+        'background',
         'backgroundColor',
+        'bottom',
         'color',
-        'fontSize',
         'fontFamily',
+        'fontSize',
         'fontWeight',
+        'height',
+        'left',
         'lineHeight',
         'position',
-        'left',
+        'right',
+        'textAlign',
         'top',
-        'bottom',
-        'right'
+        'width',
     ];
     // ctx.shadowColor = “red” // string Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
     // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
@@ -272,7 +273,7 @@ export class TextRenderer {
 
     convertColor(rgba): [string, number] {
         console.log('convertColor', rgba);
-        const [, r, g, b, a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+),\s*([.\d]+)?\)$/);
+        const [, r, g, b, a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/);
         return [
             '#' + this.decimal2hex(r) + this.decimal2hex(g) + this.decimal2hex(b),
             (a ? Math.abs(Number(1 - a)) : 1)
