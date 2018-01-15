@@ -13,8 +13,11 @@ export class TextRenderer {
         '-webkit-text-stroke',
         '-webkit-text-stroke-width',
         '-webkit-text-stroke-color',
+        '-webkitTextStroke',
+        '-webkitTextStrokeWidth',
+        '-webkitTextStrokeColor',
         'width',
-        'background',
+        'backgroundColor',
         'color',
         'fontSize',
         'fontFamily',
@@ -84,7 +87,7 @@ export class TextRenderer {
 
     private _getStyles = () => {
         let textBlockStyle = this.getStyles();
-        let styles : { [key: string]: string } = {};
+        let styles: { [key: string]: string } = {};
 
         TextRenderer.textStyleRules.forEach(ruleName => {
             if (textBlockStyle.hasOwnProperty(ruleName) && textBlockStyle[ruleName] !== '') {
@@ -158,9 +161,6 @@ export class TextRenderer {
             this.computedStyles.fontFamily || ''
         ].join(' ');
         this.ctx.textBaseline = 'top';
-        this.ctx.fillStyle = this.computedStyles.color;
-
-        console.log('RENDER..............', this.computedStyles.width, this.computedStyles.height);
 
         if (this.computedStyles['-webkit-text-stroke-color']
             && this.computedStyles['-webkit-text-stroke-width']
@@ -180,13 +180,24 @@ export class TextRenderer {
         this.y = this._scale(this.computedStyles.top, 'height');
         this.initalx = this.x;
 
+        console.log('RENDER..............', this.computedStyles.backgroundColor, this.x, this.y, args.width, args.height);
+        console.log(this.computedStyles);
+        this.ctx.beginPath();
+        [this.ctx.fillStyle, this.ctx.globalAlpha] = this.convertColor(this.computedStyles.backgroundColor);
+        console.log('set bg to ', this.convertColor(this.computedStyles.backgroundColor));
+        this.ctx.fillRect(this.x, this.y, args.width, args.height);
+        this.ctx.fill();
+
+        this.ctx.fillStyle = this.computedStyles.color;
+
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
-        // let nComputedStylesWidth = Number(strComputedStylesWidth);
         this.nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
 
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {
             this.processLine(inputLine);
         });
+
+        console.log('now y = ', this.y);
     }
 
     processLine(inputLine: string) {
@@ -253,6 +264,22 @@ export class TextRenderer {
         el.style['::-webkit-scrollbar'] = 'display: none;'
         return rv;
     };
+
+    convertColor(rgba): [string, number] {
+        const [, r, g, b, a] = rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+),\s*(\d+)?\)$/);
+        return [
+            '#' + this.decimal2hex(r) + this.decimal2hex(g) + this.decimal2hex(b),
+            (a ? Math.abs(Number(1 - a)) : 1)
+        ];
+    }
+
+    decimal2hex(dec): string {
+        let rv = Number(dec).toString(16);
+        if (rv.length === 1) {
+            rv = '0' + rv;
+        }
+        return rv;
+    }
 }
 
 
