@@ -6,7 +6,7 @@ export class Screenshot {
     ) { }
 
     getImg() {
-        let img: HTMLImageElement = document.getElementById('meme-img') as HTMLImageElement;
+        let img: HTMLImageElement = document.getElementById('meme-img-input') as HTMLImageElement;
         this.canvas = document.createElement("canvas");
         this.canvas.id = "screenshot-canvas";
         document.body.appendChild(this.canvas);

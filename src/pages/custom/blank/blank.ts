@@ -3,10 +3,10 @@ import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { ContainerSizeService } from '../../../services/ContainerSizeService';
-import { AfterViewInit, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CustomMeme } from '../../../components/meme/custom-meme';
 
 @IonicPage()
@@ -14,7 +14,7 @@ import { CustomMeme } from '../../../components/meme/custom-meme';
   selector: 'page-custom-blank',
   templateUrl: 'blank.html'
 })
-export class CustomBlankPage extends CustomMeme implements AfterViewInit, DoCheck {
+export class CustomBlankPage extends CustomMeme implements AfterViewInit {
 
   public imageUrl: string;
   public resizeWidth: number = 800;

@@ -17,12 +17,12 @@
   <div id='editable-image' [hidden]="!imageUrl">
     <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
     <div id="meme-text-container">
-      <custom-text #textinput style='width:100%; height:100%; top:0'></custom-text>
+      <custom-text #textinput style='position:absolute;width:100%; height:100%; top:0; left:0;'></custom-text>
     </div>
   </div>
 
-  <div [hidden]="!isWeb" class='image-selector'>
-    <input id='meme-img' [hidden]='imageUrl' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
+  <div [hidden]="!isWeb || imageUrl" class='image-selector-parent'>
+    <input class='image-selector' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
   </div>
 
 </ion-content>
