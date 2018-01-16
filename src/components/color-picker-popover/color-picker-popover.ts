@@ -23,6 +23,7 @@ export class ColorPickerPopoverComponent {
     public viewCtrl: ViewController,
     public navParams: NavParams
   ) {
+    // TODO write the color to a new div and getComputedStyles, unless === 'transparent'.....
     const color = navParams.data.color === 'transparent' ? 'rgba(0,0,0,0)' : navParams.data.color;
     this.originalStyle = this.domSanitizer.bypassSecurityTrustStyle(
       'background-color: ' + color
