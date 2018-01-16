@@ -29,38 +29,13 @@
   </ion-item>
 
   <ion-item>
-    <ion-label (click)='chooseColor("background-color")'>Background</ion-label>
     <div class='color-preview' [style.backgroundColor]='safeStyle("background-color")'></div>
+    <button ion-button color='light' (click)='chooseColor("background-color")'>Background Color</button>
   </ion-item>
 
-  <!--
-  <ion-item no-lines id='color'>
-    Foreground:
-    <input type='color' [(ngModel)]="selections['color']" (change)='onChange()'>
-  </ion-item>
-  <ion-item>
-    <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['foreground-opacity']" (ionChange)='onChange()'>
-      <ion-label range-left>0</ion-label>
-      <ion-label range-right>1</ion-label>
-    </ion-range>
-  </ion-item>
-
-  <ion-item no-lines id='background-color'>
-    Background:
-    <input type='color' [(ngModel)]="selections['background-color']" (change)='onChange()'>
-    <button style='padding:0.5em; border-radius:0.5em;' (click)='setTransparentBackground()'>Clear</button>
-  </ion-item>
-  <ion-item>
-    <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['background-opacity']" (ionChange)='onChange()'>
-      <ion-label range-left>0</ion-label>
-      <ion-label range-right>1</ion-label>
-    </ion-range>
-  </ion-item>
--->
-
-  <ion-item no-lines id='-stroke-color'>
-    Stroke:
-    <input type='color' [(ngModel)]="selections['-webkit-text-stroke-color']" (change)='onChange()'>
+  <ion-item no-lines>
+    <div class='color-preview' [style.backgroundColor]='safeStyle("-webkit-text-stroke-color")'></div>
+    <button ion-button color='light' (click)='chooseColor("-webkit-text-stroke-color")'>Outline Color</button>
   </ion-item>
   <ion-item>
     <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['-webkit-text-stroke-width']" (ionChange)='onChange()'>
