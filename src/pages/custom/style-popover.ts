@@ -2,6 +2,7 @@ import { MemeStyleService } from './../../services/MemeStyleService';
 import { Component } from '@angular/core';
 import { ViewController, NavParams, ModalController } from 'ionic-angular';
 import { ColorPickerPopoverComponent } from '../../components/color-picker-popover/color-picker-popover';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
     templateUrl: 'style-popover.html'
@@ -10,21 +11,23 @@ export class StylePopoverPage {
     protected static stateDefaults = {
         '-webkit-text-stroke-color': 'white',
         '-webkit-text-stroke-width': '0',
-        'font-family': 'Helvetica',
+        'font-family': 'Anton',
+        'font-weight': 'normal',
         'overflow-wrap': 'break-word',
         'text-align': 'center',
         'white-space': 'noraml', // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
         'word-wrap': 'break-word',
         'color': 'black',
+        'foreground-opacity': 1,
         'background-color': 'transparent',
         'background-opacity': 1,
-        'foreground-opacity': 1,
     };
     protected selections = {};
     protected state: { [key: string]: any } = {};
 
     constructor(
         public viewCtrl: ViewController,
+        private domSanitizer: DomSanitizer,
         private memeStyleService: MemeStyleService,
         public navParams: NavParams,
         public modalCtrl: ModalController
@@ -126,15 +129,18 @@ export class StylePopoverPage {
         return rv;
     }
 
-    chooseColor(cssRule: string) {
-        console.log('choose to replace ', cssRule, this.state[cssRule]);
+    safeStyle(styleRuleName): SafeStyle {
+        return this.domSanitizer.bypassSecurityTrustStyle(styleRuleName + ':' + this.state[styleRuleName]);
+    }
+
+    chooseColor(cssRuleName: string) {
         let modal = this.modalCtrl.create(ColorPickerPopoverComponent, {
-            color: this.state[cssRule]
+            color: this.selections[cssRuleName]
         });
 
         modal.onDidDismiss((data) => {
-            console.log('closed colour picker, got ', data);
-            // this.userSettingsSubscription.unsubscribe();
+            this.selections[cssRuleName] = data.color;
+            this.onChange();
         });
 
         modal.present();

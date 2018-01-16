@@ -42,8 +42,6 @@ img.meme-img {
   z-index: 500;
 }
 
-
-
 .screen-overlay {
   position: fixed;
   top: 0;
@@ -101,7 +99,8 @@ ion-content {
   height: 100%;
 }
 
-.image-selector { // meme-img-input
+.image-selector {
+  // meme-img-input
   position: absolute;
   background: gray;
   padding: 2em;
@@ -123,15 +122,28 @@ ion-content {
   content: 'Use the button, or drag and drop a file here.'
 }
 
-
 .list-header {
   margin-top: 1em;
   border: 0;
   margin-bottom: 0;
   padding-bottom: 0;
 }
+
 .list-header .label-md {
   margin: 0;
   font-size: 100%;
   opacity: 0.5;
+}
+
+.range-md,
+.range-md.range-has-pin {
+  padding-top: 0;
+}
+
+.color-preview {
+  width: 2em;
+  height: 1em;
+  display: inline-block;
+  border: 1px solid grey;
+  border-radius: 2pt;
 }

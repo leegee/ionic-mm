@@ -1,25 +1,4 @@
 <ion-list class='style-popover'>
-  <ion-list>
-    <ion-item>
-      <ion-label>Word wrap</ion-label>
-      <ion-toggle color='secondary' [(ngModel)]="selections['word-wrap']" (ionChange)='onChange()'></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <ion-label>Overflow wrap</ion-label>
-      <ion-toggle color='secondary' [(ngModel)]="selections['overflow-wrap']" (ionChange)='onChange()'></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <ion-label>Whitespace wrap</ion-label>
-      <ion-toggle color='secondary' [(ngModel)]="selections['white-space']" (ionChange)='onChange()'></ion-toggle>
-    </ion-item>
-  </ion-list>
-
-  <ion-segment [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
-    <ion-segment-button value="left"> Left </ion-segment-button>
-    <ion-segment-button value="center"> Center </ion-segment-button>
-    <ion-segment-button value="right"> Right </ion-segment-button>
-  </ion-segment>
-
   <ion-item>
     <ion-label>Typeface</ion-label>
     <ion-select [(ngModel)]="selections['font-family']" (ionChange)='onChange()'>
@@ -33,12 +12,29 @@
   </ion-item>
 
   <ion-segment [(ngModel)]="selections['font-weight']" (ionChange)='onChange()'>
-    <ion-segment-button value="100">Light </ion-segment-button>
+    <ion-segment-button value="light" style='font-weight:light'>Light </ion-segment-button>
     <ion-segment-button value="normal">Normal</ion-segment-button>
-    <ion-segment-button value="bold">Bold</ion-segment-button>
+    <ion-segment-button value="bold" style='font-weight:bold'>Bold</ion-segment-button>
+  </ion-segment>
+
+  <ion-segment [(ngModel)]="selections['text-align']" (ionChange)='onChange()'>
+    <ion-segment-button value="left"> Left </ion-segment-button>
+    <ion-segment-button value="center"> Center </ion-segment-button>
+    <ion-segment-button value="right"> Right </ion-segment-button>
   </ion-segment>
 
   <ion-item>
+    <ion-label (click)='chooseColor("color")'>Text Color</ion-label>
+    <div class='color-preview' [style.backgroundColor]='safeStyle("color")'></div>
+  </ion-item>
+
+  <ion-item>
+    <ion-label (click)='chooseColor("background-color")'>Background</ion-label>
+    <div class='color-preview' [style.backgroundColor]='safeStyle("background-color")'></div>
+  </ion-item>
+
+  <!--
+  <ion-item no-lines id='color'>
     Foreground:
     <input type='color' [(ngModel)]="selections['color']" (change)='onChange()'>
   </ion-item>
@@ -49,7 +45,7 @@
     </ion-range>
   </ion-item>
 
-  <ion-item>
+  <ion-item no-lines id='background-color'>
     Background:
     <input type='color' [(ngModel)]="selections['background-color']" (change)='onChange()'>
     <button style='padding:0.5em; border-radius:0.5em;' (click)='setTransparentBackground()'>Clear</button>
@@ -60,20 +56,34 @@
       <ion-label range-right>1</ion-label>
     </ion-range>
   </ion-item>
+-->
 
-  <ion-segment [(ngModel)]="selections['-webkit-text-stroke-color']" (ionChange)='onChange()'>
-    <ion-segment-button value="black"> Black outline </ion-segment-button>
-    <ion-segment-button value="white"> White outline</ion-segment-button>
-  </ion-segment>
+  <ion-item no-lines id='-stroke-color'>
+    Stroke:
+    <input type='color' [(ngModel)]="selections['-webkit-text-stroke-color']" (change)='onChange()'>
+  </ion-item>
+  <ion-item>
+    <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['-webkit-text-stroke-width']" (ionChange)='onChange()'>
+      <ion-label range-left>No
+        <br/>outline</ion-label>
+      <ion-label range-right>Thick
+        <br/>outline</ion-label>
+    </ion-range>
+  </ion-item>
 
   <ion-list>
+    <ion-list-header>Word wrap</ion-list-header>
     <ion-item>
-      <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['-webkit-text-stroke-width']" (ionChange)='onChange()'>
-        <ion-label range-left>No
-          <br/>outline</ion-label>
-        <ion-label range-right>Thick
-          <br/>outline</ion-label>
-      </ion-range>
+      <ion-label>Word wrap</ion-label>
+      <ion-toggle color='secondary' [(ngModel)]="selections['word-wrap']" (ionChange)='onChange()'></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Overflow wrap</ion-label>
+      <ion-toggle color='secondary' [(ngModel)]="selections['overflow-wrap']" (ionChange)='onChange()'></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Whitespace wrap</ion-label>
+      <ion-toggle color='secondary' [(ngModel)]="selections['white-space']" (ionChange)='onChange()'></ion-toggle>
     </ion-item>
   </ion-list>
 
