@@ -98,8 +98,8 @@ export class StylePopoverPage {
         return newState;
     }
 
-    safeStyle(styleRuleName): SafeStyle {
-        return this.domSanitizer.bypassSecurityTrustStyle(styleRuleName + ':' + this.state[styleRuleName]);
+    safeStyleValue(styleRuleName): SafeStyle {
+        return this.domSanitizer.bypassSecurityTrustStyle(this.selections[styleRuleName]);
     }
 
     chooseColor(cssRuleName: string) {

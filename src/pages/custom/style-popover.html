@@ -24,17 +24,17 @@
   </ion-segment>
 
   <ion-item>
-    <div class='color-preview' [style.backgroundColor]='safeStyle("color")'></div>
+    <div class='color-preview' [style.backgroundColor]='safeStyleValue("color")'></div>
     <button ion-button color='light' (click)='chooseColor("color")'>Text Color</button>
   </ion-item>
 
   <ion-item>
-    <div class='color-preview' [style.backgroundColor]='safeStyle("background-color")'></div>
+    <div class='color-preview' [style.backgroundColor]='safeStyleValue("background-color")'></div>
     <button ion-button color='light' (click)='chooseColor("background-color")'>Background Color</button>
   </ion-item>
 
   <ion-item no-lines>
-    <div class='color-preview' [style.backgroundColor]='safeStyle("-webkit-text-stroke-color")'></div>
+    <div class='color-preview' [style.backgroundColor]='safeStyleValue("-webkit-text-stroke-color")'></div>
     <button ion-button color='light' (click)='chooseColor("-webkit-text-stroke-color")'>Outline Color</button>
   </ion-item>
   <ion-item>

@@ -23,20 +23,22 @@ export class ColorPickerPopoverComponent {
     public viewCtrl: ViewController,
     public navParams: NavParams
   ) {
+    const color = navParams.data.color === 'transparent' ? 'rgba(0,0,0,0)' : navParams.data.color;
     this.originalStyle = this.domSanitizer.bypassSecurityTrustStyle(
-      'background-color: ' + navParams.data.color
+      'background-color: ' + color
     );
-    this.chosenColor = navParams.data.color;
-    [, this.red, this.green, this.blue, , this.alpha] = navParams.data.color.match(
+    this.chosenColor = color;
+    console.log('chosenColor now', this.chosenColor, 'from', color);
+    [, this.red, this.green, this.blue, , this.alpha] = color.match(
       /^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/
     );
     this.chosenAlpha = this.alpha ? (this.alpha * 100) : 100;
   }
 
   ngOnInit() {
-    this.canvas = document.getElementById('picker') as HTMLCanvasElement;;
+    this.canvas = document.getElementById('picker') as HTMLCanvasElement;
     this.ctx = this.canvas.getContext('2d');
-    let image = new Image();
+    const image = new Image();
     image.onload = () => {
       this.ctx.drawImage(image, 0, 0, image.width, image.height);
     }
@@ -64,10 +66,10 @@ export class ColorPickerPopoverComponent {
       e.clientX - rect.left,
       e.clientY - rect.top,
       1, 1
-    );
-    this.red = imageData.data[0];
-    this.green = imageData.data[1];
-    this.blue = imageData.data[2];
+    ).data;
+    this.red = imageData[0];
+    this.green = imageData[1];
+    this.blue = imageData[2];
     this.setColor();
   }
 
