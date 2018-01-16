@@ -24,8 +24,8 @@
   </ion-segment>
 
   <ion-item>
-    <ion-label (click)='chooseColor("color")'>Text Color</ion-label>
     <div class='color-preview' [style.backgroundColor]='safeStyle("color")'></div>
+    <button ion-button color='light' (click)='chooseColor("color")'>Text Color</button>
   </ion-item>
 
   <ion-item>

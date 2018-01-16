@@ -72,7 +72,7 @@ export class ColorPickerPopoverComponent {
   }
 
   onCancel() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({ color: this.originalStyle });
   }
 
   onOk() {

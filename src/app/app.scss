@@ -141,9 +141,10 @@ ion-content {
 }
 
 .color-preview {
+  float: left;
+  margin-right: 1em;
   width: 2em;
-  height: 1em;
-  display: inline-block;
+  height: 2em;
   border: 1px solid grey;
-  border-radius: 2pt;
+  border-radius: 2em;
 }
