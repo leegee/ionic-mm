@@ -1,7 +1,7 @@
-<div clas='custom-text-container' [style]='getPositionStyle()' [hidden]='isHidden'>
+<div clas='custom-text-container' [style]='getPositionStyleAttr()' [hidden]='isHidden'>
   <div id='menu-handle' (click)='onMenuHandleClick($event)' [hidden]='isHidden'>
     <ion-icon name='options'></ion-icon>
   </div>
-  <textarea #textinput class='meme-text-container' [hidden]='isHidden' [(ngModel)]='text' placeholder='{{placeholder}}' [style]='getStyleAttr()'
+  <textarea #textinput class='meme-text-container' [hidden]='isHidden' [(ngModel)]='text' placeholder='{{placeholder}}' [style]='getfontStyleAttr()'
     (input)='sizeText($event)' (touchstart)='onTouchStart($event)' (touchmove)='onTouchMove($event)' (touchend)='onTouchEnd()'></textarea>
 </div>

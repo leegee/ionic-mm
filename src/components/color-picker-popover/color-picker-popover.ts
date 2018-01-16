@@ -50,7 +50,7 @@ export class ColorPickerPopoverComponent {
     this.choosingColor = "rgb(" + imageData.data[0] + ", " + imageData.data[1] + ", " + imageData.data[2] + ")";
   }
 
-  getStyleAttr() {
+  getfontStyleAttr() {
     return this.domSanitizer.bypassSecurityTrustStyle(
       'background-color: ' + this.choosingColor
     );

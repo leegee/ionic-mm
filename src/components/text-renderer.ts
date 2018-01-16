@@ -122,16 +122,16 @@ export class TextRenderer {
     // The computed value of 'line-height' varies by user-agent :(
     private _setScaledLineHeight(scaledFontSize): void {
         let el = document.createElement('div');
-        let styleAttr = 'z-index: 999; display:inline-block; position: "absolute";left: 0;top: 0; width:auto;height:auto; background:blue;'
+        let fontStyleAttr = 'z-index: 999; display:inline-block; position: "absolute";left: 0;top: 0; width:auto;height:auto; background:blue;'
             + 'font-size:' + this.computedStyles.fontSize + ';'
             + 'line-height: ' + this.computedStyles.lineHeight;
 
-        el.setAttribute('style', styleAttr);
+        el.setAttribute('style', fontStyleAttr);
         el.innerHTML = "&nbsp;";
         this.nativeElement.appendChild(el);
         let cssValue = el.getBoundingClientRect().height;
         this.lineHeight = this._scaleFont(cssValue + 'px');
-        // console.log('Set line-height to [%s] from [%s]', this.lineHeight, styleAttr);
+        // console.log('Set line-height to [%s] from [%s]', this.lineHeight, fontStyleAttr);
         el.outerHTML = '';
     }
 
@@ -273,7 +273,7 @@ export class TextRenderer {
 
     convertColor(rgba): [string, number] {
         console.log('convertColor', rgba);
-        const [, r, g, b, a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/);
+        const [, r, g, b, , a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/);
         return [
             '#' + this.decimal2hex(r) + this.decimal2hex(g) + this.decimal2hex(b),
             (a ? Math.abs(Number(1 - a)) : 1)

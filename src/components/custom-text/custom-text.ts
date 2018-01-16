@@ -28,21 +28,24 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   protected elTextInput: HTMLInputElement;
   private touching = false;
   private running: boolean;
-  private style: { [key: string]: string } = {}; // Set to over-ride styles from DOM
-  private styleAttr: { [key: string]: string } = {}; // Styles from DOM via @Input styleInput
+  private style: { [key: string]: string } = {}; // Set to over-ride styles set in template markup
+  private fontStyleAttr: { [key: string]: string } = {}; // Styles from DOM via @Input styleInput
   private left: string = '';
   private top: string = '';
   private clientX: number;
   private clientY: number;
   protected container: HTMLElement;
   private lastTouchTimeStamp = 0;
-  private stylesFromElementMarkup = {
-    // 'color': true,
-    // 'background': true,
-    // 'backgroundColor': true,
-    // '-webkit-text-stroke': true,
-    // '-webkit-text-stroke-width': true,
-    // '-webkit-text-stroke-colour': true
+  private stylesFromElementMarkup = { // to populate fontStyleAttr
+    'color': true,
+    'background': true,
+    'backgroundColor': true,
+    'WebkitTextStroke': true,
+    'WebkitTextStrokeWidth': true,
+    'WebkitTextStrokeColour': true,
+    '-webkit-text-stroke': true,
+    '-webkit-text-stroke-width': true,
+    '-webkit-text-stroke-colour': true
   };
 
   constructor(
@@ -73,23 +76,26 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return this.elRef.nativeElement.offsetParent !== null;
   }
 
-  getStyleAttr() {
+  getfontStyleAttr() {
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
 
     //  replace this with getComputedStyles
     for (let rule of this.styleInput.split(/\s*;+\s*/)) {
       if (rule.length) {
         let [, name, value] = rule.match(/^\s*([^:]+)\s*:\s*(.+)$/);
-        if (this.stylesFromElementMarkup.hasOwnProperty(name) && (!this.style || !this.style.hasOwnProperty(name))) {
+        if (!this.style.hasOwnProperty(name) &&
+          this.stylesFromElementMarkup.hasOwnProperty(name)
+        ) {
           styleAtrStr += name + ':' + value + ';';
-          this.styleAttr[name] = value;
+          this.fontStyleAttr[name] = value;
         }
       }
     }
 
     // User styles
-    for (let prop in this.style) {
-      styleAtrStr += prop + ':' + this.style[prop] + ';';
+    for (let name in this.style) {
+      styleAtrStr += name + ':' + this.style[name] + ';';
+      this.fontStyleAttr[name] = this.style[name];
     }
 
     return this.domSanitizer.bypassSecurityTrustStyle(styleAtrStr);
@@ -102,12 +108,16 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   getStyles() {
     const elStylesWithFont = this._stylesForElement(this.elTextInput);
     const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
-    console.log('THis.style', this.style);
     return Object.assign(
-      elStylesWithPos,
       elStylesWithFont,
       this.style, // From the popover
       {
+        left: elStylesWithPos.left,
+        top: elStylesWithPos.top,
+        right: elStylesWithPos.right,
+        bottom: elStylesWithPos,
+        width: elStylesWithPos.width,
+        height: elStylesWithPos.height,
         fontSize: elStylesWithFont.fontSize
       }
     );
@@ -243,7 +253,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     this.top = y + 'px';
   }
 
-  getPositionStyle() {
+  getPositionStyleAttr() {
     const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
     return this.domSanitizer.bypassSecurityTrustStyle(
       'position:absolute; width:' + elStylesWithPos.width + '; height:' + elStylesWithPos.height + '; left: ' + this.left + ';' + 'top: ' + this.top + ';'
