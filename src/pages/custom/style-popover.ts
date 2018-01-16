@@ -18,9 +18,7 @@ export class StylePopoverPage {
         'white-space': 'noraml', // https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
         'word-wrap': 'break-word',
         'color': 'black',
-        'foreground-opacity': 1,
-        'background-color': 'transparent',
-        'background-opacity': 1,
+        'background-color': 'transparent'
     };
     protected selections = {};
     protected state: { [key: string]: any } = {};
@@ -57,7 +55,6 @@ export class StylePopoverPage {
     }
 
     public closeAndReflow() {
-        console.log('close and reflow');
         this.viewCtrl.dismiss();
         setTimeout(
             () => this.onChange()
@@ -97,36 +94,8 @@ export class StylePopoverPage {
             }
         }
 
-        if (newState['foreground-opacity'] !== 1) {
-            newState['color'] = this._opacity(newState['color'], newState['foreground-opacity']);
-        }
-
-        if (newState['background-opacity'] !== 1) {
-            newState['background-color'] = this._opacity(newState['background-color'], newState['background-opacity']);
-        }
-
         console.log('after change', newState);
         return newState;
-    }
-
-    private _opacity(color: string, opacity: number | string): string {
-        console.log('opacity', color, opacity);
-        let r, g, b;
-        if (color.match(/^rgb/)) {
-            [, r, g, b,] = color.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/);
-        } else if (color.match(/^#/)) {
-            [, r, g, b,] = color.match(/^#(..)(..)(..)(..)?$/);
-            r = parseInt(r, 16);
-            g = parseInt(g, 16);
-            b = parseInt(b, 16);
-        }
-        let a = Number(opacity);
-        if (a > 0) {
-            a = a / 100;
-        }
-        let rv = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-        console.log('set ', rv);
-        return rv;
     }
 
     safeStyle(styleRuleName): SafeStyle {
@@ -144,10 +113,5 @@ export class StylePopoverPage {
         });
 
         modal.present();
-    }
-
-    setTransparentBackground() {
-        this.selections['background-color'] = 'transparent';
-        this.onChange();
     }
 }
