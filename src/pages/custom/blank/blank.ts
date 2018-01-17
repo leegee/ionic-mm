@@ -1,4 +1,4 @@
-import { AlertController } from 'ionic-angular';
+import { AlertController, Platform } from 'ionic-angular';
 import { ImageResizer } from '@ionic-native/image-resizer';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
@@ -30,9 +30,10 @@ export class CustomBlankPage extends CustomMeme implements AfterViewInit {
     protected imagePicker: ImagePicker,
     protected imageResizer: ImageResizer,
     protected containerSizeService: ContainerSizeService,
-    protected elRef: ElementRef
+    protected elRef: ElementRef,
+    protected platform: Platform
   ) {
-    super(alertCtrl, navCtrl, file, filePath, toastCtrl, imagePicker, imageResizer, containerSizeService, elRef);
+    super(alertCtrl, navCtrl, file, filePath, toastCtrl, imagePicker, imageResizer, containerSizeService, elRef, platform);
   }
 
   ngAfterViewInit() {

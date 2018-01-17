@@ -24,9 +24,11 @@ export abstract class Meme implements AfterViewChecked {
     protected alertCtrl: AlertController,
     public navCtrl: NavController,
     protected elRef: ElementRef,
-    protected containerSizeService: ContainerSizeService
+    protected containerSizeService: ContainerSizeService,
+    protected platform: Platform
   ) {
-    this.isWeb = !new Platform().is('android');
+    this.isWeb = ! this.platform.is('android');
+    console.log('isWeb? ', this.isWeb);
   }
 
   ngAfterViewChecked() {

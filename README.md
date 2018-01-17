@@ -7,13 +7,8 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
-- Render BG
-- Inconsisent stroke before/after popover
-
 To Do
 -----
-
-- remove custom-text components
 
 Future
 ------

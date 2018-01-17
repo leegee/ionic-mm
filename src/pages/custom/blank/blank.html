@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div [hidden]="!isWeb || imageUrl" class='image-selector-parent'>
+  <div [hidden]="(!isWeb) || imageUrl" class='image-selector-parent'>
     <input class='image-selector' type='file' accept='.jpg,.jpeg,.png' (change)='getImageFile($event)'>
   </div>
 
