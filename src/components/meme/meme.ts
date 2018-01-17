@@ -28,7 +28,6 @@ export abstract class Meme implements AfterViewChecked {
     protected platform: Platform
   ) {
     this.isWeb = ! this.platform.is('android');
-    console.log('isWeb? ', this.isWeb);
   }
 
   ngAfterViewChecked() {

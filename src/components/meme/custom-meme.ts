@@ -41,7 +41,6 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
         protected platform: Platform
     ) {
         super(alertCtrl, navCtrl, elRef, containerSizeService, platform);
-        console.log('*** isWeb? ', this.isWeb);
     }
 
     ngAfterViewInit() {
