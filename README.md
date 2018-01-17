@@ -7,6 +7,9 @@ My first mobile app, first Ionic app, first Cordova experience, and first Angula
 Bugs
 ----
 
+- Text outline not visible until render
+- Android menu-handle touch
+
 To Do
 -----
 

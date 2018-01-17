@@ -6,6 +6,7 @@ import { MemeStyleService } from '../../services/MemeStyleService';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 import { TextBlockInterface } from '../text-block-interface';
 
 @Component({
@@ -55,15 +56,13 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     public popoverCtrl: PopoverController
   ) {
     super();
-    // this.style = StylePopoverPage.initialState;
-    // TODO - set the style-popover initial state here!
   }
 
   ngOnDestroy() {
     // this.userSettingsSubscription.unsubscribe();
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     if (!this.elTextInput) {
       this.elTextInput = this.elRef.nativeElement.querySelector('textarea');
       if (this.isVisible()) {
@@ -72,11 +71,11 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     }
   }
 
-  isVisible() {
+  isVisible(): boolean {
     return this.elRef.nativeElement.offsetParent !== null;
   }
 
-  getfontStyleAttr() {
+  getfontStyleAttr(): SafeStyle {
     let styleAtrStr = 'font-size:' + this.fontSize + 'vh;';
 
     //  replace this with getComputedStyles
@@ -103,7 +102,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
 
   /*
     The computed style for this.elTextInput does not reflect its actual position on the screen.
-    Nor can CSSStyleDeclarations be cast to objecrts
+    Nor can CSSStyleDeclarations be cast to PJOs
   */
   getStyles() {
     const elStylesWithFont = this._stylesForElement(this.elTextInput);
@@ -181,12 +180,15 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   }
 
   onTouchStart(e) {
+    console.log('touch start', e);
     this.touching = true;
+    this.lastTouchTimeStamp = e.timeStamp;
     this.clientX = e.touches[0].clientX;
     this.clientY = e.touches[0].clientY;
   }
 
   onTouchEnd() {
+    console.log('touch end');
     this.touching = false;
     this.sizeText();
   }

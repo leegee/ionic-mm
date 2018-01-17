@@ -274,9 +274,13 @@ export class TextRenderer {
     convertColor(rgba): [string, number] {
         console.log('convertColor', rgba);
         const [, r, g, b, , a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/);
+        let alpha = 1;
+        console.log('rgba', r, g, b, a);
+        console.log(Math.abs(Number(1 - a)));
+        alpha = a || alpha;
         return [
             '#' + this.decimal2hex(r) + this.decimal2hex(g) + this.decimal2hex(b),
-            (a ? Math.abs(Number(1 - a)) : 1)
+            alpha
         ];
     }
 

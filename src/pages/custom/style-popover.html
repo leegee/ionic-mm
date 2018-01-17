@@ -38,7 +38,7 @@
     <button ion-button color='light' (click)='chooseColor("-webkit-text-stroke-color")'>Outline Color</button>
   </ion-item>
   <ion-item>
-    <ion-range min='0' max='100' pin='true' [(ngModel)]="selections['-webkit-text-stroke-width']" (ionChange)='onChange()'>
+    <ion-range min='0' max='10' pin='true' [(ngModel)]="selections['-webkit-text-stroke-width']" (ionChange)='onChange()'>
       <ion-label range-left>No
         <br/>outline</ion-label>
       <ion-label range-right>Thick
