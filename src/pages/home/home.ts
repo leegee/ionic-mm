@@ -1,3 +1,4 @@
+import { ButtonPage } from './../memes/button/button';
 import { MostInterestingManPage } from './../memes/most-interesting-man/most-interesting-man';
 import { OrangePage } from './../memes/orange/orange';
 import { ExpandingConsciousness } from './../memes/expanding-consciousness/expanding-consciousness';
@@ -20,6 +21,7 @@ export class HomePage {
   ) {
     this.blankMemes = [
       BatmanPage,
+      ButtonPage,
       DogePage,
       ExpandingConsciousness,
       SuccPage,

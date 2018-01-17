@@ -1,3 +1,4 @@
+import { ButtonPage } from './../pages/memes/button/button';
 import { ColorPickerPopoverComponent } from './../components/color-picker-popover/color-picker-popover';
 import { CustomBlankPage } from './../pages/custom/blank/blank';
 import { StylePopoverPage } from './../pages/custom/style-popover';
@@ -61,6 +62,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     PepePage,
     ExpandingConsciousness,
     BatmanPage,
+    ButtonPage,
     OrangePage
   ],
   entryComponents: [
@@ -79,6 +81,7 @@ import { CustomTextJaggedComponent } from '../components/custom-text-jagged/cust
     PepePage,
     ExpandingConsciousness,
     BatmanPage,
+    ButtonPage,
     OrangePage
   ],
   providers: [

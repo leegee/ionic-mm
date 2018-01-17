@@ -107,6 +107,7 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
   getStyles() {
     const elStylesWithFont = this._stylesForElement(this.elTextInput);
     const elStylesWithPos = this._stylesForElement(this.elRef.nativeElement);
+
     return Object.assign(
       elStylesWithFont,
       this.style, // From the popover
@@ -117,7 +118,9 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
         bottom: elStylesWithPos,
         width: elStylesWithPos.width,
         height: elStylesWithPos.height,
-        fontSize: elStylesWithFont.fontSize
+        transform: elStylesWithFont.transform,
+        transformOrigin: elStylesWithFont.transformOrigin,
+        fontSize: elStylesWithFont.fontSize,
       }
     );
   }

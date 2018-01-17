@@ -30,6 +30,8 @@ export class TextRenderer {
         'textAlign',
         'top',
         'width',
+        'transform',
+        'transformOrigin'
     ];
     // ctx.shadowColor = “red” // string Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
     // ctx.shadowOffsetX = 0; // integer Horizontal distance of the shadow, in relation to the text.
@@ -76,7 +78,6 @@ export class TextRenderer {
             } else {
                 console.error('Now only expecting px, got [%s]', units);
                 console.trace();
-                debugger;
             }
         }
         // console.log('RV ', rv);
@@ -99,7 +100,6 @@ export class TextRenderer {
 
         // Canvas rules only:
         if (!styles.textAlign.match(/(left|right|center)/)) {
-            console.log('styles.textAlign was ', styles.textAlign);
             styles.textAlign = 'left';
         }
 
@@ -185,13 +185,30 @@ export class TextRenderer {
         let [, strComputedStylesWidth,] = this.computedStyles.width.match(TextRenderer.reFontSize);
         this.nComputedStylesWidthScaled = this._scale(strComputedStylesWidth, 'width');
 
+        if (this.computedStyles.transform) {
+            // transformOrigin
+            console.log('this.computedStyles.transformOrigin', this.computedStyles.transformOrigin);
+            let [, x, y] = this.computedStyles.transformOrigin.match(/^(.+?)px\s+(.+?)px$/);
+            console.log(x, ',', y);
+            let nX = Number(this._scale(x, 'width'));
+            let nY = Number(this._scale(y, 'height'));
+            // nX = Number(x);
+            // nY = Number(y);
+            console.log(nX, ',', nY);
+            this.ctx.translate(nX, nY);
+            const csv = this.computedStyles.transform.replace(
+                /^\w+\((.+?)\)$/, '$1'
+            );
+            const matrix = csv.split(/\s*,\s*/);
+            this.ctx.setTransform.apply(this.ctx, matrix);
+        }
+
         {
             let width = this.nComputedStylesWidthScaled;
             let [, heightStr] = this.computedStyles.height.match(TextRenderer.reFontSize);
             let height: number = this._scale(heightStr, 'height');
             this.ctx.beginPath();
             [this.ctx.fillStyle, this.ctx.globalAlpha] = this.convertColor(this.computedStyles.backgroundColor);
-            console.log('this.ctx.globalAlpha', this.ctx.globalAlpha, 'from', this.computedStyles.backgroundColor);
             this.ctx.fillRect(this.x, this.y, width, height);
             this.ctx.fill();
         }
@@ -202,6 +219,11 @@ export class TextRenderer {
         allText.split(/[\n\r\f]/g).forEach((inputLine) => {
             this.processLine(inputLine);
         });
+
+        // Reset
+        if (this.computedStyles.transform) {
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        }
 
         console.log('now y = ', this.y);
     }
@@ -272,11 +294,8 @@ export class TextRenderer {
     };
 
     convertColor(rgba): [string, number] {
-        console.log('convertColor', rgba);
         const [, r, g, b, , a] = rgba.match(/^rgba?\(([.\d]+),\s*([.\d]+),\s*([.\d]+)(,\s*([.\d]+)?)?\)$/);
         let alpha = 1;
-        console.log('rgba', r, g, b, a);
-        console.log(Math.abs(Number(1 - a)));
         alpha = a || alpha;
         return [
             '#' + this.decimal2hex(r) + this.decimal2hex(g) + this.decimal2hex(b),
