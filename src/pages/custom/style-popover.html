@@ -1,5 +1,9 @@
 <ion-list class='style-popover'>
   <ion-item>
+      <button ion-button color="dark" (click)="deleteHandler()">Remove this text block?</button>
+  </ion-item>
+
+  <ion-item>
     <ion-label>Typeface</ion-label>
     <ion-select [(ngModel)]="selections['font-family']" (ionChange)='onChange()'>
       <ion-option value="Roboto" style='font-family:Roboto'>Roboto</ion-option>

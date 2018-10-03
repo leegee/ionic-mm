@@ -1,5 +1,5 @@
 import { MemeStyleService } from './../../services/MemeStyleService';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ViewController, NavParams, ModalController } from 'ionic-angular';
 import { ColorPickerPopoverComponent } from '../../components/color-picker-popover/color-picker-popover';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
@@ -8,6 +8,8 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
     templateUrl: 'style-popover.html'
 })
 export class StylePopoverPage {
+    @Output() delete = new EventEmitter<boolean>();
+
     protected static stateDefaults = {
         '-webkit-text-stroke-color': 'white',
         '-webkit-text-stroke-width': '0',
@@ -36,7 +38,11 @@ export class StylePopoverPage {
         });
         this.initialiseSelectionsState();
         this.onChange();
-    };
+    }
+
+    public deleteHandler() {
+        this.delete.emit(true);
+    }
 
     private camelise(subject) {
         subject = subject.replace(/^-/, '');
@@ -50,7 +56,6 @@ export class StylePopoverPage {
     }
 
     public close() {
-        console.log('close');
         this.viewCtrl.dismiss();
     }
 
