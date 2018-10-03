@@ -117,7 +117,7 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
         let imgBlob = e.target.files[0];
         let reader = new FileReader();
         reader.onload = (e: Event) => {
-            this.imageUrl = (<FileReader>e.target).result;
+            this.imageUrl = (<FileReader>e.target).result as string;
         };
         reader.readAsDataURL(imgBlob);
     }
