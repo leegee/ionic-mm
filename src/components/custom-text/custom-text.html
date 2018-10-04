@@ -1,5 +1,5 @@
 <div clas='custom-text-container' [style]='getPositionStyleAttr()' [hidden]='isHidden'>
-  <div id='menu-handle' (click)='onMenuHandleClick($event)' [hidden]='isHidden'>
+  <div id='menu-handle' (click)='onMenuHandleClick($event)' [hidden]='isHidden' (delete)="onDeleted($event)">
     <ion-icon name='options'></ion-icon>
   </div>
   <textarea #textinput class='meme-text-container' [hidden]='isHidden' [(ngModel)]='text' placeholder='{{placeholder}}' [style]='getfontStyleAttr()'

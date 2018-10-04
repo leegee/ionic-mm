@@ -1,5 +1,5 @@
 import { MemeStyleService } from './../../services/MemeStyleService';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ElementRef } from '@angular/core';
 import { ViewController, NavParams, ModalController } from 'ionic-angular';
 import { ColorPickerPopoverComponent } from '../../components/color-picker-popover/color-picker-popover';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
@@ -8,8 +8,6 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
     templateUrl: 'style-popover.html'
 })
 export class StylePopoverPage {
-    @Output() delete = new EventEmitter<boolean>();
-
     protected static stateDefaults = {
         '-webkit-text-stroke-color': 'white',
         '-webkit-text-stroke-width': '0',
@@ -30,7 +28,8 @@ export class StylePopoverPage {
         private domSanitizer: DomSanitizer,
         private memeStyleService: MemeStyleService,
         public navParams: NavParams,
-        public modalCtrl: ModalController
+        public modalCtrl: ModalController,
+        protected elRef: ElementRef
     ) {
         Object.keys(StylePopoverPage.stateDefaults).forEach(styleRuleName => {
             let camelised = this.camelise(styleRuleName);
@@ -41,7 +40,8 @@ export class StylePopoverPage {
     }
 
     public deleteHandler() {
-        this.delete.emit(true);
+        console.log('popup emit delete');
+        this.close('delete');
     }
 
     private camelise(subject) {
@@ -55,8 +55,8 @@ export class StylePopoverPage {
         return subject;
     }
 
-    public close() {
-        this.viewCtrl.dismiss();
+    public close(rv) {
+        this.viewCtrl.dismiss(rv);
     }
 
     public closeAndReflow() {

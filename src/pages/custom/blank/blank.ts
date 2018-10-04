@@ -54,13 +54,12 @@ export class CustomBlankPage extends CustomMeme implements AfterViewInit {
         if (Number(textBlock.id) === this.textBlocksDisplayed) {
           textBlock.setPosition(e.clientX, e.clientY);
           textBlock.isHidden = false;
-          setTimeout( () => {
+          setTimeout(() => {
             textBlock.sizeText();
           });
           break;
         }
       }
     }
-
   }
 }

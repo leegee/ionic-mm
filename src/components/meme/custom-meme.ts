@@ -138,5 +138,4 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
             position: 'top'
         }).present();
     }
-
 }

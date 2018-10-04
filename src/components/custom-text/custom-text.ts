@@ -182,6 +182,10 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
     return rv;
   }
 
+  onDeleted(e: Event) {
+    console.log('on deleted', e);
+  }
+
   onTouchStart(e) {
     console.log('touch start', e);
     this.touching = true;
@@ -244,8 +248,11 @@ export class CustomTextComponent extends TextRenderer implements TextBlockInterf
       }
     );
 
-    popover.onDidDismiss(() => {
+    popover.onDidDismiss((finalCommand:String) => {
       this.userSettingsSubscription.unsubscribe();
+      if (finalCommand === 'delete') {
+        this.text = '';
+      }
     });
 
     popover.present({
