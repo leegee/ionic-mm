@@ -32,6 +32,11 @@ Or half-way between the two:
 
     ionic cordova run browser
 
+IE
+
+  npm run dev
+  npm test
+
 Bibliography
 ------------
 
