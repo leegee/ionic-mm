@@ -200,7 +200,9 @@ export class TextRenderer {
                 /^\w+\((.+?)\)$/, '$1'
             );
             const matrix = csv.split(/\s*,\s*/);
-            this.ctx.setTransform.apply(this.ctx, matrix);
+            if (csv && csv !== 'none ' && matrix.length === 6) {
+              this.ctx.setTransform.apply(this.ctx, matrix);
+            }
         }
 
         {
@@ -222,7 +224,7 @@ export class TextRenderer {
 
         // Reset
         if (this.computedStyles.transform) {
-            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+          this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         }
 
         console.log('now y = ', this.y);
