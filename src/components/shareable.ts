@@ -5,10 +5,14 @@ export class Shareable {
     constructor() { }
 
     static share(imgb64: string) {
+      try {
         Shareable.socialSharing.share(
             'Meme',
             'Memeology',
             imgb64
         );
+      } catch (e) {
+        console.warn(e);
+      }
     }
 }
