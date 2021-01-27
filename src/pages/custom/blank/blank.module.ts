@@ -12,4 +12,4 @@ import { IonicPageModule } from 'ionic-angular';
     IonicPageModule.forChild(CustomBlankPage)
   ],
 })
-export class CustomBlankPageModule {}
+export class CustomBlankPageModule { }
