@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 interface TypeMeme {
-    title: string;
-    templateUrl: string;
-    thumbnailUrl: string;
-    imageUrl: string;
-    width: number;
-    height: number;
+  title: string;
+  templateUrl: string;
+  thumbnailUrl: string;
+  imageUrl: string[];
+  width: number;
+  height: number;
 };
 
 @Component({
@@ -25,7 +25,7 @@ export class DankPage {
       title: 'Doge',
       templateUrl: '/pages/memes/doge.html',
       thumbnailUrl: 'assets/imgs/doge_thumb.jpg',
-      imageUrl: 'assets/imgs/doge.jpg',
+      imageUrl: ['assets/imgs/doge.jpg'],
       width: 800,
       height: 450
     }];
@@ -34,7 +34,7 @@ export class DankPage {
   }
 
   itemTapped(event, selectedMeme) {
-    // That's right, we're pushing to ourselves!
+    // pushing to ourselves!
     this.navCtrl.push(DankPage, { selectedMeme });
   }
 }

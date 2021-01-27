@@ -11,13 +11,13 @@ import { Meme } from '../../../components/meme/meme';
 export class SuccPage extends Meme {
   static title: string = 'Mr Succ';
   static thumbnailUrl: string = 'assets/imgs/succ.jpg';
-  imageUrl: string = 'assets/imgs/succ.jpg';
+  imageUrl = ['assets/imgs/succ.jpg'];
   width: number = 600;
   height: number = 600;
 
   constructor(
     protected alertCtrl: AlertController,
-    public  navCtrl: NavController,
+    public navCtrl: NavController,
     public elRef: ElementRef,
     public containerSizeService: ContainerSizeService,
     protected platform: Platform

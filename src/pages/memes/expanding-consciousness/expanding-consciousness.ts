@@ -11,7 +11,7 @@ import { Meme } from '../../../components/meme/meme';
 export class ExpandingConsciousness extends Meme {
   static thumbnailUrl: string = 'assets/imgs/expanding-consciousness_thumb.jpg';
   static title: string = 'Expanding consciousness';
-  imageUrl: string = 'assets/imgs/expanding-consciousness.jpg';
+  imageUrl = ['assets/imgs/expanding-consciousness.jpg'];
   width: number = 857;
   height: number = 1202;
 

@@ -16,7 +16,7 @@ import { CustomMeme } from '../../../components/meme/custom-meme';
 })
 export class CustomWholePage extends CustomMeme implements AfterViewInit, DoCheck {
 
-  public imageUrl: string;
+  public imageUrl: string[];
   public resizeWidth: number = 800;
   public resizeHeight: number = 800;
 

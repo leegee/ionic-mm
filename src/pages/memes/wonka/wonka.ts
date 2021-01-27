@@ -12,13 +12,13 @@ export class WonkaPage extends Meme {
   static title: string = 'Wonka';
   static thumbnailUrl: string = 'assets/imgs/wonka.jpg';
   title = 'Wonka';
-  imageUrl: string = 'assets/imgs/wonka.jpg';
+  imageUrl = ['assets/imgs/wonka.jpg'];
   width: number = 550;
   height: number = 545;
 
   constructor(
     protected alertCtrl: AlertController,
-    public  navCtrl: NavController,
+    public navCtrl: NavController,
     public elRef: ElementRef,
     public containerSizeService: ContainerSizeService,
     protected platform: Platform

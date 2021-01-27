@@ -11,13 +11,13 @@ import { Meme } from '../../../components/meme/meme';
 export class ButtonPage extends Meme {
   static thumbnailUrl: string = 'assets/imgs/button.jpg';
   static title: string = 'Button';
-  imageUrl: string = 'assets/imgs/button.jpg';
+  imageUrl = ['assets/imgs/button.jpg'];
   width: number = 600;
   height: number = 908;
 
   constructor(
     protected alertCtrl: AlertController,
-    public  navCtrl: NavController,
+    public navCtrl: NavController,
     public elRef: ElementRef,
     public containerSizeService: ContainerSizeService,
     protected platform: Platform
