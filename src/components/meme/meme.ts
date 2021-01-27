@@ -13,7 +13,7 @@ export abstract class Meme implements AfterViewChecked {
 
   protected container: HTMLElement;
   protected img: HTMLImageElement;
-  public imageUrl: string;
+  public imageUrl: string[];
   public width: number;
   public height: number;
   protected isDirty: boolean = false;
@@ -27,7 +27,7 @@ export abstract class Meme implements AfterViewChecked {
     protected containerSizeService: ContainerSizeService,
     protected platform: Platform
   ) {
-    this.isWeb = ! this.platform.is('android');
+    this.isWeb = !this.platform.is('android');
   }
 
   ngAfterViewChecked() {

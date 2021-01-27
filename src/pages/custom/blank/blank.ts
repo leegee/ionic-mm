@@ -16,7 +16,7 @@ import { CustomMeme } from '../../../components/meme/custom-meme';
 })
 export class CustomBlankPage extends CustomMeme implements AfterViewInit {
 
-  public imageUrl: string;
+  public imageUrl: string[];
   public resizeWidth: number = 800;
   public resizeHeight: number = 800;
   protected textBlocksDisplayed = 1;

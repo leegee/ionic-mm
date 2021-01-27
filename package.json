@@ -5,14 +5,14 @@
   "description": "Makes meming easy.",
   "homepage": "https://github.com/leegee/ionic-mm.git",
   "private": true,
-  "repository": [
-    "https://github.com/leegee/ionic-mm.git"
-  ],
+  "repository": {
+    "url": "https://github.com/leegee/ionic-mm.git"
+  },
   "scripts": {
     "mobile": "ionic cordova run android --livereload",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "dev": "ionic cordova run browser",
+    "start": "ionic cordova run browser",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
@@ -66,7 +66,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.2",
+    "@ionic/app-scripts": "^3.2.4",
     "@types/jasmine": "^2.8.2",
     "@types/node": "^8.0.53",
     "karma": "^1.7.1",

@@ -14,22 +14,31 @@
 
 <ion-content padding>
 
-  <div id='editable-image' [hidden]="!imageUrl">
-    <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()">
-    <div id="meme-text-container" tappable (click)="onContainerClicked($event)">
-      <custom-text #textinput id='1' [hidden]='false'  text='Your text' style='position: absolute; width:20%; height: 20%; left: 30px; top: 30px;'></custom-text>
-      <custom-text #textinput id='2' [hidden]='isHidden' text='Text 2' style='position: absolute; width:20%; height: 20%;'></custom-text>
-      <custom-text #textinput id='3' [hidden]='isHidden' text='Text 3' style='position: absolute; width:20%; height: 20%;'></custom-text>
-      <custom-text #textinput id='4' [hidden]='isHidden' text='Text 4' style='position: absolute; width:20%; height: 20%;'></custom-text>
-      <custom-text #textinput id='5' [hidden]='isHidden' text='Text 5' style='position: absolute; width:20%; height: 20%;'></custom-text>
-      <custom-text #textinput id='6' [hidden]='isHidden' text='Text 6' style='position: absolute; width:20%; height: 20%;'></custom-text>
-      <custom-text #textinput id='7' [hidden]='isHidden' text='Text 7' style='position: absolute; width:20%; height: 20%;'></custom-text>
-      <custom-text #textinput id='8' [hidden]='isHidden' text='Max text' style='position: absolute; width:20%; height: 20%;'></custom-text>
-    </div>
+  <div *ngFor="let anImageUrl of imageUrl; index as i" [hidden]='!imageUrl[i]'>
+    <img id='meme-img' class='meme-img' src="{{anImageUrl}}" (load)="onImageLoad()">
   </div>
+
+  <!-- <div id='editable-image' [hidden]="!imageUrl"> -->
+  <!-- <img id='meme-img' class='meme-img' src="{{imageUrl}}" (load)="onImageLoad()"> -->
+  <div id="meme-text-container" tappable (click)="onContainerClicked($event)">
+    <custom-text #textinput id='1' [hidden]='false' text='Your text'
+      style='position: absolute; width:20%; height: 20%; left: 30px; top: 30px;'></custom-text>
+    <custom-text #textinput id='2' [hidden]='isHidden' text='Text 2'></custom-text>
+    <custom-text #textinput id='3' [hidden]='isHidden' text='Text 3'></custom-text>
+    <custom-text #textinput id='4' [hidden]='isHidden' text='Text 4'></custom-text>
+    <custom-text #textinput id='5' [hidden]='isHidden' text='Text 5'></custom-text>
+    <custom-text #textinput id='6' [hidden]='isHidden' text='Text 6'></custom-text>
+    <custom-text #textinput id='7' [hidden]='isHidden' text='Text 7'></custom-text>
+    <custom-text #textinput id='8' [hidden]='isHidden' text='Max text'></custom-text>
+  </div>
+  <!-- </div> -->
 
   <div [hidden]="(!isWeb) || imageUrl" class='image-selector-parent'>
     <input class='image-selector' type='file' accept='.jpg,.jpeg,.png,.webp' (change)='getImageFile($event)'>
   </div>
+
+  <ion-fab>
+    <ion-fab-button>+ Image</ion-fab-button>
+  </ion-fab>
 
 </ion-content>

@@ -18,7 +18,7 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
 
     protected container: HTMLElement;
     protected img: HTMLImageElement;
-    public imageUrl: string;
+    public imageUrl: string[];
     public width: number;
     public height: number;
     protected isDirty: boolean = false;
@@ -89,8 +89,8 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
                         height: this.resizeHeight
                     } as ImageResizerOptions)
                 })
-                .then((resizedFilePath) => {
-                    this.imageUrl = resizedFilePath;
+                .then((resizedFilePath: string) => {
+                    this.imageUrl.push( resizedFilePath);
                     this.isDirty = true;
                 }).catch(e => {
                     console.error(e);
@@ -117,7 +117,7 @@ export abstract class CustomMeme extends Meme implements AfterViewInit, DoCheck 
         let imgBlob = e.target.files[0];
         let reader = new FileReader();
         reader.onload = (e: Event) => {
-            this.imageUrl = (<FileReader>e.target).result as string;
+            this.imageUrl.push( (<FileReader>e.target).result as string);
         };
         reader.readAsDataURL(imgBlob);
     }
